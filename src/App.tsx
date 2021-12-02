@@ -1,17 +1,19 @@
 import "./App.css";
 import Lifeline from "./Lifeline";
 import SequenceDescriber from "./SequenceDescriber";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SequenceReader from "./SequenceReader";
 
 function App() {
-  const [sequenceText, setSequenceText] = useState("");
-  const [actors, setActors] = useState<string[]>([]);
-  const sequenceChange = (text: string) => {
-    const sd = SequenceReader(text);
-    setActors((arr) => [...sd.actors]);
-    setSequenceText(text);
-  };
+  const [sequenceText, setSequenceText] = useState(() => {
+    return localStorage.getItem("sequenceText") || "";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("sequenceText", sequenceText);
+  });
+
+  const getActors = () => SequenceReader(sequenceText).actors;
 
   // temp
   const start = 500;
@@ -20,13 +22,15 @@ function App() {
   return (
     <div className="App">
       <svg>
-        {actors.map((a, index) => (
-          <Lifeline x={start + index * width} y={200} name={a} />
-        ))}
+        <g id="matrix-group" transform="matrix(1 0 0 1 0 0)">
+          {getActors().map((a, index) => (
+            <Lifeline x={start + index * width} y={200} name={a} />
+          ))}
+        </g>
       </svg>
       <SequenceDescriber
         sequenceText={sequenceText}
-        onChange={sequenceChange}
+        onChange={setSequenceText}
       />
     </div>
   );
