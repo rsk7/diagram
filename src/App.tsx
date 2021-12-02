@@ -1,10 +1,11 @@
-import React from 'react';
-import './App.css';
+import "./App.css";
+import Lifeline from "./Lifeline";
 
 function App() {
   return (
     <svg>
-      <rect fill="lime" width="100%" height="100%"/>
+      <Lifeline x={200} y={200} name={"Actor A"} />
+      <Lifeline x={600} y={200} name={"Actor B"} />
     </svg>
   );
 }
