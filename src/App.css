@@ -3,3 +3,7 @@ svg {
   width: 100vw;
   display: block;
 }
+
+.div {
+  position: relative;
+}
