@@ -29,6 +29,9 @@ function App() {
         onMouseDown={(e) => handleMouseDown({ x: e.pageX, y: e.pageY })}
         onMouseMove={(e) => handleMouseMove({ x: e.pageX, y: e.pageY })}
         onMouseUp={(e) => handleMouseUp({ x: e.pageX, y: e.pageY })}
+        style={{
+          cursor: dragState.mouseDownPosition ? "grabbing" : "grab"
+        }}
       >
         <g
           id="matrix-group"
