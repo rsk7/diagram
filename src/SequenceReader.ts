@@ -19,11 +19,7 @@ export default function sequenceReader(text: string): SequenceDiagram {
     .split("\n")
     .filter((l) => l.length)
     .map((l) => l.trim());
-
   const actors = findActors(lines);
-
-  console.log(actors);
-
   return {
     actors
   };
