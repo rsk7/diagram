@@ -12,19 +12,20 @@ interface DragState {
 }
 
 // return transform matrix
-export default function useSvgDragState(transform: Position) {
+export default function useSvgMatrixState(initMatrix: number[]) {
   const [dragState, setDragState] = useState<DragState>({
     mouseDownPosition: null,
-    originalTransform: transform,
-    currentTransform: transform
+    originalTransform: { x: initMatrix[4], y: initMatrix[5] },
+    currentTransform: { x: initMatrix[4], y: initMatrix[5] }
   });
 
   const handleMouseDown = (p: Position) => {
-    const { mouseDownPosition } = dragState;
+    const { mouseDownPosition, currentTransform } = dragState;
     if (!mouseDownPosition) {
       setDragState({
         ...dragState,
-        mouseDownPosition: p
+        mouseDownPosition: p,
+        originalTransform: currentTransform
       });
     }
   };
@@ -55,10 +56,33 @@ export default function useSvgDragState(transform: Position) {
     }
   };
 
+  const [zoomState, setZoomState] = useState<number>(initMatrix[0]);
+  const zoomInterval = 0.1;
+
+  const handleZoom = (position: Position, scrollUp: boolean) => {
+    setZoomState(
+      scrollUp ? zoomState - zoomInterval : zoomState + zoomInterval
+    );
+    // use position to zoom on mouse position as center
+  };
+
+  const matrix = [
+    zoomState,
+    0,
+    0,
+    zoomState,
+    dragState.currentTransform.x,
+    dragState.currentTransform.y
+  ];
+
+  const isDragging = !!dragState.mouseDownPosition;
+
   return {
-    dragState,
+    matrix,
+    isDragging,
     handleMouseDown,
     handleMouseUp,
-    handleMouseMove
+    handleMouseMove,
+    handleZoom
   };
 }

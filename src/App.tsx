@@ -3,8 +3,7 @@ import Lifeline from "./Lifeline";
 import SequenceDescriber from "./SequenceDescriber";
 import { useState, useEffect } from "react";
 import SequenceReader from "./SequenceReader";
-import useSvgDragState from "./useSvgDragState";
-import useSvgZoomState from "./useSvgZoomState";
+import useSvgMatrixState from "./useSvgMatrixState";
 
 function App() {
   const [sequenceText, setSequenceText] = useState(() => {
@@ -21,9 +20,14 @@ function App() {
   const start = 500;
   const width = 200;
 
-  const { dragState, handleMouseDown, handleMouseUp, handleMouseMove } =
-    useSvgDragState({ x: 0, y: 0 });
-  const { zoomState, handleZoom } = useSvgZoomState(1);
+  const {
+    matrix,
+    isDragging,
+    handleMouseDown,
+    handleMouseUp,
+    handleMouseMove,
+    handleZoom
+  } = useSvgMatrixState([1, 0, 0, 1, 0, 0]);
 
   return (
     <div className="App">
@@ -31,15 +35,10 @@ function App() {
         onMouseDown={(e) => handleMouseDown({ x: e.pageX, y: e.pageY })}
         onMouseMove={(e) => handleMouseMove({ x: e.pageX, y: e.pageY })}
         onMouseUp={(e) => handleMouseUp({ x: e.pageX, y: e.pageY })}
-        onWheel={(e) => handleZoom(e.deltaY > 0)}
-        style={{
-          cursor: dragState.mouseDownPosition ? "grabbing" : "grab"
-        }}
+        onWheel={(e) => handleZoom({ x: e.pageX, y: e.pageY }, e.deltaY > 0)}
+        style={{ cursor: isDragging ? "grabbing" : "grab" }}
       >
-        <g
-          id="matrix-group"
-          transform={`matrix(${zoomState}, 0, 0, ${zoomState}, ${dragState.currentTransform.x}, ${dragState.currentTransform.y})`}
-        >
+        <g id="matrix-group" transform={`matrix(${matrix.join(", ")})`}>
           {getActors().map((a, index) => (
             <Lifeline x={start + index * width} y={200} name={a} />
           ))}
