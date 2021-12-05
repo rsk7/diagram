@@ -1,5 +1,10 @@
 interface SequenceDiagram {
   actors: string[];
+  interactions?: {
+    fromActor: string;
+    toActor: string;
+    description: string;
+  }[];
 }
 
 function findActors(lines: string[]): string[] {

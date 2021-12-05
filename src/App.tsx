@@ -21,13 +21,13 @@ function App() {
   const width = 200;
 
   const {
-    matrix,
+    matrixState,
     isDragging,
     handleMouseDown,
     handleMouseUp,
     handleMouseMove,
     handleZoom
-  } = useSvgMatrixState([1, 0, 0, 1, 0, 0]);
+  } = useSvgMatrixState();
 
   return (
     <div className="App">
@@ -38,7 +38,7 @@ function App() {
         onWheel={(e) => handleZoom({ x: e.pageX, y: e.pageY }, e.deltaY > 0)}
         style={{ cursor: isDragging ? "grabbing" : "grab" }}
       >
-        <g id="matrix-group" transform={`matrix(${matrix.join(", ")})`}>
+        <g id="matrix-group" transform={`${matrixState.toString()}`}>
           {getActors().map((a, index) => (
             <Lifeline x={start + index * width} y={200} name={a} />
           ))}
