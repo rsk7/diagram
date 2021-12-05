@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import SequenceReader from "./SequenceReader";
 import useSvgMatrixState from "./useSvgMatrixState";
 import sequenceDiagramLayout from "./SequenceDiagramLayout";
+import MessageArrow from "./MessageArrow";
 
 function App() {
   const [sequenceText, setSequenceText] = useState(() => {
@@ -50,16 +51,16 @@ function App() {
           </marker>
         </defs>
         <g id="matrix-group" transform={`${matrixState.toString()}`}>
-          {lifelineProps.map((p) => (
+          {Array.from(lifelineProps.values()).map((p) => (
             <Lifeline {...p} />
           ))}
-          <polyline
-            points="10,10 10,90 90,90"
-            fill="none"
-            stroke="black"
-            marker-start="url(#arrow)"
-            marker-end="url(#arrow)"
-          />
+          <MessageArrow
+            x={500}
+            y={500}
+            description="test"
+            length={300}
+            direction="right"
+          ></MessageArrow>
         </g>
       </svg>
       <SequenceDescriber

@@ -19,8 +19,8 @@ export default function sequenceDiagramLayout(
   const LIFELINE_SEPARATION = 50;
 
   // need lifeline props here
-  const lifelineProps = actors.reduce<LifelineProps[]>(
-    (acc: LifelineProps[], value: string) => {
+  const lifelineProps = actors
+    .reduce<LifelineProps[]>((acc: LifelineProps[], value: string) => {
       const { width, height } = getSize(value, FONT_SIZE, MAX_WIDTH, MIN_WIDTH);
       if (!acc.length) {
         return [
@@ -49,9 +49,13 @@ export default function sequenceDiagramLayout(
           }
         ];
       }
-    },
-    []
-  );
+    }, [])
+    .reduce<Map<string, LifelineProps>>((acc, value) => {
+      acc.set(value.name, value);
+      return acc;
+    }, new Map<string, LifelineProps>());
+
+  const interactions = diagram.interactions;
 
   return {
     lifelineProps
