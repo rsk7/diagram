@@ -52,7 +52,6 @@ export default function useSvgMatrixState(initMatrix?: DOMMatrix) {
   };
 
   const handleZoom = (position: Position, scrollUp: boolean) => {
-    console.log("zoom position", position.x, position.y);
     const zoomFactor = scrollUp ? 1 / 1.01 : 1.01;
     const point = new DOMPoint(position.x, position.y);
     const transformedPoint = point.matrixTransform(matrixState.inverse());

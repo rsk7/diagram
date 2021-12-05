@@ -4,6 +4,7 @@ import SequenceDescriber from "./SequenceDescriber";
 import { useState, useEffect } from "react";
 import SequenceReader from "./SequenceReader";
 import useSvgMatrixState from "./useSvgMatrixState";
+import sequenceDiagramLayout from "./SequenceDiagramLayout";
 
 function App() {
   const [sequenceText, setSequenceText] = useState(() => {
@@ -14,11 +15,8 @@ function App() {
     localStorage.setItem("sequenceText", sequenceText);
   });
 
-  const getActors = () => SequenceReader(sequenceText).actors;
-
-  // temp
-  const start = 500;
-  const width = 200;
+  const diagram = SequenceReader(sequenceText);
+  const { lifelineProps } = sequenceDiagramLayout(diagram, { x: 500, y: 200 });
 
   const {
     matrixState,
@@ -38,10 +36,30 @@ function App() {
         onWheel={(e) => handleZoom({ x: e.pageX, y: e.pageY }, e.deltaY > 0)}
         style={{ cursor: isDragging ? "grabbing" : "grab" }}
       >
+        <defs>
+          <marker
+            id="arrow"
+            viewBox="0 0 10 10"
+            refX="5"
+            refY="5"
+            markerWidth="6"
+            markerHeight="6"
+            orient="auto-start-reverse"
+          >
+            <path d="M 0 0 L 10 5 L 0 10 z" />
+          </marker>
+        </defs>
         <g id="matrix-group" transform={`${matrixState.toString()}`}>
-          {getActors().map((a, index) => (
-            <Lifeline x={start + index * width} y={200} name={a} />
+          {lifelineProps.map((p) => (
+            <Lifeline {...p} />
           ))}
+          <polyline
+            points="10,10 10,90 90,90"
+            fill="none"
+            stroke="black"
+            marker-start="url(#arrow)"
+            marker-end="url(#arrow)"
+          />
         </g>
       </svg>
       <SequenceDescriber

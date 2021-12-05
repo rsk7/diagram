@@ -1,11 +1,4 @@
-interface SequenceDiagram {
-  actors: string[];
-  interactions?: {
-    fromActor: string;
-    toActor: string;
-    description: string;
-  }[];
-}
+import SequenceDiagram from "./SequenceDiagram";
 
 function findActors(lines: string[]): string[] {
   const actorLines = lines.filter(
