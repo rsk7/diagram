@@ -12,18 +12,18 @@ export default function sequenceDiagramLayout(
   // find actor spacing
   const actors = diagram.actors;
 
-  // find length of lifelines;
-  const LENGTH = 500;
+  const LENGTH = 500; // default
   const FONT_SIZE = 12;
   const MAX_WIDTH = 200;
   const MIN_WIDTH = 50;
   const LIFELINE_SEPARATION = 50;
   const INTERACTION_LINE_PADDING = 5;
   const MESSAGE_ARROW_DESCRIPTION_PADDING = 20;
+  const END_PADDING = 50;
 
   // need lifeline props here
-  const lifelineProps = actors
-    .reduce<LifelineProps[]>((acc: LifelineProps[], value: string) => {
+  const lifelineProps = actors.reduce<LifelineProps[]>(
+    (acc: LifelineProps[], value: string) => {
       const { width, height } = getSize(value, FONT_SIZE, MAX_WIDTH, MIN_WIDTH);
 
       if (!acc.length) {
@@ -56,18 +56,21 @@ export default function sequenceDiagramLayout(
           }
         ];
       }
-    }, [])
-    .reduce<Map<string, LifelineProps>>((acc, value) => {
+    },
+    []
+  );
+
+  const lifelinePropsMap = lifelineProps.reduce<Map<string, LifelineProps>>(
+    (acc, value) => {
       acc.set(value.name, value);
       return acc;
-    }, new Map<string, LifelineProps>());
-
-  const maxLifelineHeight = Array.from(lifelineProps.values()).reduce(
-    (acc, value) => {
-      return acc > value.height ? acc : value.height;
     },
-    0
+    new Map<string, LifelineProps>()
   );
+
+  const maxLifelineHeight = lifelineProps.reduce((acc, value) => {
+    return acc > value.height ? acc : value.height;
+  }, 0);
 
   const interactionStartY =
     maxLifelineHeight + startPosition.y + INTERACTION_LINE_PADDING;
@@ -75,8 +78,8 @@ export default function sequenceDiagramLayout(
 
   const messageArrowProps = interactions?.reduce<MessageArrowProps[]>(
     (acc: MessageArrowProps[], value: SequenceInteraction) => {
-      const fromLifeline = lifelineProps.get(value.fromActor);
-      const toLifeline = lifelineProps.get(value.toActor);
+      const fromLifeline = lifelinePropsMap.get(value.fromActor);
+      const toLifeline = lifelinePropsMap.get(value.toActor);
       if (!fromLifeline || !toLifeline) return acc;
       const distanceX = fromLifeline.lineX - toLifeline.lineX;
       const endX = toLifeline.lineX - (distanceX > 0 ? -5 : 5);
@@ -135,6 +138,15 @@ export default function sequenceDiagramLayout(
     },
     []
   );
+
+  // set length of linelines
+  if (messageArrowProps?.length) {
+    const maxY =
+      messageArrowProps[messageArrowProps.length - 1].startY + END_PADDING;
+    lifelineProps.forEach((p) => (p.length = maxY - p.y));
+  }
+
+  console.log(lifelineProps[0].length);
 
   return {
     lifelineProps,

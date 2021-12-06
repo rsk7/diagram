@@ -54,7 +54,7 @@ function App() {
           </marker>
         </defs>
         <g id="matrix-group" transform={`${matrixState.toString()}`}>
-          {Array.from(lifelineProps.values()).map((p, index) => (
+          {lifelineProps.map((p, index) => (
             <Lifeline key={index} {...p} />
           ))}
           {messageArrowProps?.map((p, index) => (
