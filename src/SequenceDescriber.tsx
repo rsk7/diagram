@@ -15,7 +15,7 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
     padding: "20px",
     border: "2px solid #e0e0e0",
     borderRadius: "5px",
-    backgroundColor: "white"
+    background: "rgba(224, 224, 224, 0.5)"
   };
   return (
     <div style={styles}>
@@ -26,7 +26,8 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
           overflowY: "auto",
           border: "none",
           outline: "none",
-          resize: "none"
+          resize: "none",
+          backgroundColor: "transparent"
         }}
         value={props.sequenceText}
         onChange={(e) =>

@@ -1,11 +1,11 @@
 import "./App.css";
-import Lifeline from "./Lifeline";
+import Lifeline, { LifelineProps } from "./Lifeline";
 import SequenceDescriber from "./SequenceDescriber";
 import { useState, useEffect } from "react";
 import SequenceReader from "./SequenceReader";
 import useSvgMatrixState from "./useSvgMatrixState";
 import sequenceDiagramLayout from "./SequenceDiagramLayout";
-import MessageArrow from "./MessageArrow";
+import MessageArrow, { MessageArrowProps } from "./MessageArrow";
 
 function App() {
   const [sequenceText, setSequenceText] = useState(() => {
@@ -16,11 +16,13 @@ function App() {
     localStorage.setItem("sequenceText", sequenceText);
   });
 
-  const diagram = SequenceReader(sequenceText);
-  const { lifelineProps, messageArrowProps } = sequenceDiagramLayout(diagram, {
-    x: 500,
-    y: 200
-  });
+  const { lifelineProps, messageArrowProps } = sequenceDiagramLayout(
+    SequenceReader(sequenceText),
+    {
+      x: window.innerWidth * 0.5,
+      y: 100
+    }
+  );
 
   const {
     matrixState,
