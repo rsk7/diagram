@@ -15,7 +15,7 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
     padding: "20px",
     border: "2px solid #e0e0e0",
     borderRadius: "5px",
-    background: "rgba(224, 224, 224, 0.5)"
+    background: "rgba(224, 224, 224, 0.2)"
   };
   return (
     <div style={styles}>

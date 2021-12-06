@@ -1,11 +1,11 @@
 import "./App.css";
-import Lifeline, { LifelineProps } from "./Lifeline";
+import Lifeline from "./Lifeline";
 import SequenceDescriber from "./SequenceDescriber";
 import { useState, useEffect } from "react";
 import SequenceReader from "./SequenceReader";
 import useSvgMatrixState from "./useSvgMatrixState";
 import sequenceDiagramLayout from "./SequenceDiagramLayout";
-import MessageArrow, { MessageArrowProps } from "./MessageArrow";
+import MessageArrow from "./MessageArrow";
 
 function App() {
   const [sequenceText, setSequenceText] = useState(() => {
