@@ -11,11 +11,10 @@ export function getSize(
   renderDiv.style.display = "block";
   renderDiv.style.minWidth = `${minWidth}px`;
   renderDiv.style.maxWidth = `${maxWidth}px`;
-  renderDiv.style.padding = "5px";
   document.getElementsByTagName("body")[0].appendChild(renderDiv);
   const result = {
-    height: renderDiv.clientHeight + 1,
-    width: renderDiv.clientWidth + 1
+    height: renderDiv.clientHeight,
+    width: renderDiv.clientWidth
   };
   renderDiv.remove();
   return result;

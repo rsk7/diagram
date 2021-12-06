@@ -1,6 +1,3 @@
-import { useMemo } from "react";
-import { getSize } from "./TextBoxSizeService";
-
 interface RectProps {
   x: number;
   y: number;
@@ -8,6 +5,7 @@ interface RectProps {
   fontSize: number;
   width: number;
   height: number;
+  border: boolean;
 }
 
 export default function Rect(props: RectProps) {
@@ -15,7 +13,6 @@ export default function Rect(props: RectProps) {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "2px 5px",
     height: props.height,
     textAlign: "center" as const,
     fontSize: props.fontSize
@@ -25,15 +22,19 @@ export default function Rect(props: RectProps) {
       <rect
         x={props.x}
         y={props.y}
-        height={props.height + 0.15 * props.height}
-        width={props.width}
+        height={props.height + 10}
+        width={props.width + 10}
         fill="white"
-        stroke="black"
-        strokeWidth="2"
+        {...(props.border
+          ? {
+              stroke: "black",
+              strokeWidth: "2"
+            }
+          : {})}
       ></rect>
       <foreignObject
-        x={props.x}
-        y={props.y}
+        x={props.x + 5}
+        y={props.y + 5}
         height={props.height}
         width={props.width}
       >
@@ -44,5 +45,6 @@ export default function Rect(props: RectProps) {
 }
 
 Rect.defaultProps = {
-  fontSize: 12
+  fontSize: 12,
+  border: true
 };
