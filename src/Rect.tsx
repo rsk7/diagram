@@ -6,15 +6,16 @@ interface RectProps {
   width: number;
   height: number;
   border: boolean;
+  textAlign: "center" | "left";
 }
 
 export default function Rect(props: RectProps) {
   const textContainerStyles = {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: props.textAlign,
     alignItems: "center",
     height: props.height,
-    textAlign: "center" as const,
+    textAlign: props.textAlign,
     fontSize: props.fontSize
   };
   return (
@@ -46,5 +47,6 @@ export default function Rect(props: RectProps) {
 
 Rect.defaultProps = {
   fontSize: 12,
-  border: true
+  border: true,
+  textAlign: "center"
 };

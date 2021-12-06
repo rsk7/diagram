@@ -82,7 +82,7 @@ export default function sequenceDiagramLayout(
       const { width, height } = getSize(
         value.description,
         FONT_SIZE,
-        Math.abs(distanceX) - MESSAGE_ARROW_DESCRIPTION_PADDING,
+        Math.abs(distanceX) - MESSAGE_ARROW_DESCRIPTION_PADDING - 10,
         MIN_WIDTH
       );
       if (!acc.length) {
@@ -91,7 +91,7 @@ export default function sequenceDiagramLayout(
             startX: fromLifeline.lineX,
             startY:
               interactionStartY + height + MESSAGE_ARROW_DESCRIPTION_PADDING,
-            endX: toLifeline.lineX,
+            endX: toLifeline.lineX - 5,
             endY:
               interactionStartY + height + MESSAGE_ARROW_DESCRIPTION_PADDING,
             description: value.description,
@@ -114,7 +114,7 @@ export default function sequenceDiagramLayout(
           {
             startX: fromLifeline.lineX,
             startY: y,
-            endX: toLifeline.lineX,
+            endX: toLifeline.lineX - 5,
             endY: y,
             description: value.description,
             direction: distanceX > 0 ? "left" : "right",

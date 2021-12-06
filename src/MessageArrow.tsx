@@ -31,6 +31,7 @@ export default function MessageArrow(props: MessageArrowProps) {
         height={props.labelHeight}
         width={props.labelWidth}
         border={false}
+        textAlign="left"
       />
     </g>
   );
