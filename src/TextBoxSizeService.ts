@@ -13,8 +13,8 @@ export function getSize(
   renderDiv.style.maxWidth = `${maxWidth}px`;
   document.getElementsByTagName("body")[0].appendChild(renderDiv);
   const result = {
-    height: renderDiv.clientHeight,
-    width: renderDiv.clientWidth
+    height: renderDiv.clientHeight + 10,
+    width: renderDiv.clientWidth + 10
   };
   renderDiv.remove();
   return result;

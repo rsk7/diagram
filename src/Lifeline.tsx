@@ -9,13 +9,13 @@ export interface LifelineProps {
   width: number;
   height: number;
   length: number;
+  lineX: number;
 }
 
 export default function Lifeline(props: LifelineProps) {
-  const lineX = Math.floor(props.width / 2) + props.x;
   return (
     <g>
-      <VerticalLine x={lineX} y={props.y} length={props.length} />
+      <VerticalLine x={props.lineX} y={props.y} length={props.length} />
       <Rect
         x={props.x}
         y={props.y}

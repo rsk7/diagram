@@ -1,4 +1,4 @@
-import SequenceDiagram from "./SequenceDiagram";
+import SequenceDiagram, { SequenceInteraction } from "./SequenceDiagram";
 
 function findActors(lines: string[]): string[] {
   const actorLines = lines.filter(
@@ -11,6 +11,44 @@ function findActors(lines: string[]): string[] {
   return actors.filter((a) => a.length);
 }
 
+function interactionCallMatcher(line: string): SequenceInteraction | undefined {
+  const callRegexp = /(?<from>.+) call(s*) (?<action>.+) on (?<to>.+)/i;
+  const match = line.match(callRegexp);
+  if (match?.groups) {
+    return {
+      fromActor: match.groups.from,
+      toActor: match.groups.to,
+      description: match.groups.action
+    };
+  }
+}
+
+function interactionReturnMatcher(
+  line: string
+): SequenceInteraction | undefined {
+  const callRegexp = /(?<from>.+) return(s*) (?<description>.+) to (?<to>.+)/i;
+  const match = line.match(callRegexp);
+  if (match?.groups) {
+    return {
+      fromActor: match.groups.from,
+      toActor: match.groups.to,
+      description: match.groups.description
+    };
+  }
+}
+
+function findInteractions(lines: string[]): SequenceInteraction[] {
+  return lines.reduce<SequenceInteraction[]>(
+    (interactions: SequenceInteraction[], line: string) => {
+      const interaction =
+        interactionCallMatcher(line) || interactionReturnMatcher(line);
+      if (interaction) interactions.push(interaction);
+      return interactions;
+    },
+    []
+  );
+}
+
 export default function sequenceReader(text: string): SequenceDiagram {
   // split text by line
   const lines = text
@@ -18,7 +56,9 @@ export default function sequenceReader(text: string): SequenceDiagram {
     .filter((l) => l.length)
     .map((l) => l.trim());
   const actors = findActors(lines);
+  const interactions = findInteractions(lines);
   return {
-    actors
+    actors,
+    interactions
   };
 }

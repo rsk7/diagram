@@ -22,8 +22,8 @@ export default function Rect(props: RectProps) {
       <rect
         x={props.x}
         y={props.y}
-        height={props.height + 10}
-        width={props.width + 10}
+        height={props.height}
+        width={props.width}
         fill="white"
         {...(props.border
           ? {
@@ -33,10 +33,10 @@ export default function Rect(props: RectProps) {
           : {})}
       ></rect>
       <foreignObject
-        x={props.x + 5}
-        y={props.y + 5}
+        x={props.x}
+        y={props.y}
         height={props.height}
-        width={props.width}
+        width={props.width - 1}
       >
         <div style={textContainerStyles}>{props.text}</div>
       </foreignObject>

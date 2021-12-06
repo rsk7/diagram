@@ -17,7 +17,10 @@ function App() {
   });
 
   const diagram = SequenceReader(sequenceText);
-  const { lifelineProps } = sequenceDiagramLayout(diagram, { x: 500, y: 200 });
+  const { lifelineProps, messageArrowProps } = sequenceDiagramLayout(diagram, {
+    x: 500,
+    y: 200
+  });
 
   const {
     matrixState,
@@ -51,16 +54,12 @@ function App() {
           </marker>
         </defs>
         <g id="matrix-group" transform={`${matrixState.toString()}`}>
-          {Array.from(lifelineProps.values()).map((p) => (
-            <Lifeline {...p} />
+          {Array.from(lifelineProps.values()).map((p, index) => (
+            <Lifeline key={index} {...p} />
           ))}
-          <MessageArrow
-            x={500}
-            y={500}
-            description="test"
-            length={300}
-            direction="right"
-          ></MessageArrow>
+          {messageArrowProps?.map((p, index) => (
+            <MessageArrow key={index} {...p} />
+          ))}
         </g>
       </svg>
       <SequenceDescriber
