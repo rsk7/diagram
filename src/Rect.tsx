@@ -6,7 +6,7 @@ interface RectProps {
   width: number;
   height: number;
   border: boolean;
-  textAlign: "center" | "left";
+  textAlign: "center" | "left" | "right";
 }
 
 export default function Rect(props: RectProps) {

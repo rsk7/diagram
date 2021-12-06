@@ -79,24 +79,28 @@ export default function sequenceDiagramLayout(
       const toLifeline = lifelineProps.get(value.toActor);
       if (!fromLifeline || !toLifeline) return acc;
       const distanceX = fromLifeline.lineX - toLifeline.lineX;
+      const endX = toLifeline.lineX - (distanceX > 0 ? -5 : 5);
       const { width, height } = getSize(
         value.description,
         FONT_SIZE,
         Math.abs(distanceX) - MESSAGE_ARROW_DESCRIPTION_PADDING - 10,
         MIN_WIDTH
       );
+      const labelX =
+        distanceX < 0
+          ? fromLifeline.lineX + MESSAGE_ARROW_DESCRIPTION_PADDING / 2
+          : fromLifeline.lineX - width - MESSAGE_ARROW_DESCRIPTION_PADDING / 2;
       if (!acc.length) {
         return [
           {
             startX: fromLifeline.lineX,
             startY:
               interactionStartY + height + MESSAGE_ARROW_DESCRIPTION_PADDING,
-            endX: toLifeline.lineX - 5,
+            endX,
             endY:
               interactionStartY + height + MESSAGE_ARROW_DESCRIPTION_PADDING,
             description: value.description,
-            direction: distanceX > 0 ? "left" : "right",
-            labelX: fromLifeline.lineX + MESSAGE_ARROW_DESCRIPTION_PADDING / 2,
+            labelX,
             labelY: interactionStartY + MESSAGE_ARROW_DESCRIPTION_PADDING - 2,
             labelHeight: height,
             labelWidth: width
@@ -114,11 +118,10 @@ export default function sequenceDiagramLayout(
           {
             startX: fromLifeline.lineX,
             startY: y,
-            endX: toLifeline.lineX - 5,
+            endX,
             endY: y,
             description: value.description,
-            direction: distanceX > 0 ? "left" : "right",
-            labelX: fromLifeline.lineX + MESSAGE_ARROW_DESCRIPTION_PADDING / 2,
+            labelX,
             labelY:
               previous.startY +
               INTERACTION_LINE_PADDING +
