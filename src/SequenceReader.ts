@@ -11,37 +11,29 @@ function findActors(lines: string[]): string[] {
   return actors.filter((a) => a.length);
 }
 
-function interactionCallMatcher(line: string): SequenceInteraction | undefined {
-  const callRegexp = /(?<from>.+) call(s*) (?<action>.+) on (?<to>.+)/i;
-  const match = line.match(callRegexp);
-  if (match?.groups) {
-    return {
-      fromActor: match.groups.from,
-      toActor: match.groups.to,
-      description: match.groups.action
-    };
-  }
-}
-
-function interactionReturnMatcher(
-  line: string
-): SequenceInteraction | undefined {
-  const callRegexp = /(?<from>.+) return(s*) (?<description>.+) to (?<to>.+)/i;
-  const match = line.match(callRegexp);
-  if (match?.groups) {
-    return {
-      fromActor: match.groups.from,
-      toActor: match.groups.to,
-      description: match.groups.description
-    };
+function interactionMatcher(line: string): SequenceInteraction | undefined {
+  const matchers = [
+    /(?<from>.+) ----(?<action>.+)----> (?<to>.+)/i,
+    /(?<to>.+) <----(?<action>.+)---- (?<from>.+)/i,
+    /(?<from>.+) call(s*) (?<action>.+) on (?<to>.+)/i,
+    /(?<from>.+) return(s*) (?<action>.+) to (?<to>.+)/i
+  ];
+  for (const matcher of matchers) {
+    const match = line.match(matcher);
+    if (match?.groups) {
+      return {
+        fromActor: match.groups.from,
+        toActor: match.groups.to,
+        description: match.groups.action
+      };
+    }
   }
 }
 
 function findInteractions(lines: string[]): SequenceInteraction[] {
   return lines.reduce<SequenceInteraction[]>(
     (interactions: SequenceInteraction[], line: string) => {
-      const interaction =
-        interactionCallMatcher(line) || interactionReturnMatcher(line);
+      const interaction = interactionMatcher(line);
       if (interaction) interactions.push(interaction);
       return interactions;
     },

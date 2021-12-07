@@ -146,8 +146,6 @@ export default function sequenceDiagramLayout(
     lifelineProps.forEach((p) => (p.length = maxY - p.y));
   }
 
-  console.log(lifelineProps[0].length);
-
   return {
     lifelineProps,
     messageArrowProps
