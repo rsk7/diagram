@@ -1,4 +1,4 @@
-import SequenceDiagram, { SequenceInteraction } from "./SequenceDiagram";
+import SequenceDiagram, { SequenceInteraction } from "../SequenceDiagram";
 
 function findActors(lines: string[]): string[] {
   const actorLines = lines.filter(

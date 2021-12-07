@@ -1,12 +1,11 @@
-import SequenceDiagram, { SequenceInteraction } from "./SequenceDiagram";
-import { getSize } from "./TextBoxSizeService";
-import Position from "./Position";
-import { LifelineProps } from "./Lifeline";
-import { MessageArrowProps } from "./MessageArrow";
+import SequenceDiagram, { SequenceInteraction } from "../SequenceDiagram";
+import { getSize } from "../../services/TextBoxSizeService";
+import LifelineProps from "./LifelineLayout";
+import MessageArrowProps from "./MessageArrowLayout";
 
 export default function sequenceDiagramLayout(
   diagram: SequenceDiagram,
-  startPosition: Position
+  startPosition: { x: number; y: number }
 ) {
   // layout sequence diagram
   // find actor spacing

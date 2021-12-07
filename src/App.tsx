@@ -1,11 +1,11 @@
 import "./App.css";
-import Lifeline from "./Lifeline";
-import SequenceDescriber from "./SequenceDescriber";
+import Lifeline from "./components/Lifeline";
+import SequenceDescriber from "./components/SequenceDescriber";
 import { useState, useEffect } from "react";
-import SequenceReader from "./SequenceReader";
-import useSvgMatrixState from "./useSvgMatrixState";
-import sequenceDiagramLayout from "./SequenceDiagramLayout";
-import MessageArrow from "./MessageArrow";
+import SequenceReader from "./diagram/parser/SequenceReader";
+import useSvgMatrixState from "./components/hooks/useSvgMatrixState";
+import sequenceDiagramLayout from "./diagram/layout/SequenceDiagramLayout";
+import MessageArrow from "./components/MessageArrow";
 
 function App() {
   const [sequenceText, setSequenceText] = useState(() => {
