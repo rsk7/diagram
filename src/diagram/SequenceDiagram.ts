@@ -4,7 +4,12 @@ export interface SequenceInteraction {
   description: string;
 }
 
+export interface SequenceActor {
+  name: string;
+  spacingRight?: number;
+}
+
 export default interface SequenceDiagram {
-  actors: string[];
+  actors: SequenceActor[];
   interactions?: SequenceInteraction[];
 }

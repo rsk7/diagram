@@ -1,6 +1,9 @@
-import SequenceDiagram, { SequenceInteraction } from "../SequenceDiagram";
+import SequenceDiagram, {
+  SequenceInteraction,
+  SequenceActor
+} from "../SequenceDiagram";
 
-function findActors(lines: string[]): string[] {
+function findActors(lines: string[]): SequenceActor[] {
   const actorLines = lines.filter(
     (l) => l.startsWith("actor:") || l.startsWith("actors:")
   );
@@ -8,13 +11,26 @@ function findActors(lines: string[]): string[] {
     const actors = line.split(":")[1];
     return [...result, ...actors.split(",").map((a) => a.trim())];
   }, []);
-  return actors.filter((a) => a.length);
+  return actors
+    .filter((a) => a.length)
+    .map((a) => {
+      const spacingRegex = /(?<actor>.+){sp\((?<spacingRight>.+)\)}/i;
+      const match = a.match(spacingRegex);
+      if (match?.groups) {
+        return {
+          name: match.groups.actor,
+          spacingRight: parseFloat(match.groups.spacingRight)
+        };
+      } else {
+        return { name: a };
+      }
+    });
 }
 
 function interactionMatcher(line: string): SequenceInteraction | undefined {
   const matchers = [
-    /(?<from>.+) ----(?<action>.+)----> (?<to>.+)/i,
-    /(?<to>.+) <----(?<action>.+)---- (?<from>.+)/i,
+    /(?<from>.+) --(?<action>.+)--> (?<to>.+)/i,
+    /(?<to>.+) <--(?<action>.+)-- (?<from>.+)/i,
     /(?<from>.+) call(s*) (?<action>.+) on (?<to>.+)/i,
     /(?<from>.+) return(s*) (?<action>.+) to (?<to>.+)/i
   ];
