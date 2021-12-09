@@ -49,13 +49,12 @@ function App() {
     localStorage.setItem("sequenceText", sequenceText);
   });
 
-  const { lifelineProps, messageArrowProps } = sequenceDiagramLayout(
-    SequenceReader(sequenceText),
-    {
-      x: window.innerWidth * 0.5,
-      y: 100
-    }
-  );
+  const { diagram, text } = SequenceReader(sequenceText);
+
+  const { lifelineProps, messageArrowProps } = sequenceDiagramLayout(diagram, {
+    x: window.innerWidth * 0.5,
+    y: 100
+  });
 
   const {
     matrixState,
@@ -97,10 +96,7 @@ function App() {
           ))}
         </g>
       </svg>
-      <SequenceDescriber
-        sequenceText={sequenceText}
-        onChange={setSequenceText}
-      />
+      <SequenceDescriber sequenceText={text} onChange={setSequenceText} />
     </div>
   );
 }

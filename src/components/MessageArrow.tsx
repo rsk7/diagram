@@ -1,23 +1,24 @@
 import Rect from "./Rect";
 
 export interface MessageArrowProps {
-  startX: number;
-  startY: number;
   description: string;
-  endX: number;
-  endY: number;
   labelX: number;
   labelY: number;
   labelHeight: number;
   labelWidth: number;
+  points: number[][];
+  y: number;
 }
 
 export default function MessageArrow(props: MessageArrowProps) {
-  const direction = props.startX - props.endX;
+  const startEndXDifference = props.points.length
+    ? props.points[0][0] - props.points[props.points.length - 1][0]
+    : 0;
+  const points = props.points.map((p) => `${p[0]}, ${p[1]}`).join(" ");
   return (
     <g>
       <polyline
-        points={`${props.startX}, ${props.startY} ${props.endX} ${props.endY}`}
+        points={points}
         fill="none"
         stroke="black"
         markerEnd="url(#arrow)"
@@ -29,7 +30,7 @@ export default function MessageArrow(props: MessageArrowProps) {
         height={props.labelHeight}
         width={props.labelWidth}
         border={false}
-        textAlign={direction < 0 ? "left" : "right"}
+        textAlign={startEndXDifference <= 0 ? "left" : "right"}
       />
     </g>
   );

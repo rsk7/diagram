@@ -3,6 +3,32 @@ import SequenceDiagram, {
   SequenceActor
 } from "../SequenceDiagram";
 
+function createSequenceActor(text: string): SequenceActor {
+  const spacingRegex = /(?<actor>.+){sp\((?<spacingRight>.+)\)}/i;
+  const match = text.match(spacingRegex);
+  if (match?.groups) {
+    return {
+      name: match.groups.actor,
+      spacingRight: parseFloat(match.groups.spacingRight)
+    };
+  } else {
+    return { name: text };
+  }
+}
+
+function mergeDuplicateSequenceActors(
+  mergeMap: Map<string, SequenceActor>,
+  actor: SequenceActor
+): Map<string, SequenceActor> {
+  if (mergeMap.get(actor.name)) {
+    mergeMap.set(actor.name, { ...mergeMap.get(actor.name), ...actor });
+    return mergeMap;
+  } else {
+    mergeMap.set(actor.name, actor);
+  }
+  return mergeMap;
+}
+
 function findActors(lines: string[]): SequenceActor[] {
   const actorLines = lines.filter(
     (l) => l.startsWith("actor:") || l.startsWith("actors:")
@@ -11,20 +37,13 @@ function findActors(lines: string[]): SequenceActor[] {
     const actors = line.split(":")[1];
     return [...result, ...actors.split(",").map((a) => a.trim())];
   }, []);
-  return actors
-    .filter((a) => a.length)
-    .map((a) => {
-      const spacingRegex = /(?<actor>.+){sp\((?<spacingRight>.+)\)}/i;
-      const match = a.match(spacingRegex);
-      if (match?.groups) {
-        return {
-          name: match.groups.actor,
-          spacingRight: parseFloat(match.groups.spacingRight)
-        };
-      } else {
-        return { name: a };
-      }
-    });
+  return Array.from(
+    actors
+      .filter((a) => a.length)
+      .map(createSequenceActor)
+      .reduce(mergeDuplicateSequenceActors, new Map<string, SequenceActor>())
+      .values()
+  );
 }
 
 function interactionMatcher(line: string): SequenceInteraction | undefined {
@@ -57,7 +76,10 @@ function findInteractions(lines: string[]): SequenceInteraction[] {
   );
 }
 
-export default function sequenceReader(text: string): SequenceDiagram {
+export default function sequenceReader(text: string): {
+  diagram: SequenceDiagram;
+  text: string;
+} {
   // split text by line
   const lines = text
     .split("\n")
@@ -65,8 +87,10 @@ export default function sequenceReader(text: string): SequenceDiagram {
     .map((l) => l.trim());
   const actors = findActors(lines);
   const interactions = findInteractions(lines);
+
+  // editor help on text
   return {
-    actors,
-    interactions
+    diagram: { actors, interactions },
+    text
   };
 }
