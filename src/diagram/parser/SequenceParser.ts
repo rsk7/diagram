@@ -21,12 +21,16 @@ export function findActorNames(line?: string): string[] {
 }
 
 export function createSequenceActor(text: string): SequenceActor {
-  const spacingRegex = /(?<actor>.+){sp\((?<spacingRight>.+)\)}/i;
-  const match = text.match(spacingRegex);
+  const actorRegex = /(?<actor>.+){(?<properties>.*)}/i;
+  const match = text.match(actorRegex);
   if (match?.groups) {
+    const spacingRegex = /sp\((?<spacingRight>.+)\)/i;
+    const propsMatch = match.groups.properties.match(spacingRegex);
     return {
       name: match.groups.actor,
-      spacingRight: parseFloat(match.groups.spacingRight)
+      spacingRight: propsMatch?.groups
+        ? parseFloat(propsMatch.groups.spacingRight)
+        : undefined
     };
   } else {
     return { name: text };

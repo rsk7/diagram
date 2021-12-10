@@ -10,6 +10,7 @@ function replaceActorName(
   currentActorRawString: string,
   previousActorRawString: string
 ): string {
+  // TODO: ignore anything inside of {}
   const currentName = createSequenceActor(currentActorRawString).name;
   const previousName = createSequenceActor(previousActorRawString).name;
   smartText = smartText.replace(
