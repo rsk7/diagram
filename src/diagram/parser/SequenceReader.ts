@@ -115,12 +115,12 @@ export default function sequenceReader(
             for (let j = 0; j < currentActorNames.length; j++) {
               if (currentActorNames[j] !== previousActorNames[j]) {
                 smartText = smartText.replace(
-                  new RegExp(`${previousActorNames[j]} --([^>])`, "g"),
-                  `${currentActorNames[j]} --$1`
+                  new RegExp(`\n${previousActorNames[j]} --([^>])`, "g"),
+                  `\n${currentActorNames[j]} --$1`
                 );
                 smartText = smartText.replace(
-                  new RegExp(`-->(\\s)*${previousActorNames[j]}`, "g"),
-                  `-->$1${currentActorNames[j]}`
+                  new RegExp(`-->(\\s)*${previousActorNames[j]}(\\s*\\n)`, "g"),
+                  `-->$1${currentActorNames[j]}$2`
                 );
               }
             }
