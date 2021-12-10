@@ -9,25 +9,23 @@ import MessageArrowProps, {
   getMaxMessageY
 } from "./MessageArrowLayout";
 
-export default function sequenceDiagramLayout(
-  diagram: SequenceDiagram,
-  startPosition: { x: number; y: number }
-): {
+export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
   lifelineProps: LifelineProps[];
   messageArrowProps: MessageArrowProps[] | undefined;
 } {
   // layout sequence diagram
   // find actor spacing
+  const TOP_LEFT_PADDING = 50;
   const actors = diagram.actors;
   const lifelinePropsMap = createLifelineSequenceMap(
     actors,
-    startPosition.x,
-    startPosition.y
+    TOP_LEFT_PADDING,
+    TOP_LEFT_PADDING
   );
   const lifelineProps = Array.from(lifelinePropsMap.values());
   const maxLifelineHeight = getMaxLifelineHeight(lifelineProps);
 
-  const interactionStartY = maxLifelineHeight + startPosition.y;
+  const interactionStartY = maxLifelineHeight + TOP_LEFT_PADDING;
   const interactions = diagram.interactions || [];
   const messageArrowProps = createMessageArrowSequence(
     interactions,

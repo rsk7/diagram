@@ -51,10 +51,7 @@ function App() {
 
   const { diagram, text } = SequenceReader(sequenceText);
 
-  const { lifelineProps, messageArrowProps } = sequenceDiagramLayout(diagram, {
-    x: window.innerWidth * 0.5,
-    y: 100
-  });
+  const { lifelineProps, messageArrowProps } = sequenceDiagramLayout(diagram);
 
   const {
     matrixState,
@@ -63,7 +60,7 @@ function App() {
     handleMouseUp,
     handleMouseMove,
     handleZoom
-  } = useSvgMatrixState();
+  } = useSvgMatrixState({ x: window.innerWidth * 0.4, y: 50 });
 
   return (
     <div className="App">
