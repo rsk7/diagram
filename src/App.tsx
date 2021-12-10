@@ -47,6 +47,9 @@ function App() {
 
   return (
     <div className="App">
+      <a id="github" href="https://github.com/rsk7/diagram">
+        Github
+      </a>
       <svg
         onMouseDown={(e) => handleMouseDown({ x: e.pageX, y: e.pageY })}
         onMouseMove={(e) => handleMouseMove({ x: e.pageX, y: e.pageY })}

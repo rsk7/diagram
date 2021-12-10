@@ -53,7 +53,7 @@ export default function useSvgMatrixState(startPosition?: Position) {
   };
 
   const handleZoom = (position: Position, scrollUp: boolean) => {
-    const zoomFactor = scrollUp ? 1 / 1.01 : 1.01;
+    const zoomFactor = scrollUp ? 1 / 1.1 : 1.1;
     const point = new DOMPoint(position.x, position.y);
     const transformedPoint = point.matrixTransform(matrixState.inverse());
     setMatrixState(
