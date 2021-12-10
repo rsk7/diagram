@@ -29,13 +29,20 @@ function mergeDuplicateSequenceActors(
   return mergeMap;
 }
 
+function findActorLines(lines: string[]): string[] {
+  return lines.filter((l) => l.startsWith("actor:") || l.startsWith("actors:"));
+}
+
+function findActorNames(line: string): string[] {
+  return line
+    .split(":")[1]
+    .split(",")
+    .map((a) => a.trim());
+}
+
 function findActors(lines: string[]): SequenceActor[] {
-  const actorLines = lines.filter(
-    (l) => l.startsWith("actor:") || l.startsWith("actors:")
-  );
-  const actors = actorLines.reduce<string[]>((result, line) => {
-    const actors = line.split(":")[1];
-    return [...result, ...actors.split(",").map((a) => a.trim())];
+  const actors = findActorLines(lines).reduce<string[]>((result, line) => {
+    return [...result, ...findActorNames(line)];
   }, []);
   return Array.from(
     actors
@@ -76,10 +83,37 @@ function findInteractions(lines: string[]): SequenceInteraction[] {
   );
 }
 
-export default function sequenceReader(text: string): {
+function splitLines(text?: string): string[] | undefined {
+  return text
+    ?.split("\n")
+    .filter((l) => l.length)
+    .map((l) => l.trim());
+}
+
+export default function sequenceReader(
+  text: string,
+  previousText?: string
+): {
   diagram: SequenceDiagram;
   text: string;
 } {
+  const currentLines = splitLines(text);
+  const previousLines = splitLines(previousText);
+
+  if (currentLines && previousLines) {
+    const currentActorLines = findActorLines(currentLines);
+    const previousActorLines = findActorLines(previousLines);
+    for (let i = 0; i < currentActorLines.length; i++) {
+      if (currentActorLines[i] !== previousActorLines[i]) {
+        const currentActorNames = findActorNames(currentActorLines[i]);
+        const previousActorNames = findActorNames(previousActorLines[i]);
+        for (let j = 0; j < currentActorNames.length; j++) {
+          // if (currentActorNames[j] !== previousActorNames[j])
+        }
+      }
+    }
+  }
+
   // split text by line
   const lines = text
     .split("\n")
