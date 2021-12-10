@@ -100,22 +100,40 @@ export default function sequenceReader(
   const currentLines = splitLines(text);
   const previousLines = splitLines(previousText);
 
-  if (currentLines && previousLines) {
+  let smartText = text;
+
+  if (currentLines?.length && previousLines?.length) {
     const currentActorLines = findActorLines(currentLines);
     const previousActorLines = findActorLines(previousLines);
-    for (let i = 0; i < currentActorLines.length; i++) {
-      if (currentActorLines[i] !== previousActorLines[i]) {
-        const currentActorNames = findActorNames(currentActorLines[i]);
-        const previousActorNames = findActorNames(previousActorLines[i]);
-        for (let j = 0; j < currentActorNames.length; j++) {
-          // if (currentActorNames[j] !== previousActorNames[j])
+    if (currentActorLines.length && previousActorLines.length) {
+      for (let i = 0; i < currentActorLines.length; i++) {
+        if (currentActorLines[i] !== previousActorLines[i]) {
+          const currentActorNames = findActorNames(currentActorLines[i]);
+          const previousActorNames = findActorNames(previousActorLines[i]);
+          // if the length is the same
+          if (currentActorNames.length === previousActorNames.length) {
+            for (let j = 0; j < currentActorNames.length; j++) {
+              if (currentActorNames[j] !== previousActorNames[j]) {
+                smartText = smartText.replace(
+                  new RegExp(`${previousActorNames[j]} --([^>])`, "g"),
+                  `${currentActorNames[j]} --$1`
+                );
+                smartText = smartText.replace(
+                  new RegExp(`-->(\\s)*${previousActorNames[j]}`, "g"),
+                  `-->$1${currentActorNames[j]}`
+                );
+              }
+            }
+          }
         }
       }
     }
   }
 
+  console.log(smartText);
+
   // split text by line
-  const lines = text
+  const lines = smartText
     .split("\n")
     .filter((l) => l.length)
     .map((l) => l.trim());
@@ -125,6 +143,6 @@ export default function sequenceReader(
   // editor help on text
   return {
     diagram: { actors, interactions },
-    text
+    text: smartText
   };
 }

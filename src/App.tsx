@@ -23,11 +23,11 @@ function App() {
 
   const previousSequenceText = usePrevious(sequenceText);
 
-  useEffect(() => {
-    localStorage.setItem("sequenceText", sequenceText);
-  });
-
   const { diagram, text } = SequenceReader(sequenceText, previousSequenceText);
+
+  useEffect(() => {
+    localStorage.setItem("sequenceText", text);
+  });
 
   const { lifelineProps, messageArrowProps } = sequenceDiagramLayout(diagram);
 

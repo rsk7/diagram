@@ -1,9 +1,18 @@
+import { useEffect, useRef } from "react";
+
 interface SequenceDescriberProps {
   sequenceText: string;
   onChange: (sequnenceText: string) => void;
 }
 
 export default function SequenceDescriber(props: SequenceDescriberProps) {
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const selectionEndRef = useRef<number>(0);
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.selectionEnd = selectionEndRef.current;
+    }
+  });
   const styles = {
     height: "85vh",
     width: "25vw",
@@ -20,6 +29,7 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
   return (
     <div style={styles}>
       <textarea
+        ref={textAreaRef}
         style={{
           height: "100%",
           width: "100%",
@@ -30,9 +40,11 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
           backgroundColor: "transparent"
         }}
         value={props.sequenceText}
-        onChange={(e) =>
-          props.onChange((e.target as HTMLTextAreaElement).value)
-        }
+        onChange={(e) => {
+          const target = e.target as HTMLTextAreaElement;
+          selectionEndRef.current = target.selectionEnd;
+          props.onChange(target.value);
+        }}
       ></textarea>
     </div>
   );
