@@ -130,8 +130,6 @@ export default function sequenceReader(
     }
   }
 
-  console.log(smartText);
-
   // split text by line
   const lines = smartText
     .split("\n")
