@@ -100,7 +100,7 @@ export default function sequenceReader(
   const currentLines = splitLines(text);
   const previousLines = splitLines(previousText);
 
-  let smartText = text;
+  let smartText = !text.endsWith("\n") ? text + "\n" : text;
 
   if (currentLines?.length && previousLines?.length) {
     const currentActorLines = findActorLines(currentLines);
@@ -117,6 +117,14 @@ export default function sequenceReader(
                 smartText = smartText.replace(
                   new RegExp(`\n${previousActorNames[j]} --([^>])`, "g"),
                   `\n${currentActorNames[j]} --$1`
+                );
+                smartText = smartText.replace(
+                  new RegExp(`--(\\s)*${previousActorNames[j]}(\\s*\\n)`, "g"),
+                  `--$1${currentActorNames[j]}$2`
+                );
+                smartText = smartText.replace(
+                  new RegExp(`\n${previousActorNames[j]}(\\s)*<--`, "g"),
+                  `\n${currentActorNames[j]}$1<--`
                 );
                 smartText = smartText.replace(
                   new RegExp(`-->(\\s)*${previousActorNames[j]}(\\s*\\n)`, "g"),
