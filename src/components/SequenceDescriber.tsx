@@ -24,7 +24,7 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
     padding: "20px",
     border: "2px solid #e0e0e0",
     borderRadius: "5px",
-    background: "rgba(224, 224, 224, 0.2)"
+    background: "rgba(255, 255, 255, 0.8)"
   };
   return (
     <div style={styles}>
@@ -41,9 +41,8 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
         }}
         value={props.sequenceText}
         onChange={(e) => {
-          const target = e.target as HTMLTextAreaElement;
-          selectionEndRef.current = target.selectionEnd;
-          props.onChange(target.value);
+          selectionEndRef.current = e.target.selectionEnd;
+          props.onChange(e.target.value);
         }}
       ></textarea>
     </div>

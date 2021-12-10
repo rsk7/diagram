@@ -20,7 +20,7 @@ Simple diagram showing three entities.
 EXAMPLE 2:
 Adding more entities to the same diagram with optional spacing. db{sp:(1|2)} adds 1 unit or spacing to the left and 2 units of spacing to the right.
 
-#actors: db{sp=(1|2)}, queue
+#actors: db{sp(2)}, queue
 #
 #server -- check db --> db
 #server -- add to queue --> queue

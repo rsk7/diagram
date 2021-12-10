@@ -1,35 +1,40 @@
 import "./App.css";
 import Lifeline from "./components/Lifeline";
 import SequenceDescriber from "./components/SequenceDescriber";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import SequenceReader from "./diagram/parser/SequenceReader";
 import useSvgMatrixState from "./components/hooks/useSvgMatrixState";
 import sequenceDiagramLayout from "./diagram/layout/SequenceDiagramLayout";
 import MessageArrow from "./components/MessageArrow";
 import { exampleText } from "./exampleText";
+import SequenceDiagram from "./diagram/SequenceDiagram";
 
-function usePrevious(value: string) {
-  const ref = useRef<string>();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
+interface SequenceState {
+  diagram: SequenceDiagram;
+  text: string;
 }
 
 function App() {
-  const [sequenceText, setSequenceText] = useState(() => {
-    return localStorage.getItem("sequenceText") || exampleText;
+  const [sequenceState, setSequenceState] = useState<SequenceState>(() => {
+    const text = localStorage.getItem("sequenceText") || exampleText;
+    return SequenceReader(text);
   });
 
-  const previousSequenceText = usePrevious(sequenceText);
-
-  const { diagram, text } = SequenceReader(sequenceText, previousSequenceText);
+  const setSequenceText = (value: string) => {
+    const previousSequenceText = sequenceState.text;
+    const newText = SequenceReader(value, {
+      enableSmartText: { previousText: previousSequenceText }
+    });
+    setSequenceState(newText);
+  };
 
   useEffect(() => {
-    localStorage.setItem("sequenceText", text);
+    localStorage.setItem("sequenceText", sequenceState.text);
   });
 
-  const { lifelineProps, messageArrowProps } = sequenceDiagramLayout(diagram);
+  const { lifelineProps, messageArrowProps } = sequenceDiagramLayout(
+    sequenceState.diagram
+  );
 
   const {
     matrixState,
@@ -71,7 +76,10 @@ function App() {
           ))}
         </g>
       </svg>
-      <SequenceDescriber sequenceText={text} onChange={setSequenceText} />
+      <SequenceDescriber
+        sequenceText={sequenceState.text}
+        onChange={setSequenceText}
+      />
     </div>
   );
 }
