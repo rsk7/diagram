@@ -9,8 +9,8 @@ import MessageArrow from "./components/MessageArrow";
 import { exampleText } from "./exampleText";
 import SequenceDiagram from "./diagram/SequenceDiagram";
 import GithubLogo from "./GitHub-Mark-32px.png";
-import { ReactComponent as CameraIcon } from "./camera-svgrepo-com.svg";
-import { ReactComponent as TextIcon } from "./text-description-svgrepo-com.svg";
+import { ReactComponent as TextIcon } from "./bootstrap-icons/card-text.svg";
+import { ReactComponent as CameraIcon } from "./bootstrap-icons/camera.svg";
 
 interface SequenceState {
   diagram: SequenceDiagram;

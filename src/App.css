@@ -2,6 +2,7 @@ svg {
   height: 100vh;
   width: 100vw;
   display: block;
+  user-select: none;
 }
 
 .div {
@@ -23,18 +24,15 @@ svg {
 }
 
 .App > #tools > .tool {
-  height: 40px;
-  width: 40px;
+  height: 25px;
+  width: 25px;
   cursor: pointer;
   margin: 5px;
+  color: black;
 }
 
-#cameraIcon {
-  fill: #000000;
-}
-
-#cameraIcon:hover {
-  fill: #737373;
+.App > #tools > .tool:hover {
+  color: #737373;
 }
 
 .react-resizable {

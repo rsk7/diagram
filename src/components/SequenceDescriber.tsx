@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { ReactComponent as LightbulbIcon } from "../lightbulb-svgrepo-com.svg";
 import "./SequenceDescriber.css";
 import { Resizable } from "react-resizable";
 import Draggable from "react-draggable";
-import { ReactComponent as MoveIcon } from "../move-svgrepo-com.svg";
-import { ReactComponent as CloseIcon } from "../close-svgrepo-com.svg";
+import { ReactComponent as BulbIcon } from "../bootstrap-icons/lightbulb.svg";
+import { ReactComponent as MoveIcon } from "../bootstrap-icons/arrows-move.svg";
+import { ReactComponent as CloseIcon } from "../bootstrap-icons/x-lg.svg";
 
 interface SequenceDescriberProps {
   sequenceText: string;
@@ -49,10 +49,10 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
           }}
         >
           <div className="tools">
-            <LightbulbIcon
+            <BulbIcon
               id="lightbulb"
+              className={`tool ${props.smartTextOn ? "on" : ""}`}
               onClick={props.onSmartTextToggle}
-              className={`${props.smartTextOn ? "on" : "off"} tool`}
             />
             <MoveIcon id="move" className="tool" />
             <CloseIcon id="close" className="tool" onClick={props.onClose} />
