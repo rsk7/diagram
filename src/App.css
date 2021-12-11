@@ -10,7 +10,21 @@ svg {
 
 #github {
   position: absolute;
-  top: 5px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
   font-size: 12px;
+}
+
+#camera {
+  position: absolute;
+  bottom: 20px;
+  right: 24px;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  fill: #000000;
+}
+
+#camera:hover {
+  fill: #737373;
 }

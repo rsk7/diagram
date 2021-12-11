@@ -8,24 +8,36 @@ import sequenceDiagramLayout from "./diagram/layout/SequenceDiagramLayout";
 import MessageArrow from "./components/MessageArrow";
 import { exampleText } from "./exampleText";
 import SequenceDiagram from "./diagram/SequenceDiagram";
+import GithubLogo from "./GitHub-Mark-32px.png";
+import { ReactComponent as CameraIcon } from "./camera-svgrepo-com.svg";
 
 interface SequenceState {
   diagram: SequenceDiagram;
   text: string;
+  smartTextEnabled: boolean;
 }
 
 function App() {
   const [sequenceState, setSequenceState] = useState<SequenceState>(() => {
     const text = localStorage.getItem("sequenceText") || exampleText;
-    return SequenceReader(text);
+    return { ...SequenceReader(text), smartTextEnabled: true };
   });
 
   const setSequenceText = (value: string) => {
     const previousSequenceText = sequenceState.text;
-    const newText = SequenceReader(value, {
-      enableSmartText: { previousText: previousSequenceText }
+    const newSequenceState = SequenceReader(value, {
+      enableSmartText: sequenceState.smartTextEnabled
+        ? { previousText: previousSequenceText }
+        : undefined
     });
-    setSequenceState(newText);
+    setSequenceState({ ...sequenceState, ...newSequenceState });
+  };
+
+  const toggleSmartText = () => {
+    setSequenceState({
+      ...sequenceState,
+      smartTextEnabled: !sequenceState.smartTextEnabled
+    });
   };
 
   useEffect(() => {
@@ -48,8 +60,9 @@ function App() {
   return (
     <div className="App">
       <a id="github" href="https://github.com/rsk7/diagram">
-        Github
+        <img src={GithubLogo} alt="Github" />
       </a>
+      <CameraIcon id="camera" onClick={(e) => alert("Not implemented")} />
       <svg
         onMouseDown={(e) => handleMouseDown({ x: e.pageX, y: e.pageY })}
         onMouseMove={(e) => handleMouseMove({ x: e.pageX, y: e.pageY })}
@@ -81,6 +94,8 @@ function App() {
       </svg>
       <SequenceDescriber
         sequenceText={sequenceState.text}
+        smartTextOn={sequenceState.smartTextEnabled}
+        onSmartTextToggle={toggleSmartText}
         onChange={setSequenceText}
       />
     </div>
