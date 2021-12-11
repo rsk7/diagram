@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ReactComponent as Lightbulb } from "../lightbulb-svgrepo-com.svg";
 import "./SequenceDescriber.css";
+import { Resizable } from "react-resizable";
 
 interface SequenceDescriberProps {
   sequenceText: string;
@@ -17,21 +18,43 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
       textAreaRef.current.selectionEnd = selectionEndRef.current;
     }
   });
+  const [boxState, setBoxState] = useState({
+    height: 600,
+    width: 500
+  });
   return (
-    <div id="sequenceDescriber">
-      <Lightbulb
-        id="lightbulb"
-        onClick={props.onSmartTextToggle}
-        className={props.smartTextOn ? "on" : "off"}
-      />
-      <textarea
-        ref={textAreaRef}
-        value={props.sequenceText}
-        onChange={(e) => {
-          selectionEndRef.current = e.target.selectionEnd;
-          props.onChange(e.target.value);
+    <Resizable
+      height={boxState.height}
+      width={boxState.width}
+      onResize={(e, { size }) => {
+        console.log("resize called");
+        setBoxState({
+          height: size.height,
+          width: size.width
+        });
+      }}
+    >
+      <div
+        id="sequenceDescriber"
+        style={{
+          width: boxState.width + "px",
+          height: boxState.height + "px"
         }}
-      ></textarea>
-    </div>
+      >
+        <Lightbulb
+          id="lightbulb"
+          onClick={props.onSmartTextToggle}
+          className={props.smartTextOn ? "on" : "off"}
+        />
+        <textarea
+          ref={textAreaRef}
+          value={props.sequenceText}
+          onChange={(e) => {
+            selectionEndRef.current = e.target.selectionEnd;
+            props.onChange(e.target.value);
+          }}
+        ></textarea>
+      </div>
+    </Resizable>
   );
 }
