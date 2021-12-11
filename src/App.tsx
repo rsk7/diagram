@@ -15,12 +15,17 @@ interface SequenceState {
   diagram: SequenceDiagram;
   text: string;
   smartTextEnabled: boolean;
+  showSequenceDescriber: boolean;
 }
 
 function App() {
   const [sequenceState, setSequenceState] = useState<SequenceState>(() => {
     const text = localStorage.getItem("sequenceText") || exampleText;
-    return { ...SequenceReader(text), smartTextEnabled: true };
+    return {
+      ...SequenceReader(text),
+      smartTextEnabled: true,
+      showSequenceDescriber: true
+    };
   });
 
   const setSequenceText = (value: string) => {
@@ -37,6 +42,13 @@ function App() {
     setSequenceState({
       ...sequenceState,
       smartTextEnabled: !sequenceState.smartTextEnabled
+    });
+  };
+
+  const toggleCloseState = () => {
+    setSequenceState({
+      ...sequenceState,
+      showSequenceDescriber: !sequenceState.showSequenceDescriber
     });
   };
 
@@ -92,12 +104,15 @@ function App() {
           ))}
         </g>
       </svg>
-      <SequenceDescriber
-        sequenceText={sequenceState.text}
-        smartTextOn={sequenceState.smartTextEnabled}
-        onSmartTextToggle={toggleSmartText}
-        onChange={setSequenceText}
-      />
+      {sequenceState.showSequenceDescriber && (
+        <SequenceDescriber
+          sequenceText={sequenceState.text}
+          smartTextOn={sequenceState.smartTextEnabled}
+          onSmartTextToggle={toggleSmartText}
+          onChange={setSequenceText}
+          onClose={toggleCloseState}
+        />
+      )}
     </div>
   );
 }

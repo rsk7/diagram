@@ -1,10 +1,17 @@
+#sequenceDescriber-dragContainer {
+  position: absolute;
+  margin: 10px;
+  top: 0px;
+  height: calc(100vh - 50px);
+  width: calc(100vw - 50px);
+}
+
 #sequenceDescriber {
   display: block;
   position: absolute;
   min-width: 300px;
   min-height: 300px;
   top: 0px;
-  margin: 30px;
   padding: 20px 10px 20px 20px;
   border: 2px solid #e0e0e0;
   border-radius: 5px;
@@ -21,16 +28,26 @@
   background-color: transparent;
 }
 
-#lightbulb {
-  height: 20px;
-  width: 20px;
+#sequenceDescriber .tools {
   position: absolute;
+  display: flex;
   top: 22px;
   right: 25px;
-  cursor: pointer;
-  background-color: #c0c0c0;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#sequenceDescriber .tools .tool {
+  height: 20px;
+  width: 20px;
   padding: 5px;
   border-radius: 5px;
+  margin: 5px;
+}
+
+#lightbulb {
+  cursor: pointer;
+  background-color: #c0c0c0;
 }
 
 #lightbulb.on {
@@ -40,4 +57,24 @@
 
 #lightbulb.off {
   fill: #909090;
+}
+
+#move {
+  cursor: move;
+  background-color: #c0c0c0;
+  fill: white;
+}
+
+#move:hover {
+  background-color: #e0e0e0;
+}
+
+#close {
+  cursor: pointer;
+  background-color: #c0c0c0;
+  fill: white;
+}
+
+#close:hover {
+  background-color: #e0e0e0;
 }
