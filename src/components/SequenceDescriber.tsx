@@ -27,46 +27,44 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
     width: 500
   });
   return (
-    <div id="sequenceDescriber-dragContainer">
-      <Draggable bounds="parent" handle="#move">
-        <Resizable
-          height={boxState.height}
-          width={boxState.width}
-          onResize={(e, { size }) => {
-            console.log("resize called");
-            setBoxState({
-              height: size.height,
-              width: size.width
-            });
+    <Draggable bounds="parent" handle="#move">
+      <Resizable
+        height={boxState.height}
+        width={boxState.width}
+        onResize={(e, { size }) => {
+          console.log("resize called");
+          setBoxState({
+            height: size.height,
+            width: size.width
+          });
+        }}
+      >
+        <div
+          id="sequenceDescriber"
+          style={{
+            width: boxState.width + "px",
+            height: boxState.height + "px"
           }}
         >
-          <div
-            id="sequenceDescriber"
-            style={{
-              width: boxState.width + "px",
-              height: boxState.height + "px"
-            }}
-          >
-            <div className="tools">
-              <LightbulbIcon
-                id="lightbulb"
-                onClick={props.onSmartTextToggle}
-                className={`${props.smartTextOn ? "on" : "off"} tool`}
-              />
-              <MoveIcon id="move" className="tool" />
-              <CloseIcon id="close" className="tool" onClick={props.onClose} />
-            </div>
-            <textarea
-              ref={textAreaRef}
-              value={props.sequenceText}
-              onChange={(e) => {
-                selectionEndRef.current = e.target.selectionEnd;
-                props.onChange(e.target.value);
-              }}
-            ></textarea>
+          <div className="tools">
+            <LightbulbIcon
+              id="lightbulb"
+              onClick={props.onSmartTextToggle}
+              className={`${props.smartTextOn ? "on" : "off"} tool`}
+            />
+            <MoveIcon id="move" className="tool" />
+            <CloseIcon id="close" className="tool" onClick={props.onClose} />
           </div>
-        </Resizable>
-      </Draggable>
-    </div>
+          <textarea
+            ref={textAreaRef}
+            value={props.sequenceText}
+            onChange={(e) => {
+              selectionEndRef.current = e.target.selectionEnd;
+              props.onChange(e.target.value);
+            }}
+          ></textarea>
+        </div>
+      </Resizable>
+    </Draggable>
   );
 }

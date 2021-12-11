@@ -10,6 +10,7 @@ import { exampleText } from "./exampleText";
 import SequenceDiagram from "./diagram/SequenceDiagram";
 import GithubLogo from "./GitHub-Mark-32px.png";
 import { ReactComponent as CameraIcon } from "./camera-svgrepo-com.svg";
+import { ReactComponent as TextIcon } from "./text-description-svgrepo-com.svg";
 
 interface SequenceState {
   diagram: SequenceDiagram;
@@ -74,7 +75,14 @@ function App() {
       <a id="github" href="https://github.com/rsk7/diagram">
         <img src={GithubLogo} alt="Github" />
       </a>
-      <CameraIcon id="camera" onClick={(e) => alert("Not implemented")} />
+      <div id="tools">
+        <TextIcon id="textIcon" className="tool" onClick={toggleCloseState} />
+        <CameraIcon
+          id="cameraIcon"
+          className="tool"
+          onClick={(e) => alert("Not implemented")}
+        />
+      </div>
       <svg
         onMouseDown={(e) => handleMouseDown({ x: e.pageX, y: e.pageY })}
         onMouseMove={(e) => handleMouseMove({ x: e.pageX, y: e.pageY })}

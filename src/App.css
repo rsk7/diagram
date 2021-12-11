@@ -15,17 +15,25 @@ svg {
   font-size: 12px;
 }
 
-#camera {
+.App > #tools {
   position: absolute;
   bottom: 20px;
   right: 24px;
+  display: flex;
+}
+
+.App > #tools > .tool {
   height: 40px;
   width: 40px;
   cursor: pointer;
+  margin: 5px;
+}
+
+#cameraIcon {
   fill: #000000;
 }
 
-#camera:hover {
+#cameraIcon:hover {
   fill: #737373;
 }
 

@@ -1,13 +1,6 @@
-#sequenceDescriber-dragContainer {
-  position: absolute;
-  margin: 10px;
-  top: 0px;
-  height: calc(100vh - 50px);
-  width: calc(100vw - 50px);
-}
-
 #sequenceDescriber {
   display: block;
+  margin: 10px;
   position: absolute;
   min-width: 300px;
   min-height: 300px;
