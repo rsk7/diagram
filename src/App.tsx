@@ -112,15 +112,14 @@ function App() {
           ))}
         </g>
       </svg>
-      {sequenceState.showSequenceDescriber && (
-        <SequenceDescriber
-          sequenceText={sequenceState.text}
-          smartTextOn={sequenceState.smartTextEnabled}
-          onSmartTextToggle={toggleSmartText}
-          onChange={setSequenceText}
-          onClose={toggleCloseState}
-        />
-      )}
+      <SequenceDescriber
+        isVisible={sequenceState.showSequenceDescriber}
+        sequenceText={sequenceState.text}
+        smartTextOn={sequenceState.smartTextEnabled}
+        onSmartTextToggle={toggleSmartText}
+        onChange={setSequenceText}
+        onClose={toggleCloseState}
+      />
     </div>
   );
 }

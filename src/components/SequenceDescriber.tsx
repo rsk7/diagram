@@ -12,6 +12,7 @@ interface SequenceDescriberProps {
   onSmartTextToggle: () => void;
   onChange: (sequnenceText: string) => void;
   onClose: () => void;
+  isVisible: boolean;
 }
 
 export default function SequenceDescriber(props: SequenceDescriberProps) {
@@ -41,6 +42,7 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
       >
         <div
           id="sequenceDescriber"
+          className={props.isVisible ? "" : "hide"}
           style={{
             width: boxState.width + "px",
             height: boxState.height + "px"
