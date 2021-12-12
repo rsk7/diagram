@@ -58,7 +58,6 @@ export default function Rect(props: RectProps) {
     props.padding,
     props.textAlign
   );
-  console.log(textAnchor);
   return (
     <g>
       <rect
