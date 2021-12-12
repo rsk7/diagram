@@ -34,7 +34,7 @@ function createReflexiveMessageArrow(
     PADDING
   );
   const y =
-    startY + INTERACTION_LINE_PADDING + MESSAGE_ARROW_DESCRIPTION_PADDING;
+    startY + INTERACTION_LINE_PADDING + MESSAGE_ARROW_DESCRIPTION_PADDING * 2;
   const startX = lifeline.lineX;
   const endX = lifeline.lineX + 5;
   const loopX = startX + MESSAGE_ARROW_DESCRIPTION_PADDING * 1.5;
@@ -48,7 +48,7 @@ function createReflexiveMessageArrow(
     ],
     y: loopY,
     description: interaction.description,
-    labelX: loopX + MESSAGE_ARROW_DESCRIPTION_PADDING * 0.5,
+    labelX: loopX + MESSAGE_ARROW_DESCRIPTION_PADDING * 0.2,
     labelY: y + MESSAGE_ARROW_DESCRIPTION_PADDING * 0.5,
     labelHeight: height,
     labelWidth: width,
@@ -77,8 +77,8 @@ function createMessageArrow(
   );
   const labelX =
     distanceX < 0
-      ? fromLifeline.lineX + MESSAGE_ARROW_DESCRIPTION_PADDING / 2
-      : fromLifeline.lineX - width - MESSAGE_ARROW_DESCRIPTION_PADDING / 2;
+      ? fromLifeline.lineX + MESSAGE_ARROW_DESCRIPTION_PADDING / 10
+      : fromLifeline.lineX - width - MESSAGE_ARROW_DESCRIPTION_PADDING / 10;
   const y =
     startY +
     height +
@@ -94,7 +94,10 @@ function createMessageArrow(
     y,
     description: interaction.description,
     labelX,
-    labelY: startY + MESSAGE_ARROW_DESCRIPTION_PADDING + 4,
+    labelY:
+      startY +
+      MESSAGE_ARROW_DESCRIPTION_PADDING +
+      MESSAGE_ARROW_DESCRIPTION_PADDING * 0.4,
     labelHeight: height,
     labelWidth: width,
     textPadding: PADDING,
