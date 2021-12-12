@@ -27,8 +27,9 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
     height: 600,
     width: 500
   });
+  const nodeRef = useRef(null);
   return (
-    <Draggable bounds="parent" handle="#move">
+    <Draggable nodeRef={nodeRef} bounds="parent" handle="#move">
       <Resizable
         height={boxState.height}
         width={boxState.width}
@@ -41,6 +42,7 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
         }}
       >
         <div
+          ref={nodeRef}
           id="sequenceDescriber"
           className={props.isVisible ? "" : "hide"}
           style={{

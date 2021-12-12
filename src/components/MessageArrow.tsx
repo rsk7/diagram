@@ -8,6 +8,8 @@ export interface MessageArrowProps {
   labelWidth: number;
   points: number[][];
   y: number;
+  textPadding: number;
+  font: string;
 }
 
 export default function MessageArrow(props: MessageArrowProps) {
@@ -30,6 +32,8 @@ export default function MessageArrow(props: MessageArrowProps) {
         height={props.labelHeight}
         width={props.labelWidth}
         border={false}
+        font={props.font}
+        padding={props.textPadding}
         textAlign={startEndXDifference <= 0 ? "left" : "right"}
       />
     </g>

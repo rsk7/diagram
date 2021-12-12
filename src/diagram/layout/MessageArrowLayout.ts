@@ -10,13 +10,16 @@ export default interface MessageArrowProps {
   labelWidth: number;
   points: number[][];
   y: number;
+  textPadding: number;
+  font: string;
 }
 
 const INTERACTION_LINE_PADDING = 5;
 const MIN_WIDTH = 50;
 const MAX_WIDTH = 200;
 const MESSAGE_ARROW_DESCRIPTION_PADDING = 20;
-const FONT_SIZE = 12;
+const FONT = "12px Arial";
+const PADDING = 5;
 
 function createReflexiveMessageArrow(
   interaction: SequenceInteraction,
@@ -25,9 +28,10 @@ function createReflexiveMessageArrow(
 ): MessageArrowProps {
   const { width, height } = getSize(
     interaction.description,
-    FONT_SIZE,
+    FONT,
     MAX_WIDTH,
-    MIN_WIDTH
+    MIN_WIDTH,
+    PADDING
   );
   const y =
     startY + INTERACTION_LINE_PADDING + MESSAGE_ARROW_DESCRIPTION_PADDING;
@@ -47,7 +51,9 @@ function createReflexiveMessageArrow(
     labelX: loopX + MESSAGE_ARROW_DESCRIPTION_PADDING * 0.5,
     labelY: y + MESSAGE_ARROW_DESCRIPTION_PADDING * 0.5,
     labelHeight: height,
-    labelWidth: width
+    labelWidth: width,
+    textPadding: PADDING,
+    font: FONT
   };
 }
 
@@ -64,9 +70,10 @@ function createMessageArrow(
   const distanceX = fromLifeline.lineX - toLifeline.lineX;
   const { width, height } = getSize(
     interaction.description,
-    FONT_SIZE,
+    FONT,
     Math.abs(distanceX) - MESSAGE_ARROW_DESCRIPTION_PADDING - 10,
-    MIN_WIDTH
+    MIN_WIDTH,
+    PADDING
   );
   const labelX =
     distanceX < 0
@@ -89,7 +96,9 @@ function createMessageArrow(
     labelX,
     labelY: startY + MESSAGE_ARROW_DESCRIPTION_PADDING + 4,
     labelHeight: height,
-    labelWidth: width
+    labelWidth: width,
+    textPadding: PADDING,
+    font: FONT
   };
 }
 

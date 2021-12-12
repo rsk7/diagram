@@ -5,30 +5,33 @@ export default interface LifelineProps {
   x: number;
   y: number;
   name: string;
-  fontSize: number;
+  font: string;
   width: number;
   height: number;
   length: number;
   lineX: number;
+  textPadding: number;
 }
 
 const DEFAULT_LENGTH = 0;
-const FONT_SIZE = 12;
+const FONT = "12px Arial";
 const MAX_WIDTH = 200;
 const MIN_WIDTH = 50;
 const LIFELINE_SEPARATION = 50;
+const PADDING = 5;
 
 function createLifeline(actor: string, x: number, y: number): LifelineProps {
-  const { width, height } = getSize(actor, FONT_SIZE, MAX_WIDTH, MIN_WIDTH);
+  const { width, height } = getSize(actor, FONT, MAX_WIDTH, MIN_WIDTH, PADDING);
   return {
     x,
     y,
     length: DEFAULT_LENGTH,
     name: actor,
-    fontSize: FONT_SIZE,
+    font: FONT,
     width,
     height,
-    lineX: Math.floor(width / 2) + x
+    lineX: Math.floor(width / 2) + x,
+    textPadding: PADDING
   };
 }
 

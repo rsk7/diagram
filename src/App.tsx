@@ -10,7 +10,7 @@ import { exampleText } from "./exampleText";
 import SequenceDiagram from "./diagram/SequenceDiagram";
 import GithubLogo from "./GitHub-Mark-32px.png";
 import { ReactComponent as TextIcon } from "./bootstrap-icons/card-text.svg";
-import { ReactComponent as CameraIcon } from "./bootstrap-icons/camera.svg";
+import Downloader from "./components/downloader";
 
 interface SequenceState {
   diagram: SequenceDiagram;
@@ -77,13 +77,11 @@ function App() {
       </a>
       <div id="tools">
         <TextIcon id="textIcon" className="tool" onClick={toggleCloseState} />
-        <CameraIcon
-          id="cameraIcon"
-          className="tool"
-          onClick={(e) => alert("Not implemented")}
-        />
+        <Downloader svgIdSelector="mainDiagram" />
       </div>
       <svg
+        id="mainDiagram"
+        xmlns="http://www.w3.org/2000/svg"
         onMouseDown={(e) => handleMouseDown({ x: e.pageX, y: e.pageY })}
         onMouseMove={(e) => handleMouseMove({ x: e.pageX, y: e.pageY })}
         onMouseUp={(e) => handleMouseUp({ x: e.pageX, y: e.pageY })}
