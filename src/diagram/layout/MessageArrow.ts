@@ -34,7 +34,7 @@ export default class MessageArrow {
   }
 
   protected get textAlignment(): TextAlignment {
-    return this.distanceX > 0 ? "left" : "right";
+    return this.distanceX > 0 ? "right" : "left";
   }
 
   protected get textMaxWidth(): number {
@@ -86,7 +86,7 @@ export default class MessageArrow {
   }
 
   protected get endX(): number {
-    return this.toLifelineLineX - (this.textAlignment === "left" ? -5 : 5);
+    return this.toLifelineLineX - (this.textAlignment === "right" ? -5 : 5);
   }
 
   get points(): [number, number][] {
@@ -94,5 +94,9 @@ export default class MessageArrow {
       [this.startX, this.y],
       [this.endX, this.y]
     ];
+  }
+
+  get endY(): number {
+    return this.y;
   }
 }

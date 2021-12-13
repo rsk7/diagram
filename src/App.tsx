@@ -57,9 +57,8 @@ function App() {
     localStorage.setItem("sequenceText", sequenceState.text);
   });
 
-  const { lifelineProps, messageArrowProps } = sequenceDiagramLayout(
-    sequenceState.diagram
-  );
+  const { lifelineProps, messageArrowProps, layoutHeight, layoutWidth } =
+    sequenceDiagramLayout(sequenceState.diagram);
 
   const {
     matrixState,
@@ -77,7 +76,18 @@ function App() {
       </a>
       <div id="tools">
         <TextIcon id="textIcon" className="tool" onClick={toggleCloseState} />
-        <Downloader svgIdSelector="mainDiagram" />
+        <Downloader
+          svgIdSelector="mainDiagram"
+          type="png"
+          layoutHeight={layoutHeight}
+          layoutWidth={layoutWidth}
+        />
+        <Downloader
+          svgIdSelector="mainDiagram"
+          type="svg"
+          layoutHeight={layoutHeight}
+          layoutWidth={layoutWidth}
+        />
       </div>
       <svg
         id="mainDiagram"

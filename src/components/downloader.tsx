@@ -1,25 +1,45 @@
 import { ReactComponent as CameraIcon } from "../bootstrap-icons/camera.svg";
-import SvgToImageService from "../services/SvgToImageService";
+import { downloadPng, downloadSvg } from "../services/DownloadService";
+import { ReactComponent as DownloadIcon } from "../bootstrap-icons/download.svg";
 
 interface DownloaderProps {
   svgIdSelector: string;
+  type: "png" | "svg";
+  layoutHeight: number;
+  layoutWidth: number;
 }
 
 export default function Downloader(props: DownloaderProps) {
-  const download = async () => {
-    console.log("started");
-    const svg = document.getElementById(props.svgIdSelector);
-    if (!svg) return;
-    console.log("svg element found");
-    const href = await SvgToImageService(svg);
-    const link = document.createElement("a");
-    console.log("started downloading");
-    link.download = "sequence_diagram.png";
-    link.style.opacity = "0";
-    document.body.appendChild(link);
-    link.href = href;
-    link.click();
-    link.remove();
-  };
-  return <CameraIcon id="cameraIcon" className="tool" onClick={download} />;
+  switch (props.type) {
+    case "png":
+      return (
+        <CameraIcon
+          className="tool"
+          onClick={() =>
+            downloadPng(
+              props.svgIdSelector,
+              "sequence_diagram.png",
+              props.layoutHeight,
+              props.layoutWidth
+            )
+          }
+        />
+      );
+    case "svg":
+      return (
+        <DownloadIcon
+          className="tool"
+          onClick={() =>
+            downloadSvg(
+              props.svgIdSelector,
+              "sequence_diagram.svg",
+              props.layoutHeight,
+              props.layoutWidth
+            )
+          }
+        />
+      );
+    default:
+      throw new Error("Unknown downloader type");
+  }
 }

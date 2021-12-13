@@ -68,7 +68,7 @@ export function getLineHeight(font: string): number {
   renderDiv.style.position = "absolute";
   renderDiv.style.font = font;
   renderDiv.style.whiteSpace = "nowrap";
-  document.getElementsByTagName("body")[0].appendChild(renderDiv);
+  document.body.appendChild(renderDiv);
   lineHeight = renderDiv.clientHeight;
   fontToLineHeightMap.set(font.toLowerCase(), lineHeight);
   renderDiv.remove();

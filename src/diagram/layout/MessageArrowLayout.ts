@@ -37,18 +37,9 @@ export function createMessageArrowSequence(
       if (ma) acc.push(ma);
     } else {
       const previous = acc[acc.length - 1];
-      const ma = createMessageArrow(value, previous.y, lifelinePropsMap);
+      const ma = createMessageArrow(value, previous.endY, lifelinePropsMap);
       if (ma) acc.push(ma);
     }
     return acc;
   }, []);
-}
-
-// TODO: this is not relative, need to calculate lenght using y - lifeline start y
-export function getMaxMessageY(messageArrowProps: MessageArrow[]): number {
-  if (messageArrowProps.length) {
-    return messageArrowProps[messageArrowProps.length - 1].y;
-  } else {
-    return 0;
-  }
 }

@@ -46,6 +46,10 @@ export default class MessageArrowReflexive extends MessageArrow {
     ];
   }
 
+  get endY(): number {
+    return this.loopY;
+  }
+
   get labelX(): number {
     return this.loopX + MESSAGE_ARROW_DESCRIPTION_PADDING * 0.2;
   }
