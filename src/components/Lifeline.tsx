@@ -1,34 +1,27 @@
+import TextBoxDetails from "../services/TextBoxDetails";
 import Rect from "./Rect";
 import VerticalLine from "./VerticalLine";
 
-export interface LifelineProps {
+interface LifelineProps {
+  lineX: number;
   x: number;
   y: number;
-  name: string;
-  font: string;
-  width: number;
-  height: number;
+  textBoxDetails: TextBoxDetails;
   length: number;
-  lineX: number;
-  textPadding: number;
 }
 
-export default function Lifeline(props: LifelineProps) {
+export default function LifelineComponent(props: LifelineProps) {
   return (
     <g>
       <VerticalLine
         x={props.lineX}
-        y={props.y + props.height}
+        y={props.y + props.textBoxDetails.height}
         length={props.length}
       />
       <Rect
-        x={props.x}
-        y={props.y}
-        font={props.font}
-        text={props.name}
-        height={props.height}
-        width={props.width}
-        padding={props.textPadding}
+        boxX={props.x}
+        boxY={props.y}
+        textBoxDetails={props.textBoxDetails}
       />
     </g>
   );

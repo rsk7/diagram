@@ -1,4 +1,4 @@
-interface Tspan {
+export interface Tspan {
   text: string;
   width: number;
 }
@@ -58,7 +58,7 @@ export function WrapText(
   return result;
 }
 
-function getLineHeight(text: string, font: string): number {
+export function getLineHeight(text: string, font: string): number {
   const renderDiv = document.createElement("div");
   renderDiv.innerText = text;
   renderDiv.style.position = "absolute";
@@ -68,28 +68,6 @@ function getLineHeight(text: string, font: string): number {
   const height = renderDiv.clientHeight;
   renderDiv.remove();
   return height;
-}
-
-export function getSize(
-  text: string,
-  font: string,
-  maxWidth: number,
-  minWidth: number,
-  padding: number
-): { height: number; width: number } {
-  const lineHeight = getLineHeight(text, font);
-  const lines = WrapText(text, font, maxWidth - padding * 2);
-  const boxWidth = lines.reduce((max, curr) => {
-    if (max < curr.width) {
-      return curr.width;
-    } else {
-      return max;
-    }
-  }, 0);
-  return {
-    height: lineHeight * lines.length + padding * 2,
-    width: boxWidth < minWidth ? minWidth : boxWidth + padding * 2
-  };
 }
 
 export function getSize_old(

@@ -103,10 +103,23 @@ function App() {
         </defs>
         <g id="matrix-group" transform={`${matrixState.toString()}`}>
           {lifelineProps.map((p, index) => (
-            <Lifeline key={index} {...p} />
+            <Lifeline
+              key={index}
+              lineX={p.lineX}
+              textBoxDetails={p.textBoxDetails}
+              length={p.length}
+              x={p.x}
+              y={p.y}
+            />
           ))}
           {messageArrowProps?.map((p, index) => (
-            <MessageArrow key={index} {...p} />
+            <MessageArrow
+              key={index}
+              textBoxDetails={p.textBoxDetails}
+              labelX={p.labelX}
+              labelY={p.labelY}
+              points={p.points}
+            />
           ))}
         </g>
       </svg>

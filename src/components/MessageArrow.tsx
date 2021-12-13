@@ -1,21 +1,14 @@
+import TextBoxDetails from "../services/TextBoxDetails";
 import Rect from "./Rect";
 
-export interface MessageArrowProps {
-  description: string;
+interface MessageArrowProps {
+  points: [number, number][];
   labelX: number;
   labelY: number;
-  labelHeight: number;
-  labelWidth: number;
-  points: number[][];
-  y: number;
-  textPadding: number;
-  font: string;
+  textBoxDetails: TextBoxDetails;
 }
 
-export default function MessageArrow(props: MessageArrowProps) {
-  const startEndXDifference = props.points.length
-    ? props.points[0][0] - props.points[props.points.length - 1][0]
-    : 0;
+export default function MessageArrowComponent(props: MessageArrowProps) {
   const points = props.points.map((p) => `${p[0]}, ${p[1]}`).join(" ");
   return (
     <g>
@@ -26,15 +19,9 @@ export default function MessageArrow(props: MessageArrowProps) {
         markerEnd="url(#arrow)"
       ></polyline>
       <Rect
-        x={props.labelX}
-        y={props.labelY}
-        text={props.description}
-        height={props.labelHeight}
-        width={props.labelWidth}
-        border={false}
-        font={props.font}
-        padding={props.textPadding}
-        textAlign={startEndXDifference <= 0 ? "left" : "right"}
+        boxX={props.labelX}
+        boxY={props.labelY}
+        textBoxDetails={props.textBoxDetails}
       />
     </g>
   );

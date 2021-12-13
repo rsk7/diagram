@@ -1,17 +1,19 @@
 import SequenceDiagram from "../SequenceDiagram";
-import LifelineProps, {
+import Lifeline from "./Lifeline";
+import {
   createLifelineSequenceMap,
   getMaxLifelineHeight,
   setLifelineLength
 } from "./LifelineLayout";
-import MessageArrowProps, {
+import MessageArrow from "./MessageArrow";
+import {
   createMessageArrowSequence,
   getMaxMessageY
 } from "./MessageArrowLayout";
 
 export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
-  lifelineProps: LifelineProps[];
-  messageArrowProps: MessageArrowProps[] | undefined;
+  lifelineProps: Lifeline[];
+  messageArrowProps: MessageArrow[] | undefined;
 } {
   // layout sequence diagram
   // find actor spacing

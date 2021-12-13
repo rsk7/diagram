@@ -1,56 +1,24 @@
-import { getSize } from "../../services/TextBoxSizeService";
 import { SequenceActor } from "../SequenceDiagram";
+import Lifeline from "./Lifeline";
 
-export default interface LifelineProps {
-  x: number;
-  y: number;
-  name: string;
-  font: string;
-  width: number;
-  height: number;
-  length: number;
-  lineX: number;
-  textPadding: number;
-}
-
-const DEFAULT_LENGTH = 0;
-const FONT = "12px Arial";
-const MAX_WIDTH = 200;
-const MIN_WIDTH = 50;
 const LIFELINE_SEPARATION = 50;
-const PADDING = 5;
-
-function createLifeline(actor: string, x: number, y: number): LifelineProps {
-  const { width, height } = getSize(actor, FONT, MAX_WIDTH, MIN_WIDTH, PADDING);
-  return {
-    x,
-    y,
-    length: DEFAULT_LENGTH,
-    name: actor,
-    font: FONT,
-    width,
-    height,
-    lineX: Math.floor(width / 2) + x,
-    textPadding: PADDING
-  };
-}
 
 export function createLifelineSequence(
   actors: SequenceActor[],
   startX: number,
   startY: number
-): LifelineProps[] {
-  return actors.reduce<LifelineProps[]>((lifelineProps, actor, idx) => {
+): Lifeline[] {
+  return actors.reduce<Lifeline[]>((lifelineProps, actor, idx) => {
     if (!lifelineProps.length) {
-      lifelineProps.push(createLifeline(actor.name, startX, startY));
+      lifelineProps.push(new Lifeline(actor.name, startX, startY));
     } else {
       const previous = lifelineProps[lifelineProps.length - 1];
       const previousActor = actors[idx - 1];
       const x =
         previous.x +
-        previous.width +
+        previous.textBoxDetails.width +
         LIFELINE_SEPARATION * (previousActor.spacingRight || 1);
-      lifelineProps.push(createLifeline(actor.name, x, startY));
+      lifelineProps.push(new Lifeline(actor.name, x, startY));
     }
     return lifelineProps;
   }, []);
@@ -60,22 +28,24 @@ export function createLifelineSequenceMap(
   actors: SequenceActor[],
   startX: number,
   startY: number
-): Map<string, LifelineProps> {
+): Map<string, Lifeline> {
   const sequence = createLifelineSequence(actors, startX, startY);
   return sequence.reduce((acc, value) => {
     acc.set(value.name, value);
     return acc;
-  }, new Map<string, LifelineProps>());
+  }, new Map<string, Lifeline>());
 }
 
-export function getMaxLifelineHeight(lifelines: LifelineProps[]): number {
+export function getMaxLifelineHeight(lifelines: Lifeline[]): number {
   return lifelines.reduce((acc, value) => {
-    return acc > value.height ? acc : value.height;
+    return acc > value.textBoxDetails.height
+      ? acc
+      : value.textBoxDetails.height;
   }, 0);
 }
 
 export function setLifelineLength(
-  lifelineProps: LifelineProps[],
+  lifelineProps: Lifeline[],
   length: number
 ): void {
   lifelineProps.forEach((p) => (p.length = length));
