@@ -21,13 +21,13 @@ export function findActorNames(line?: string): string[] {
 }
 
 export function createSequenceActor(text: string): SequenceActor {
-  const actorRegex = /(?<actor>.+){(?<properties>.*)}/i;
-  const match = text.match(actorRegex);
-  if (match?.groups) {
+  const actorDescription = text.split("|");
+  const name = actorDescription[0];
+  if (actorDescription.length > 1) {
     const spacingRegex = /sp\((?<spacingRight>.+)\)/i;
-    const propsMatch = match.groups.properties.match(spacingRegex);
+    const propsMatch = actorDescription[1].match(spacingRegex);
     return {
-      name: match.groups.actor,
+      name,
       spacingRight: propsMatch?.groups
         ? parseFloat(propsMatch.groups.spacingRight)
         : undefined

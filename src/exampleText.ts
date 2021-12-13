@@ -14,17 +14,15 @@ Remove the "#" character to start drawing.
 
 The diagram is being drawn in an SVG element. You can move it around by dragging it. Scroll up or down to zoom. This text box can also be moved using the move button on the top right and resized using the handle on the bottom right corner.
 
-Additional actors can be specified anywhere in the text. The actors description must always be in a new line. Duplicate actor names are ignored.
+Additional actors can be specified anywhere in the text. The actors description must always be in a new line. Spacing between actors can be configured using special syntax. For example: db|sp(x) will space out the next actor from user by x units. Try different values in the line below.
 
-#actors: user, db, data warehouse
+#actors: db|sp(2), data warehouse
 #
 #server -- saving data --> db
 #user -- thinking --> user
 #server -- doing server work --> server
 #db -- sends data for aggregation --> data warehouse
 
+The lightbulb icon on the top control whether actor names are replaced automatically throughout this text. It defaults to off. It is buggy when actor names are duplicated. Try turning it on and changing the name of an actor above.
 
-Spacing between actors can be configured using special syntax. user{sp(x)} will space out the next actor from user by x units. Try different values in the line below.
-
-#actors: user{sp(2.6)}, server{sp(2)}
 `;

@@ -4,20 +4,21 @@ import {
   findActorNames,
   createSequenceActor
 } from "./SequenceParser";
+import esc from "escape-string-regexp";
 
 function replaceActorName(
   smartText: string,
   currentActorRawString: string,
   previousActorRawString: string
 ): string {
-  const currentName = createSequenceActor(currentActorRawString).name;
-  const previousName = createSequenceActor(previousActorRawString).name;
+  const currentName = esc(createSequenceActor(currentActorRawString).name);
+  const previousName = esc(createSequenceActor(previousActorRawString).name);
   smartText = smartText.replace(
     new RegExp(`([\n|#])${previousName} --([^>])`, "g"),
     `$1${currentName} --$2`
   );
   smartText = smartText.replace(
-    new RegExp(`--(\\s)*${previousName}(\\s*\\n)`, "g"),
+    new RegExp(`--( )*${previousName}(\\s*\\n)`, "g"),
     `--$1${currentName}$2`
   );
   smartText = smartText.replace(
