@@ -69,7 +69,7 @@ export default class TextBoxDetails {
     border: boolean,
     alignment: TextAlignment
   ): TextBoxDetails {
-    const lineHeight = getLineHeight(text, font);
+    const lineHeight = getLineHeight(font);
     const lines = WrapText(text, font, maxWidth - padding * 2);
     const boxWidth = lines.reduce(
       (max, curr) => (max < curr.width ? curr.width : max),

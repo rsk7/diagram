@@ -58,39 +58,19 @@ export function WrapText(
   return result;
 }
 
-export function getLineHeight(text: string, font: string): number {
+const fontToLineHeightMap = new Map<string, number>();
+
+export function getLineHeight(font: string): number {
+  let lineHeight = fontToLineHeightMap.get(font.toLowerCase());
+  if (lineHeight) return lineHeight;
   const renderDiv = document.createElement("div");
-  renderDiv.innerText = text;
+  renderDiv.innerText = "Aa";
   renderDiv.style.position = "absolute";
   renderDiv.style.font = font;
   renderDiv.style.whiteSpace = "nowrap";
   document.getElementsByTagName("body")[0].appendChild(renderDiv);
-  const height = renderDiv.clientHeight;
+  lineHeight = renderDiv.clientHeight;
+  fontToLineHeightMap.set(font.toLowerCase(), lineHeight);
   renderDiv.remove();
-  return height;
-}
-
-export function getSize_old(
-  text: string,
-  fontSize: number,
-  maxWidth: number,
-  minWidth: number,
-  padding: number
-) {
-  const renderDiv = document.createElement("div");
-  renderDiv.innerText = text;
-  renderDiv.style.position = "absolute";
-  //renderDiv.style.fontSize = `${fontSize}px`;
-  renderDiv.style.font = `${fontSize}px Arial`;
-  renderDiv.style.display = "block";
-  renderDiv.style.minWidth = `${minWidth}px`;
-  renderDiv.style.maxWidth = `${maxWidth}px`;
-  renderDiv.style.border = "1px solid black";
-  renderDiv.style.textAlign = "center";
-  document.getElementsByTagName("body")[0].appendChild(renderDiv);
-  const result = {
-    height: renderDiv.clientHeight + padding * 2,
-    width: renderDiv.clientWidth + padding * 2
-  };
-  return result;
+  return lineHeight;
 }
