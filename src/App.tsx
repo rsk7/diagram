@@ -24,7 +24,7 @@ function App() {
     const text = localStorage.getItem("sequenceText") || exampleText;
     return {
       ...SequenceReader(text),
-      smartTextEnabled: true,
+      smartTextEnabled: false,
       showSequenceDescriber: true
     };
   });
