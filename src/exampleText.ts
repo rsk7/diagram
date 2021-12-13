@@ -23,6 +23,6 @@ Additional actors can be specified anywhere in the text. The actors description 
 #server -- working --> server
 #db -- sends data for aggregation --> data warehouse
 
-The lightbulb icon on the top controls whether actor names are replaced automatically throughout this text when it is updated. It defaults to off. Try turning it on and changing the name of an actor above.
+The lightbulb icon on the top controls whether actor names are replaced automatically throughout this text when an actor line is updated. It defaults to off. Try turning it on and changing the name of an actor in a line that begins with "actors:".
 
 `;
