@@ -1,32 +1,30 @@
 export const exampleText = `SEQUENCE DIAGRAMS
 =================
 
-Draws sequence diagrams with a simple language. Everything supported is shown below.
+This is a tool that draws simple sequence diagrams. The diagrams are described in text using a simple language. To create a diagram start by defining some "actors" and some interactions between them.
 
-Remove "#" character from start of line to render examples.
-
-
-EXAMPLE 1:
-Simple diagram showing three entities.
+Remove the "#" character to start drawing.
 
 #actors: user, computer, server
 #
-#user -- does something --> computer
-#computer -- asks server --> server
-#server -- confirms to computer --> computer
-#computer -- shows results --> user
+#user -- opens browser --> computer
+#computer -- sends request --> server
+#server -- sends response --> computer
+#computer -- shows page --> user
 
+The diagram is being drawn in an SVG element. You can move it around by dragging it. Scroll up or down to zoom. This text box can also be moved using the move button on the top right and resized using the handle on the bottom right corner.
 
-EXAMPLE 2:
-Adding more entities to the same diagram with optional spacing. db{sp(2)} adds 1 unit or spacing to the left and 2 units of spacing to the right.
+Additional actors can be specified anywhere in the text. The actors description must always be in a new line. Duplicate actor names are ignored.
 
-#actors: db{sp(2)}, queue
+#actors: user, db, data warehouse
 #
-#server -- check db --> db
-#server -- add to queue --> queue
+#server -- saving data --> db
+#user -- thinking --> user
+#server -- doing server work --> server
+#db -- sends data for aggregation --> data warehouse
 
 
-Try changing the name of one of the actors. All active references are updated.
+Spacing between actors can be configured using special syntax. user{sp(x)} will space out the next actor from user by x units. Try different values in the line below.
 
-To save as image, click the camera icon on the top right of this text box.
+#actors: user{sp(2.6)}, server{sp(2)}
 `;

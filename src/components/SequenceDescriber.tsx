@@ -34,7 +34,6 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
         height={boxState.height}
         width={boxState.width}
         onResize={(e, { size }) => {
-          console.log("resize called");
           setBoxState({
             height: size.height,
             width: size.width

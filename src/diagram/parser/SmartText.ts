@@ -25,7 +25,7 @@ function replaceActorName(
     `$1${currentName}$2<--`
   );
   smartText = smartText.replace(
-    new RegExp(`-->(\\s)*${previousName}(\\s*\\n)`, "g"),
+    new RegExp(`-->( )*${previousName}(\\s*\\n)`, "g"),
     `-->$1${currentName}$2`
   );
   return smartText;
