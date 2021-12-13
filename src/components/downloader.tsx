@@ -1,6 +1,8 @@
 import { ReactComponent as CameraIcon } from "../bootstrap-icons/camera.svg";
 import { downloadPng, downloadSvg } from "../services/DownloadService";
-import { ReactComponent as DownloadIcon } from "../bootstrap-icons/download.svg";
+import { useState } from "react";
+import "./downloader.css";
+import ReactDOM from "react-dom";
 
 interface DownloaderProps {
   svgIdSelector: string;
@@ -9,37 +11,51 @@ interface DownloaderProps {
   layoutWidth: number;
 }
 
+const downloadOptions = ({
+  isOpen,
+  svgClick,
+  pngClick
+}: {
+  isOpen: boolean;
+  svgClick: () => {};
+  pngClick: () => {};
+}) => {
+  if (!isOpen) return null;
+  return ReactDOM.createPortal(
+    <div className="modal tool-options">
+      <button onClick={svgClick}>SVG</button>
+      <button onClick={pngClick}>PNG</button>
+    </div>,
+    document.body
+  );
+};
+
 export default function Downloader(props: DownloaderProps) {
-  switch (props.type) {
-    case "png":
-      return (
-        <CameraIcon
-          className="tool"
-          onClick={() =>
-            downloadPng(
-              props.svgIdSelector,
-              "sequence_diagram.png",
-              props.layoutHeight,
-              props.layoutWidth
-            )
-          }
-        />
-      );
-    case "svg":
-      return (
-        <DownloadIcon
-          className="tool"
-          onClick={() =>
-            downloadSvg(
-              props.svgIdSelector,
-              "sequence_diagram.svg",
-              props.layoutHeight,
-              props.layoutWidth
-            )
-          }
-        />
-      );
-    default:
-      throw new Error("Unknown downloader type");
-  }
+  const [showOptions, toggleShowOptions] = useState(false);
+  const modal = downloadOptions({
+    isOpen: showOptions,
+    svgClick: () =>
+      downloadSvg(
+        "mainDiagram",
+        "sequence_diagram.svg",
+        props.layoutHeight,
+        props.layoutWidth
+      ),
+    pngClick: () =>
+      downloadPng(
+        "mainDiagram",
+        "sequence_diagram.png",
+        props.layoutHeight,
+        props.layoutWidth
+      )
+  });
+  return (
+    <div>
+      {modal}
+      <CameraIcon
+        className="tool"
+        onClick={() => toggleShowOptions(!showOptions)}
+      />
+    </div>
+  );
 }

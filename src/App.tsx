@@ -82,12 +82,6 @@ function App() {
           layoutHeight={layoutHeight}
           layoutWidth={layoutWidth}
         />
-        <Downloader
-          svgIdSelector="mainDiagram"
-          type="svg"
-          layoutHeight={layoutHeight}
-          layoutWidth={layoutWidth}
-        />
       </div>
       <svg
         id="mainDiagram"

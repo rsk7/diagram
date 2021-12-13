@@ -1,0 +1,12 @@
+.modal.tool-options {
+  width: 100px;
+  bottom: 55px;
+  right: 30px;
+}
+
+.modal.tool-options > button {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  margin: 5px;
+}

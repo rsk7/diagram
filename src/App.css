@@ -23,7 +23,7 @@ svg {
   display: flex;
 }
 
-.App > #tools > .tool {
+.App > #tools .tool {
   height: 25px;
   width: 25px;
   cursor: pointer;
@@ -31,7 +31,7 @@ svg {
   color: black;
 }
 
-.App > #tools > .tool:hover {
+.App > #tools .tool:hover {
   color: #737373;
 }
 
@@ -52,6 +52,10 @@ svg {
   background-origin: content-box;
   box-sizing: border-box;
   cursor: se-resize;
+}
+
+.modal {
+  position: absolute;
 }
 
 textarea::-webkit-scrollbar {
