@@ -23,6 +23,6 @@ Remove the "#" character to start drawing.
 #server -- working --> server
 #db -- sends data for aggregation --> data warehouse
 
-The lightbulb icon on the top controls whether actor names are replaced automatically throughout this text when an actor line is updated. It defaults to off. Try turning it on and changing the name of an actor in a line that begins with "actors:".
+The lightbulb icon on the top controls whether actor names are replaced automatically throughout this text when an actor line is updated. It's like an automatic find and replace for actor names that is only activated when editing actor lines.  It defaults to off. Try turning it on and changing the name of an actor in a line that begins with "actors:".
 
 `;
