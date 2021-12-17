@@ -46,7 +46,7 @@ export function getMaxLifelineHeight(lifelines: Lifeline[]): number {
 
 export function setLifelineLength(
   lifelineProps: Lifeline[],
-  length: number
+  endY: number
 ): void {
-  lifelineProps.forEach((p) => (p.length = length));
+  lifelineProps.forEach((p) => (p.length = endY - (p.y + p.textBoxDetails.height)));
 }

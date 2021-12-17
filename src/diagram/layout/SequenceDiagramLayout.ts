@@ -37,7 +37,7 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
   if (lastLifeline && lastMessage) {
     setLifelineLength(
       lifelineProps,
-      lastMessage.endY - lastLifeline.y + PADDING
+      lastMessage.endY + PADDING
     );
     layoutHeight = lastLifeline.y + lastLifeline.length + PADDING;
     layoutWidth =
