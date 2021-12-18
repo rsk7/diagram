@@ -16,7 +16,6 @@ export default async function SvgToImageService(
   height: number,
   width: number
 ): Promise<string> {
-  console.log(width, height);
   const dataUrl = await svgToDataUrl(svg);
   const image = new Image();
   image.crossOrigin = "anonymous";

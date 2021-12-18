@@ -18,6 +18,7 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
   title: Title | undefined;
   layoutHeight: number;
   layoutWidth: number;
+  diagramStartY: number;
 } {
   const actors = diagram.actors;
   const lifelinePropsMap = createLifelineSequenceMap(actors, PADDING, PADDING);
@@ -49,6 +50,7 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
   }
 
   let title;
+  let diagramStartY = 0;
 
   if (firstLifeline && lastLifeline) {
     title = createTitle(
@@ -57,11 +59,17 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
       firstLifeline.y,
       lastLifeline.x + lastLifeline.textBoxDetails.width - firstLifeline.x
     );
+
+    if (title) {
+      diagramStartY = title.y - PADDING;
+      layoutHeight = layoutHeight + title.textBoxDetails.height + PADDING;
+    }
   }
 
   return {
     lifelineProps,
     messageArrowProps,
+    diagramStartY,
     layoutHeight,
     layoutWidth,
     title

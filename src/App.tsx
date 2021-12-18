@@ -58,8 +58,14 @@ function App() {
     localStorage.setItem("sequenceText", sequenceState.text);
   });
 
-  const { lifelineProps, messageArrowProps, layoutHeight, layoutWidth, title } =
-    sequenceDiagramLayout(sequenceState.diagram);
+  const {
+    lifelineProps,
+    messageArrowProps,
+    layoutHeight,
+    layoutWidth,
+    title,
+    diagramStartY
+  } = sequenceDiagramLayout(sequenceState.diagram);
 
   const {
     matrixState,
@@ -82,6 +88,7 @@ function App() {
           type="png"
           layoutHeight={layoutHeight}
           layoutWidth={layoutWidth}
+          diagramStartY={diagramStartY}
         />
       </div>
       <svg

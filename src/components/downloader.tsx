@@ -9,6 +9,7 @@ interface DownloaderProps {
   type: "png" | "svg";
   layoutHeight: number;
   layoutWidth: number;
+  diagramStartY: number;
 }
 
 const downloadOptions = ({
@@ -39,14 +40,16 @@ export default function Downloader(props: DownloaderProps) {
         "mainDiagram",
         "sequence_diagram.svg",
         props.layoutHeight,
-        props.layoutWidth
+        props.layoutWidth,
+        props.diagramStartY
       ),
     pngClick: () =>
       downloadPng(
         "mainDiagram",
         "sequence_diagram.png",
         props.layoutHeight,
-        props.layoutWidth
+        props.layoutWidth,
+        props.diagramStartY
       )
   });
   return (

@@ -4,6 +4,7 @@ function svgForDownload(
   svgIdSelector: string,
   layoutHeight: number,
   layoutWidth: number,
+  diagramStartY: number,
   svgAction: (svg: HTMLElement) => Promise<void>
 ) {
   const svg = document.getElementById(svgIdSelector);
@@ -11,7 +12,10 @@ function svgForDownload(
   const clonedSvg = svg.cloneNode(true) as HTMLElement;
   const matrixGroup = clonedSvg.querySelector("#matrix-group") as SVGGElement;
   matrixGroup.setAttribute("transform", "1 0 0 1 0 0");
-  clonedSvg.setAttribute("viewBox", `1 1 ${layoutWidth} ${layoutHeight}`);
+  clonedSvg.setAttribute(
+    "viewBox",
+    `1 ${diagramStartY} ${layoutWidth} ${layoutHeight}`
+  );
   return svgAction(clonedSvg);
 }
 
@@ -29,22 +33,36 @@ export async function downloadPng(
   svgIdSelector: string,
   fileName: string,
   layoutHeight: number,
-  layoutWidth: number
+  layoutWidth: number,
+  diagramStartY: number
 ) {
-  svgForDownload(svgIdSelector, layoutHeight, layoutWidth, async (svg) => {
-    const href = await SvgToImageService(svg, layoutHeight, layoutWidth);
-    download(href, fileName);
-  });
+  svgForDownload(
+    svgIdSelector,
+    layoutHeight,
+    layoutWidth,
+    diagramStartY,
+    async (svg) => {
+      const href = await SvgToImageService(svg, layoutHeight, layoutWidth);
+      download(href, fileName);
+    }
+  );
 }
 
 export async function downloadSvg(
   svgIdSelector: string,
   fileName: string,
   layoutHeight: number,
-  layoutWidth: number
+  layoutWidth: number,
+  diagramStartY: number
 ) {
-  svgForDownload(svgIdSelector, layoutHeight, layoutWidth, async (svg) => {
-    const href = await svgToDataUrl(svg);
-    download(href, fileName);
-  });
+  svgForDownload(
+    svgIdSelector,
+    layoutHeight,
+    layoutWidth,
+    diagramStartY,
+    async (svg) => {
+      const href = await svgToDataUrl(svg);
+      download(href, fileName);
+    }
+  );
 }
