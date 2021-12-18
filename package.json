@@ -13,6 +13,7 @@
     "@types/react-resizable": "^1.7.4",
     "@visx/text": "^2.3.0",
     "escape-string-regexp": "^5.0.0",
+    "firebase": "^9.6.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-draggable": "^4.4.4",
