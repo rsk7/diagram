@@ -1,5 +1,10 @@
 import SequenceDiagram from "../SequenceDiagram";
-import { splitLines, findActors, findInteractions } from "./SequenceParser";
+import {
+  splitLines,
+  findActors,
+  findInteractions,
+  findTitle
+} from "./SequenceParser";
 import SmartText from "./SmartText";
 
 interface Options {
@@ -19,10 +24,11 @@ export default function SequenceReader(
     ? SmartText(text, options.enableSmartText.previousText)
     : text;
   const lines = splitLines(smartText);
+  const title = findTitle(lines);
   const actors = findActors(lines);
   const interactions = findInteractions(lines);
   return {
-    diagram: { actors, interactions },
+    diagram: { title, actors, interactions },
     text: smartText
   };
 }

@@ -10,6 +10,7 @@ export interface SequenceActor {
 }
 
 export default interface SequenceDiagram {
+  title: string;
   actors: SequenceActor[];
   interactions?: SequenceInteraction[];
 }

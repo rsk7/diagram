@@ -1,4 +1,4 @@
-export const exampleText = `SEQUENCE DIAGRAMS
+export const exampleText = `Sequence Diagram
 =================
 
 This is a tool that draws simple sequence diagrams. The diagrams are described in text using a simple language. To create a diagram start by defining some "actors" and some interactions between them.

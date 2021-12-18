@@ -63,6 +63,15 @@ export function findActors(lines: string[]): SequenceActor[] {
   );
 }
 
+export function findTitle(lines: string[]): string {
+  for (let i = 0; i < lines.length; i++) {
+    if (i > 0 && lines[i].startsWith("====")) {
+      return lines[i - 1];
+    }
+  }
+  return "";
+}
+
 function interactionMatcher(line: string): SequenceInteraction | undefined {
   const matchers = [
     /(?<from>.+) --(?<action>.+)--> (?<to>.+)/i,

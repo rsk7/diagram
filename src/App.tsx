@@ -11,6 +11,7 @@ import SequenceDiagram from "./diagram/SequenceDiagram";
 import GithubLogo from "./GitHub-Mark-32px.png";
 import { ReactComponent as TextIcon } from "./bootstrap-icons/card-text.svg";
 import Downloader from "./components/downloader";
+import Rect from "./components/Rect";
 
 interface SequenceState {
   diagram: SequenceDiagram;
@@ -57,7 +58,7 @@ function App() {
     localStorage.setItem("sequenceText", sequenceState.text);
   });
 
-  const { lifelineProps, messageArrowProps, layoutHeight, layoutWidth } =
+  const { lifelineProps, messageArrowProps, layoutHeight, layoutWidth, title } =
     sequenceDiagramLayout(sequenceState.diagram);
 
   const {
@@ -106,6 +107,13 @@ function App() {
           </marker>
         </defs>
         <g id="matrix-group" transform={`${matrixState.toString()}`}>
+          {title && (
+            <Rect
+              boxX={title.x}
+              boxY={title.y}
+              textBoxDetails={title.textBoxDetails}
+            />
+          )}
           {lifelineProps.map((p, index) => (
             <Lifeline
               key={index}

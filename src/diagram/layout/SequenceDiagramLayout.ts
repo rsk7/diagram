@@ -7,12 +7,15 @@ import {
 } from "./LifelineLayout";
 import MessageArrow from "./MessageArrow";
 import { createMessageArrowSequence } from "./MessageArrowLayout";
+import createTitle from "./TitleLayout";
+import Title from "./Title";
 
 const PADDING = 50;
 
 export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
   lifelineProps: Lifeline[];
   messageArrowProps: MessageArrow[] | undefined;
+  title: Title | undefined;
   layoutHeight: number;
   layoutWidth: number;
 } {
@@ -29,16 +32,14 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
     lifelinePropsMap
   );
 
+  const firstLifeline = lifelineProps[0];
   const lastLifeline = lifelineProps[lifelineProps.length - 1];
   const lastMessage = messageArrowProps[messageArrowProps.length - 1];
   let layoutHeight = 0;
   let layoutWidth = 0;
 
   if (lastLifeline && lastMessage) {
-    setLifelineLength(
-      lifelineProps,
-      lastMessage.endY + PADDING
-    );
+    setLifelineLength(lifelineProps, lastMessage.endY + PADDING);
     layoutHeight = lastLifeline.y + lastLifeline.length + PADDING;
     layoutWidth =
       lastLifeline.x +
@@ -47,10 +48,22 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
       PADDING * 0.2;
   }
 
+  let title;
+
+  if (firstLifeline && lastLifeline) {
+    title = createTitle(
+      diagram.title,
+      firstLifeline.x,
+      firstLifeline.y,
+      lastLifeline.x + lastLifeline.textBoxDetails.width - firstLifeline.x
+    );
+  }
+
   return {
     lifelineProps,
     messageArrowProps,
     layoutHeight,
-    layoutWidth
+    layoutWidth,
+    title
   };
 }
