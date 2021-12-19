@@ -8,7 +8,7 @@ const TITLE_BOTTOM_PADDING = 30;
 export default class Title {
   private startY: number;
   private maxWidth: number;
-  private text: string;
+  private _text: string;
   private startX: number;
 
   private _textBoxDetails: TextBoxDetails | undefined;
@@ -16,8 +16,12 @@ export default class Title {
   constructor(startX: number, startY: number, text: string, maxWidth: number) {
     this.startX = startX;
     this.startY = startY;
-    this.text = text;
+    this._text = text;
     this.maxWidth = maxWidth;
+  }
+
+  get text(): string {
+    return this._text;
   }
 
   get x(): number {

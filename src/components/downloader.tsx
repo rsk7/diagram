@@ -10,6 +10,7 @@ interface DownloaderProps {
   layoutHeight: number;
   layoutWidth: number;
   diagramStartY: number;
+  fileName?: string;
 }
 
 const downloadOptions = ({
@@ -33,12 +34,13 @@ const downloadOptions = ({
 
 export default function Downloader(props: DownloaderProps) {
   const [showOptions, toggleShowOptions] = useState(false);
+  const fileName = props.fileName || "sequence_diagram";
   const modal = downloadOptions({
     isOpen: showOptions,
     svgClick: () =>
       downloadSvg(
         "mainDiagram",
-        "sequence_diagram.svg",
+        `${fileName}.svg`,
         props.layoutHeight,
         props.layoutWidth,
         props.diagramStartY
@@ -46,7 +48,7 @@ export default function Downloader(props: DownloaderProps) {
     pngClick: () =>
       downloadPng(
         "mainDiagram",
-        "sequence_diagram.png",
+        `${fileName}.png`,
         props.layoutHeight,
         props.layoutWidth,
         props.diagramStartY

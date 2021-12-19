@@ -73,7 +73,7 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
         annotationDescriptionProps[annotationDescriptionProps.length - 1].endY;
       layoutHeight = layoutEndY + PADDING + PADDING * 0.2;
     } else {
-      layoutEndY = lastLifeline.y + lastLifeline.length;
+      layoutEndY = lastLifeline.y + lastLifeline.length + PADDING * 0.6;
       layoutHeight = layoutEndY + PADDING + PADDING * 0.2;
     }
     watermark = {

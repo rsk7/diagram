@@ -101,6 +101,7 @@ function App() {
           layoutHeight={layoutHeight}
           layoutWidth={layoutWidth}
           diagramStartY={diagramStartY}
+          fileName={title?.text.replace(/\s/g, "_")}
         />
       </div>
       <svg
