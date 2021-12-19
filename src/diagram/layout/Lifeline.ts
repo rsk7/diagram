@@ -35,6 +35,10 @@ export default class Lifeline {
     return this.actor.annotation;
   }
 
+  get endY(): number {
+    return this.y + this.textBoxDetails.height + this.length;
+  }
+
   get textBoxDetails(): TextBoxDetails {
     if (!this._textBoxDetails) {
       this._textBoxDetails = TextBoxDetails.Create(

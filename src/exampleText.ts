@@ -37,3 +37,26 @@ Remove the "#" character to start drawing.
 The lightbulb icon on the top controls whether actor names are replaced automatically throughout this text when an actor line is updated. It's like an automatic find and replace for actor names that is only activated when editing actor lines.  It defaults to off. Try turning it on and changing the name of an actor in a line that begins with "actors:".
 
 `;
+
+const REFRESH_EXAMPLE_GUID = "2df39b83-30d1-4f8f-8479-b4f692d25970";
+export const EXAMPLE_GUID = "27e67be2-598c-49df-85c2-3a8942088cbe";
+
+if (
+  !localStorage.getItem(EXAMPLE_GUID) ||
+  localStorage.getItem("refreshExampleGUID") !== REFRESH_EXAMPLE_GUID
+) {
+  localStorage.setItem(EXAMPLE_GUID, exampleText);
+  localStorage.setItem("refreshExampleGUID", REFRESH_EXAMPLE_GUID);
+  const files = JSON.parse(localStorage.getItem("files") || "[]");
+  const exampleFile = files.find(
+    (f: { guid: string }) => f.guid === EXAMPLE_GUID
+  );
+  if (!exampleFile) {
+    files.push({
+      fileName: "Example",
+      guid: EXAMPLE_GUID
+    });
+    localStorage.setItem("files", JSON.stringify(files));
+    localStorage.setItem("currentGUID", EXAMPLE_GUID);
+  }
+}

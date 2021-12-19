@@ -7,6 +7,7 @@ import { ReactComponent as MoveIcon } from "../bootstrap-icons/arrows-move.svg";
 import { ReactComponent as CloseIcon } from "../bootstrap-icons/x-lg.svg";
 import { ReactComponent as ClipboardIcon } from "../bootstrap-icons/clipboard.svg";
 import { ReactComponent as ClipboardCheckIcon } from "../bootstrap-icons/clipboard-check.svg";
+import { ReactComponent as TrashIcon } from "../bootstrap-icons/trash.svg";
 
 interface SequenceDescriberProps {
   sequenceText: string;
@@ -14,6 +15,7 @@ interface SequenceDescriberProps {
   onSmartTextToggle: () => void;
   onChange: (sequnenceText: string) => void;
   onClose: () => void;
+  onDelete: () => void;
   isVisible: boolean;
 }
 
@@ -41,7 +43,6 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
       setTimeout(() => setShowClipSuccess(false), 5000);
     }
   });
-  const clipboardIcon = showClipSuccess ? ClipboardCheckIcon : ClipboardIcon;
   return (
     <Draggable nodeRef={nodeRef} bounds="parent" handle="#move">
       <Resizable
@@ -69,6 +70,7 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
               className={`tool ${props.smartTextOn ? "on" : ""}`}
               onClick={props.onSmartTextToggle}
             />
+            <TrashIcon className="tool" onClick={props.onDelete} />
             {showClipSuccess ? (
               <ClipboardCheckIcon className="tool" onClick={copyToClipboard} />
             ) : (

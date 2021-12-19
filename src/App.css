@@ -23,7 +23,7 @@ svg {
   display: flex;
 }
 
-.App > #tools .tool {
+.App .tool {
   height: 25px;
   width: 25px;
   cursor: pointer;

@@ -54,6 +54,10 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
   let annotationDescriptionProps;
   let watermark;
 
+  if (lastLifeline) {
+    layoutEndY = lastLifeline.endY + PADDING;
+  }
+
   if (lastLifeline && lastMessage) {
     setLifelineLength(lifelineProps, lastMessage.endY + PADDING);
     layoutWidth =
@@ -62,20 +66,25 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
       PADDING +
       PADDING * 0.2;
     layoutEndX = layoutWidth;
-    annotationDescriptionProps = createAnnotationSequence(
-      Array.from(annotationMap.values()),
-      firstLifeline.x,
-      lastMessage.endY + 1.5 * PADDING,
-      layoutWidth - 2 * PADDING
-    );
-    if (annotationDescriptionProps?.length) {
-      layoutEndY =
-        annotationDescriptionProps[annotationDescriptionProps.length - 1].endY;
-      layoutHeight = layoutEndY + PADDING + PADDING * 0.2;
-    } else {
-      layoutEndY = lastLifeline.y + lastLifeline.length + PADDING * 0.6;
-      layoutHeight = layoutEndY + PADDING + PADDING * 0.2;
-    }
+    layoutEndY = lastMessage.endY + 1.5 * PADDING;
+  }
+
+  annotationDescriptionProps = createAnnotationSequence(
+    Array.from(annotationMap.values()),
+    firstLifeline.x,
+    layoutEndY,
+    layoutWidth - 2 * PADDING
+  );
+  if (annotationDescriptionProps?.length) {
+    layoutEndY =
+      annotationDescriptionProps[annotationDescriptionProps.length - 1].endY;
+    layoutHeight = layoutEndY + PADDING + PADDING * 0.2;
+  } else {
+    layoutEndY = lastLifeline.y + lastLifeline.length + PADDING * 0.6;
+    layoutHeight = layoutEndY + PADDING + PADDING * 0.2;
+  }
+
+  if (lastLifeline && lastMessage) {
     watermark = {
       x: layoutEndX - (PADDING + PADDING * 0.2),
       y: layoutEndY + PADDING * 0.6
