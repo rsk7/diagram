@@ -1,7 +1,7 @@
 import SequenceReader from "./diagram/parser/SequenceReader";
 import AppState from "./AppState";
 import { v4 as uuidv4 } from "uuid";
-import { exampleText, EXAMPLE_GUID } from "./exampleText";
+import { EXAMPLE_GUID } from "./exampleText";
 import { useEffect, useReducer } from "react";
 
 function setSequenceText(currState: AppState, text: string): AppState {
