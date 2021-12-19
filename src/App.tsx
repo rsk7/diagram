@@ -10,7 +10,7 @@ import { exampleText } from "./exampleText";
 import SequenceDiagram from "./diagram/SequenceDiagram";
 import GithubLogo from "./GitHub-Mark-32px.png";
 import { ReactComponent as TextIcon } from "./bootstrap-icons/card-text.svg";
-import Downloader from "./components/Downloader";
+import Downloader from "./components/downloader";
 import Rect from "./components/Rect";
 import AnnotationDescription from "./components/AnnotationDescription";
 
