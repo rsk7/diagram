@@ -5,6 +5,8 @@ import Draggable from "react-draggable";
 import { ReactComponent as BulbIcon } from "../bootstrap-icons/lightbulb.svg";
 import { ReactComponent as MoveIcon } from "../bootstrap-icons/arrows-move.svg";
 import { ReactComponent as CloseIcon } from "../bootstrap-icons/x-lg.svg";
+import { ReactComponent as ClipboardIcon } from "../bootstrap-icons/clipboard.svg";
+import { ReactComponent as ClipboardCheckIcon } from "../bootstrap-icons/clipboard-check.svg";
 
 interface SequenceDescriberProps {
   sequenceText: string;
@@ -28,6 +30,18 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
     width: 500
   });
   const nodeRef = useRef(null);
+
+  const [showClipSuccess, setShowClipSuccess] = useState(false);
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(props.sequenceText);
+    setShowClipSuccess(true);
+  };
+  useEffect(() => {
+    if (showClipSuccess) {
+      setTimeout(() => setShowClipSuccess(false), 5000);
+    }
+  });
+  const clipboardIcon = showClipSuccess ? ClipboardCheckIcon : ClipboardIcon;
   return (
     <Draggable nodeRef={nodeRef} bounds="parent" handle="#move">
       <Resizable
@@ -55,6 +69,11 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
               className={`tool ${props.smartTextOn ? "on" : ""}`}
               onClick={props.onSmartTextToggle}
             />
+            {showClipSuccess ? (
+              <ClipboardCheckIcon className="tool" onClick={copyToClipboard} />
+            ) : (
+              <ClipboardIcon className="tool" onClick={copyToClipboard} />
+            )}
             <MoveIcon id="move" className="tool" />
             <CloseIcon id="close" className="tool" onClick={props.onClose} />
           </div>
