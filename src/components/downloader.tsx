@@ -1,7 +1,7 @@
 import { ReactComponent as CameraIcon } from "../bootstrap-icons/camera.svg";
 import { downloadPng, downloadSvg } from "../services/DownloadService";
 import { useState } from "react";
-import "./Downloader.css";
+import "./downloader.css";
 import ReactDOM from "react-dom";
 
 interface DownloaderProps {

@@ -75,7 +75,8 @@ function App() {
     layoutHeight,
     layoutWidth,
     title,
-    diagramStartY
+    diagramStartY,
+    watermark
   } = sequenceDiagramLayout(sequenceState.diagram);
 
   const {
@@ -161,6 +162,17 @@ function App() {
               annotation={p.annotationData}
             />
           ))}
+          {watermark && (
+            <text
+              fill="#b0b0b0"
+              style={{ font: "12px Consolas" }}
+              textAnchor="end"
+              x={watermark.x}
+              y={watermark.y}
+            >
+              sequencediagram.xyz
+            </text>
+          )}
         </g>
       </svg>
       <SequenceDescriber

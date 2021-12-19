@@ -25,6 +25,7 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
   layoutHeight: number;
   layoutWidth: number;
   diagramStartY: number;
+  watermark?: { x: number; y: number };
 } {
   const annotationMap = createAnnotationMap(diagram);
   const actors = diagram.actors;
@@ -48,7 +49,10 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
 
   let layoutHeight = 0;
   let layoutWidth = 0;
+  let layoutEndY = 0;
+  let layoutEndX = 0;
   let annotationDescriptionProps;
+  let watermark;
 
   if (lastLifeline && lastMessage) {
     setLifelineLength(lifelineProps, lastMessage.endY + PADDING);
@@ -57,6 +61,7 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
       lastLifeline.textBoxDetails.width +
       PADDING +
       PADDING * 0.2;
+    layoutEndX = layoutWidth;
     annotationDescriptionProps = createAnnotationSequence(
       Array.from(annotationMap.values()),
       firstLifeline.x,
@@ -64,12 +69,17 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
       layoutWidth - 2 * PADDING
     );
     if (annotationDescriptionProps?.length) {
-      layoutHeight =
-        annotationDescriptionProps[annotationDescriptionProps.length - 1].endY +
-        PADDING;
+      layoutEndY =
+        annotationDescriptionProps[annotationDescriptionProps.length - 1].endY;
+      layoutHeight = layoutEndY + PADDING + PADDING * 0.2;
     } else {
-      layoutHeight = lastLifeline.y + lastLifeline.length + PADDING;
+      layoutEndY = lastLifeline.y + lastLifeline.length;
+      layoutHeight = layoutEndY + PADDING + PADDING * 0.2;
     }
+    watermark = {
+      x: layoutEndX - (PADDING + PADDING * 0.2),
+      y: layoutEndY + PADDING * 0.6
+    };
   }
 
   let title;
@@ -97,6 +107,7 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
     diagramStartY,
     layoutHeight,
     layoutWidth,
-    title
+    title,
+    watermark
   };
 }
