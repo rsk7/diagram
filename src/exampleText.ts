@@ -3,12 +3,23 @@ export const exampleText = `Sequence Diagram
 
 This is a tool that draws simple sequence diagrams. The diagrams are described in text using a simple language. To create a diagram start by defining some "actors" and some interactions between them.
 
-actors: user, computer, server
+
+
+actors: user
+Someone who has access to a computer.
+
+actor: computer, server
+Server needs to be online.
 
 user -- opens browser --> computer
+
 computer -- sends request --> server
+Computer does a great job sending the request.
+
 server -- sends response --> computer
 computer -- shows page --> user
+
+
 
 The diagram is being drawn in an SVG element. You can move it around by dragging it. Scroll up or down to zoom. This text box can also be moved using the move button on the top right and resized using the handle on the bottom right corner.
 

@@ -1,5 +1,6 @@
 import TextBoxDetails, { TextAlignment } from "../../services/TextBoxDetails";
 import { SequenceInteraction } from "../SequenceDiagram";
+import { AnnotationData } from "./AnnotationLayout";
 
 export const INTERACTION_LINE_PADDING = 5;
 const MIN_WIDTH = 50;
@@ -13,6 +14,7 @@ export default class MessageArrow {
   interaction: SequenceInteraction;
   textBoxBorder: boolean;
   startY: number;
+  annotationData?: AnnotationData;
 
   private _textBoxDetails: TextBoxDetails | undefined;
 
@@ -27,6 +29,10 @@ export default class MessageArrow {
     this.interaction = interaction;
     this.textBoxBorder = false;
     this.startY = startY;
+  }
+
+  get annotationText(): string | undefined {
+    return this.interaction.annotation;
   }
 
   private get distanceX(): number {

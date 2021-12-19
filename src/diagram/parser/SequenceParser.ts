@@ -2,14 +2,15 @@ import { SequenceActor, SequenceInteraction } from "../SequenceDiagram";
 
 export function splitLines(text?: string): string[] {
   if (!text) return [];
-  return text
-    .split("\n")
-    .filter((l) => l.length)
-    .map((l) => l.trim());
+  return text.split("\n").map((l) => l.trim());
 }
 
 export function findActorLines(lines: string[]): string[] {
-  return lines.filter((l) => l.startsWith("actor:") || l.startsWith("actors:"));
+  return lines.filter(isActorLine);
+}
+
+function isActorLine(line: string): boolean {
+  return line.startsWith("actor:") || line.startsWith("actors:");
 }
 
 export function findActorNames(line?: string): string[] {
@@ -51,13 +52,25 @@ function mergeDuplicateSequenceActors(
 }
 
 export function findActors(lines: string[]): SequenceActor[] {
-  const actors = findActorLines(lines).reduce<string[]>((result, line) => {
-    return [...result, ...findActorNames(line)];
-  }, []);
   return Array.from(
-    actors
-      .filter((a) => a.length)
-      .map(createSequenceActor)
+    lines
+      .reduce<SequenceActor[]>(
+        (acc: SequenceActor[], line: string, index: number) => {
+          if (isActorLine(line)) {
+            const actorNames = findActorNames(line);
+            const actors = actorNames
+              .filter((a) => a.length)
+              .map(createSequenceActor);
+            const followingLine = lines[index + 1] || "";
+            if (actors.length) {
+              annotationAdder(followingLine, actors[actors.length - 1]);
+              acc.push(...actors);
+            }
+          }
+          return acc;
+        },
+        []
+      )
       .reduce(mergeDuplicateSequenceActors, new Map<string, SequenceActor>())
       .values()
   );
@@ -93,11 +106,29 @@ function interactionMatcher(line: string): SequenceInteraction | undefined {
 
 export function findInteractions(lines: string[]): SequenceInteraction[] {
   return lines.reduce<SequenceInteraction[]>(
-    (interactions: SequenceInteraction[], line: string) => {
+    (interactions: SequenceInteraction[], line: string, index: number) => {
       const interaction = interactionMatcher(line);
-      if (interaction) interactions.push(interaction);
+      if (interaction) {
+        // check if following line is plain text
+        const followingLine = lines[index + 1] || "";
+        annotationAdder(followingLine, interaction);
+        interactions.push(interaction);
+      }
       return interactions;
     },
     []
   );
+}
+
+function annotationAdder(
+  nextLine: string,
+  destination: { annotation?: string }
+) {
+  if (
+    nextLine.trim().length &&
+    !interactionMatcher(nextLine) &&
+    !isActorLine(nextLine)
+  ) {
+    destination.annotation = nextLine;
+  }
 }

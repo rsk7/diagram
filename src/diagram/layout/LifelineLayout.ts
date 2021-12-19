@@ -10,7 +10,7 @@ export function createLifelineSequence(
 ): Lifeline[] {
   return actors.reduce<Lifeline[]>((lifelineProps, actor, idx) => {
     if (!lifelineProps.length) {
-      lifelineProps.push(new Lifeline(actor.name, startX, startY));
+      lifelineProps.push(new Lifeline(actor, startX, startY));
     } else {
       const previous = lifelineProps[lifelineProps.length - 1];
       const previousActor = actors[idx - 1];
@@ -18,7 +18,7 @@ export function createLifelineSequence(
         previous.x +
         previous.textBoxDetails.width +
         LIFELINE_SEPARATION * (previousActor.spacingRight || 1);
-      lifelineProps.push(new Lifeline(actor.name, x, startY));
+      lifelineProps.push(new Lifeline(actor, x, startY));
     }
     return lifelineProps;
   }, []);
@@ -48,5 +48,7 @@ export function setLifelineLength(
   lifelineProps: Lifeline[],
   endY: number
 ): void {
-  lifelineProps.forEach((p) => (p.length = endY - (p.y + p.textBoxDetails.height)));
+  lifelineProps.forEach(
+    (p) => (p.length = endY - (p.y + p.textBoxDetails.height))
+  );
 }

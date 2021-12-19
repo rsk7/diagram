@@ -10,8 +10,9 @@ import { exampleText } from "./exampleText";
 import SequenceDiagram from "./diagram/SequenceDiagram";
 import GithubLogo from "./GitHub-Mark-32px.png";
 import { ReactComponent as TextIcon } from "./bootstrap-icons/card-text.svg";
-import Downloader from "./components/downloader";
+import Downloader from "./components/Downloader";
 import Rect from "./components/Rect";
+import AnnotationDescription from "./components/AnnotationDescription";
 
 interface SequenceState {
   diagram: SequenceDiagram;
@@ -20,9 +21,18 @@ interface SequenceState {
   showSequenceDescriber: boolean;
 }
 
+// yup hacktastic indeed
+const CURRENT_GUID = "27e67be2-598c-49df-85c2-3a8942088cbe";
+const PREVIOUS_GUID = "sequenceText";
+
+function removeOldCache() {
+  localStorage.setItem(PREVIOUS_GUID, "");
+}
+
 function App() {
   const [sequenceState, setSequenceState] = useState<SequenceState>(() => {
-    const text = localStorage.getItem("sequenceText") || exampleText;
+    removeOldCache();
+    const text = localStorage.getItem(CURRENT_GUID) || exampleText;
     return {
       ...SequenceReader(text),
       smartTextEnabled: false,
@@ -55,12 +65,13 @@ function App() {
   };
 
   useEffect(() => {
-    localStorage.setItem("sequenceText", sequenceState.text);
+    localStorage.setItem(CURRENT_GUID, sequenceState.text);
   });
 
   const {
     lifelineProps,
     messageArrowProps,
+    annotationDescriptionProps,
     layoutHeight,
     layoutWidth,
     title,
@@ -129,6 +140,7 @@ function App() {
               length={p.length}
               x={p.x}
               y={p.y}
+              annotation={p.annotationData}
             />
           ))}
           {messageArrowProps?.map((p, index) => (
@@ -138,6 +150,15 @@ function App() {
               labelX={p.labelX}
               labelY={p.labelY}
               points={p.points}
+              annotation={p.annotationData}
+            />
+          ))}
+          {annotationDescriptionProps?.map((p) => (
+            <AnnotationDescription
+              boxX={p.x}
+              boxY={p.y}
+              textBoxDetails={p.textBoxDetails}
+              annotation={p.annotationData}
             />
           ))}
         </g>

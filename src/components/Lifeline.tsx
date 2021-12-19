@@ -8,6 +8,11 @@ interface LifelineProps {
   y: number;
   textBoxDetails: TextBoxDetails;
   length: number;
+  annotation?: {
+    index: number;
+    color: string;
+    font: string;
+  };
 }
 
 export default function LifelineComponent(props: LifelineProps) {
@@ -22,6 +27,7 @@ export default function LifelineComponent(props: LifelineProps) {
         boxX={props.x}
         boxY={props.y}
         textBoxDetails={props.textBoxDetails}
+        annotation={props.annotation}
       />
     </g>
   );

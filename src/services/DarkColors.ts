@@ -1,0 +1,118 @@
+const colorList = [
+  "AliceBlue",
+  "Black",
+  "Blue",
+  "Chocolate",
+  "Coral",
+  "Crimson",
+  "Cyan",
+  "DarkBlue",
+  "DarkCyan",
+  "DarkGoldenRod",
+  "DarkGray",
+  "DarkGreen",
+  "DarkKhaki",
+  "DarkMagenta",
+  "DarkOliveGreen",
+  "Darkorange",
+  "DarkOrchid",
+  "DarkRed",
+  "DarkSalmon",
+  "DarkSeaGreen",
+  "DarkSlateBlue",
+  "DarkSlateGray",
+  "DarkTurquoise",
+  "DarkViolet",
+  "DeepPink",
+  "DeepSkyBlue",
+  "DodgerBlue",
+  "FireBrick",
+  "ForestGreen",
+  "Gray",
+  "Green",
+  "GreenYellow",
+  "HotPink",
+  "IndianRed",
+  "Indigo",
+  "Khaki",
+  "LawnGreen",
+  "LightBlue",
+  "LightCoral",
+  "LightCyan",
+  "LightGray",
+  "LightGreen",
+  "LightPink",
+  "LightSalmon",
+  "LightSeaGreen",
+  "LightSkyBlue",
+  "LightSlateGray",
+  "LightSteelBlue",
+  "Lime",
+  "LimeGreen",
+  "Maroon",
+  "MediumAquaMarine",
+  "MediumBlue",
+  "MediumOrchid",
+  "MediumPurple",
+  "MediumSeaGreen",
+  "MediumSlateBlue",
+  "MediumSpringGreen",
+  "MediumTurquoise",
+  "MediumVioletRed",
+  "MidnightBlue",
+  "Navy",
+  "Olive",
+  "OliveDrab",
+  "Orange",
+  "OrangeRed",
+  "Orchid",
+  "PaleGoldenRod",
+  "PaleGreen",
+  "PaleTurquoise",
+  "PaleVioletRed",
+  "Peru",
+  "Pink",
+  "Plum",
+  "Purple",
+  "Red",
+  "RosyBrown",
+  "RoyalBlue",
+  "SaddleBrown",
+  "Salmon",
+  "SandyBrown",
+  "SeaGreen",
+  "Sienna",
+  "Silver",
+  "SkyBlue",
+  "SlateBlue",
+  "SlateGray",
+  "SpringGreen",
+  "SteelBlue",
+  "Tan",
+  "Teal",
+  "Thistle",
+  "Tomato",
+  "Turquoise",
+  "Violet",
+  "Wheat",
+  "Yellow"
+];
+
+export function nextColors(colorLength: number): string[] {
+  let nextColorIndex = 0;
+  const colors = [];
+  const colorArray = colorList;
+  for (let i = 0; i < colorLength; i++) {
+    const result = colorArray[nextColorIndex];
+    const length = colorArray.length;
+    // assuming 1/6 of length colors in sequence are similar
+    const skip = Math.floor(length / 4) + 1;
+    const proposedNextIndex = nextColorIndex + skip;
+    nextColorIndex =
+      proposedNextIndex > length
+        ? proposedNextIndex % length
+        : proposedNextIndex;
+    colors.push(result);
+  }
+  return colors;
+}

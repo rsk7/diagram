@@ -6,6 +6,11 @@ interface MessageArrowProps {
   labelX: number;
   labelY: number;
   textBoxDetails: TextBoxDetails;
+  annotation?: {
+    index: number;
+    color: string;
+    font: string;
+  };
 }
 
 export default function MessageArrowComponent(props: MessageArrowProps) {
@@ -22,6 +27,7 @@ export default function MessageArrowComponent(props: MessageArrowProps) {
         boxX={props.labelX}
         boxY={props.labelY}
         textBoxDetails={props.textBoxDetails}
+        annotation={props.annotation}
       />
     </g>
   );
