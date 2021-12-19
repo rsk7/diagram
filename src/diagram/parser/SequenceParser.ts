@@ -87,8 +87,8 @@ export function findTitle(lines: string[]): string {
 
 function interactionMatcher(line: string): SequenceInteraction | undefined {
   const matchers = [
-    /(?<from>.+) --(?<action>.+)--> (?<to>.+)/i,
-    /(?<to>.+) <--(?<action>.+)-- (?<from>.+)/i,
+    /(?<from>.+)--(?<action>.+)-->(?<to>.+)/i,
+    /(?<to>.+)<--(?<action>.+)--(?<from>.+)/i,
     /(?<from>.+) call(s*) (?<action>.+) on (?<to>.+)/i,
     /(?<from>.+) return(s*) (?<action>.+) to (?<to>.+)/i
   ];
@@ -96,9 +96,9 @@ function interactionMatcher(line: string): SequenceInteraction | undefined {
     const match = line.match(matcher);
     if (match?.groups) {
       return {
-        fromActor: match.groups.from,
-        toActor: match.groups.to,
-        description: match.groups.action
+        fromActor: match.groups.from.trim(),
+        toActor: match.groups.to.trim(),
+        description: match.groups.action.trim()
       };
     }
   }
