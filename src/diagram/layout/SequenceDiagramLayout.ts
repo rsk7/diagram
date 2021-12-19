@@ -69,19 +69,21 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
     layoutEndY = lastMessage.endY + 1.5 * PADDING;
   }
 
-  annotationDescriptionProps = createAnnotationSequence(
-    Array.from(annotationMap.values()),
-    firstLifeline.x,
-    layoutEndY,
-    layoutWidth - 2 * PADDING
-  );
-  if (annotationDescriptionProps?.length) {
-    layoutEndY =
-      annotationDescriptionProps[annotationDescriptionProps.length - 1].endY;
-    layoutHeight = layoutEndY + PADDING + PADDING * 0.2;
-  } else {
-    layoutEndY = lastLifeline.y + lastLifeline.length + PADDING * 0.6;
-    layoutHeight = layoutEndY + PADDING + PADDING * 0.2;
+  if (lastLifeline) {
+    annotationDescriptionProps = createAnnotationSequence(
+      Array.from(annotationMap.values()),
+      firstLifeline.x,
+      layoutEndY,
+      layoutWidth - 2 * PADDING
+    );
+    if (annotationDescriptionProps?.length) {
+      layoutEndY =
+        annotationDescriptionProps[annotationDescriptionProps.length - 1].endY;
+      layoutHeight = layoutEndY + PADDING + PADDING * 0.2;
+    } else {
+      layoutEndY = lastLifeline.y + lastLifeline.length + PADDING * 0.6;
+      layoutHeight = layoutEndY + PADDING + PADDING * 0.2;
+    }
   }
 
   if (lastLifeline && lastMessage) {
