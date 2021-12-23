@@ -46,7 +46,7 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
   });
   const Theme = EditorView.theme({
     ".cm-content": {
-      fontSize: "9pt"
+      fontSize: "10pt"
     }
   });
   return (
