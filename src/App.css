@@ -58,15 +58,15 @@ svg {
   position: absolute;
 }
 
-textarea::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 12px; /* width of the entire scrollbar */
 }
 
-textarea::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: white; /* color of the tracking area */
 }
 
-textarea::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: #e0e0e0; /* color of the scroll thumb */
   border-radius: 20px; /* roundness of the scroll thumb */
   border: 3px solid white; /* creates padding around scroll thumb */

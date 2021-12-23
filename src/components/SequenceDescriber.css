@@ -5,33 +5,41 @@
   min-width: 300px;
   min-height: 300px;
   top: 0px;
-  padding: 20px 10px 20px 20px;
   border: 2px solid #e0e0e0;
   border-radius: 5px;
   background: rgba(255, 255, 255, 0.8);
+  padding-bottom: 10px;
+}
+
+#sequenceDescriber .cm-editor.cm-focused {
+  outline: none;
+}
+
+#sequenceDescriber .cm-scroller {
+  overflow-x: hidden;
 }
 
 #sequenceDescriber.hide {
   display: none;
 }
 
-#sequenceDescriber textarea {
+#sequenceDescriber .cm-container {
   height: 100%;
   width: 100%;
   overflow-y: auto;
   border: none;
   outline: none;
-  resize: none;
   background-color: transparent;
 }
 
 #sequenceDescriber .tools {
   position: absolute;
   display: flex;
-  top: 18px;
-  right: 25px;
+  top: 2px;
+  right: 10px;
   justify-content: flex-end;
   align-items: center;
+  z-index: 1000;
 }
 
 #sequenceDescriber .tools .tool {
