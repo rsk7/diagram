@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@codemirror/basic-setup": "^0.19.1",
+    "@codemirror/gutter": "^0.19.9",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -12,6 +14,7 @@
     "@types/react-dom": "^17.0.11",
     "@types/react-resizable": "^1.7.4",
     "@visx/text": "^2.3.0",
+    "codemirror": "^5.65.0",
     "escape-string-regexp": "^5.0.0",
     "firebase": "^9.6.1",
     "react": "^17.0.2",

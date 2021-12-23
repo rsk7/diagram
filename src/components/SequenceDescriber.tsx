@@ -8,6 +8,8 @@ import { ReactComponent as CloseIcon } from "../bootstrap-icons/x-lg.svg";
 import { ReactComponent as ClipboardIcon } from "../bootstrap-icons/clipboard.svg";
 import { ReactComponent as ClipboardCheckIcon } from "../bootstrap-icons/clipboard-check.svg";
 import { ReactComponent as TrashIcon } from "../bootstrap-icons/trash.svg";
+import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
+import { lineNumbers, gutter } from "@codemirror/gutter";
 
 interface SequenceDescriberProps {
   sequenceText: string;
@@ -43,6 +45,18 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
       setTimeout(() => setShowClipSuccess(false), 5000);
     }
   });
+
+  const editorRef = useRef<EditorView | null>(null);
+  useEffect(() => {
+    editorRef.current = new EditorView({
+      state: EditorState.create({
+        doc: props.sequenceText,
+        extensions: [basicSetup]
+      }),
+      parent: nodeRef.current!
+    });
+  }, []);
+
   return (
     <Draggable nodeRef={nodeRef} bounds="parent" handle="#move">
       <Resizable
@@ -79,14 +93,6 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
             <MoveIcon id="move" className="tool" />
             <CloseIcon id="close" className="tool" onClick={props.onClose} />
           </div>
-          <textarea
-            ref={textAreaRef}
-            value={props.sequenceText}
-            onChange={(e) => {
-              selectionEndRef.current = e.target.selectionEnd;
-              props.onChange(e.target.value);
-            }}
-          ></textarea>
         </div>
       </Resizable>
     </Draggable>
