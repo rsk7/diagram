@@ -2,4 +2,4 @@
 
 Tool for making simple sequence diagrams. Created using create-react-app.
 
-[sequencediagram.xyz](sequencediagram.xyz)
+[sequencediagram.xyz](https://sequencediagram.xyz)
