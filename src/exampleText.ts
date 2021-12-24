@@ -32,6 +32,8 @@ Remove the "#" character to start drawing.
 
 Use [Ctrl or Cmd] + F to find and replace.
 
+This editor is codemirror.net/6 used in React via https://uiwjs.github.io/react-codemirror/.
+
 `;
 
 const REFRESH_EXAMPLE_GUID = "2df39b83-30d1-4f8f-8479-b4f692d25972";
