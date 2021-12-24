@@ -71,13 +71,6 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
           }}
         >
           <div className="tools">
-            {/*
-            <BulbIcon
-              id="lightbulb"
-              className={`tool ${props.smartTextOn ? "on" : ""}`}
-              onClick={props.onSmartTextToggle}
-            />
-            */}
             <TrashIcon className="tool" onClick={props.onDelete} />
             {showClipSuccess ? (
               <ClipboardCheckIcon className="tool" onClick={copyToClipboard} />

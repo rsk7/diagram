@@ -8,7 +8,6 @@
   border: 2px solid #e0e0e0;
   border-radius: 5px;
   background: rgba(255, 255, 255, 0.8);
-  padding-bottom: 10px;
 }
 
 #sequenceDescriber .cm-editor.cm-focused {
@@ -59,4 +58,30 @@
 #sequenceDescriber .tools #lightbulb.on {
   background-color: #ffffff;
   fill: orange;
+}
+
+.cm-panels .cm-panel.cm-search {
+  background-color: white;
+}
+
+.cm-panels .cm-button {
+  border: 1px solid #e0e0e0;
+  background-color: #e0e0e0;
+  background-image: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.cm-panels .cm-button:hover {
+  background-color: white;
+}
+
+.cm-panel .cm-textfield {
+  padding: 1px;
+  border: none;
+}
+
+.cm-panel input.cm-textfield:focus {
+  outline: none;
 }

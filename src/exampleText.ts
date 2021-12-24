@@ -30,9 +30,11 @@ Remove the "#" character to start drawing.
 #server -- working --> server
 #db -- sends data for aggregation --> data warehouse
 
+Use [Ctrl or Cmd] + F to find and replace.
+
 `;
 
-const REFRESH_EXAMPLE_GUID = "2df39b83-30d1-4f8f-8479-b4f692d25971";
+const REFRESH_EXAMPLE_GUID = "2df39b83-30d1-4f8f-8479-b4f692d25972";
 export const EXAMPLE_GUID = "27e67be2-598c-49df-85c2-3a8942088cbe";
 
 if (
