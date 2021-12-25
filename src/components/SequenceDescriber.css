@@ -85,3 +85,11 @@
 .cm-panel input.cm-textfield:focus {
   outline: none;
 }
+
+#sequenceDescriber .cm-editor {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+#sequenceDescriber .cm-activeLine {
+  background-color: rgba(243, 249, 255, 0.5);
+}
