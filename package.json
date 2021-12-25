@@ -5,6 +5,8 @@
   "dependencies": {
     "@codemirror/basic-setup": "^0.19.1",
     "@codemirror/gutter": "^0.19.9",
+    "@codemirror/highlight": "^0.19.6",
+    "@codemirror/language": "^0.19.7",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -31,7 +33,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lezer": "lezer-generator src/language/sequence.grammar -o src/language/parser.js"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@lezer/generator": "^0.15.2",
     "@types/uuid": "^8.3.3",
     "prettier": "2.5.0"
   }
