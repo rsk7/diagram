@@ -1,0 +1,26 @@
+@top Program { expression* }
+
+@skip { newLine | LineComment }
+
+
+expression {
+  String | Title | ActorExpression
+}
+
+Title {
+  "==" String "=="
+}
+
+ActorExpression {
+  Actor String ("," String)*
+}
+
+@tokens {
+  @precedence { Actor, String }
+  Actor { "actors:" }
+  String { $[a-zA-Z_\-0-9 ]+ }
+  LineComment { "#" ![\n]* }
+  newLine { $[\n\r]+ }
+}
+
+@detectDelim
