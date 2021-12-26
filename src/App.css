@@ -41,7 +41,7 @@ svg {
 
 .react-resizable-handle {
   position: absolute;
-  width: 20px;
+  width: 12px;
   height: 12px;
   bottom: 0;
   right: 0;
