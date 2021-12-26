@@ -1,17 +1,13 @@
 import { SequenceActor, SequenceInteraction } from "../SequenceDiagram";
-
-export function splitLines(text?: string): string[] {
-  if (!text) return [];
-  return text.split("\n").map((l) => l.trim());
-}
-
-export function findActorLines(lines: string[]): string[] {
-  return lines.filter(isActorLine);
-}
-
-function isActorLine(line: string): boolean {
-  return line.startsWith("actor:") || line.startsWith("actors:");
-}
+import { interactionLineRegex } from "./regex";
+import {
+  Line,
+  findActorLines,
+  findTitleLines,
+  findInteractionLines,
+  isAnnotationLine,
+  isActorLine
+} from "./SequenceLines";
 
 export function findActorNames(line?: string): string[] {
   if (!line) return [];
@@ -51,17 +47,18 @@ function mergeDuplicateSequenceActors(
   return mergeMap;
 }
 
-export function findActors(lines: string[]): SequenceActor[] {
+export function findActors(lines: Line[]): SequenceActor[] {
+  const actorLines = findActorLines(lines);
   return Array.from(
-    lines
+    actorLines
       .reduce<SequenceActor[]>(
-        (acc: SequenceActor[], line: string, index: number) => {
+        (acc: SequenceActor[], line: Line, index: number) => {
           if (isActorLine(line)) {
-            const actorNames = findActorNames(line);
+            const actorNames = findActorNames(line.text);
             const actors = actorNames
               .filter((a) => a.length)
               .map(createSequenceActor);
-            const followingLine = lines[index + 1] || "";
+            const followingLine = actorLines[index + 1] || "";
             if (actors.length) {
               annotationAdder(followingLine, actors[actors.length - 1]);
               acc.push(...actors);
@@ -76,23 +73,13 @@ export function findActors(lines: string[]): SequenceActor[] {
   );
 }
 
-export function findTitle(lines: string[]): string {
-  for (let i = 0; i < lines.length; i++) {
-    if (i > 0 && lines[i].startsWith("====")) {
-      return lines[i - 1];
-    }
-  }
-  return "";
+export function findTitle(lines: Line[]): string {
+  const titleLines = findTitleLines(lines);
+  return titleLines?.length ? lines[0].text : "";
 }
 
 function interactionMatcher(line: string): SequenceInteraction | undefined {
-  const matchers = [
-    /(?<from>.+)--(?<action>.+)-->(?<to>.+)/i,
-    /(?<to>.+)<--(?<action>.+)--(?<from>.+)/i,
-    /(?<from>.+) call(s*) (?<action>.+) on (?<to>.+)/i,
-    /(?<from>.+) return(s*) (?<action>.+) to (?<to>.+)/i
-  ];
-  for (const matcher of matchers) {
+  for (const matcher of interactionLineRegex) {
     const match = line.match(matcher);
     if (match?.groups) {
       return {
@@ -104,13 +91,14 @@ function interactionMatcher(line: string): SequenceInteraction | undefined {
   }
 }
 
-export function findInteractions(lines: string[]): SequenceInteraction[] {
-  return lines.reduce<SequenceInteraction[]>(
-    (interactions: SequenceInteraction[], line: string, index: number) => {
-      const interaction = interactionMatcher(line);
+export function findInteractions(lines: Line[]): SequenceInteraction[] {
+  const interactionLines = findInteractionLines(lines);
+  return interactionLines.reduce<SequenceInteraction[]>(
+    (interactions: SequenceInteraction[], line: Line, index: number) => {
+      const interaction = interactionMatcher(line.text);
       if (interaction) {
         // check if following line is plain text
-        const followingLine = lines[index + 1] || "";
+        const followingLine = interactionLines[index + 1] || "";
         annotationAdder(followingLine, interaction);
         interactions.push(interaction);
       }
@@ -120,15 +108,8 @@ export function findInteractions(lines: string[]): SequenceInteraction[] {
   );
 }
 
-function annotationAdder(
-  nextLine: string,
-  destination: { annotation?: string }
-) {
-  if (
-    nextLine.trim().length &&
-    !interactionMatcher(nextLine) &&
-    !isActorLine(nextLine)
-  ) {
-    destination.annotation = nextLine;
+function annotationAdder(nextLine: Line, destination: { annotation?: string }) {
+  if (isAnnotationLine(nextLine)) {
+    destination.annotation = nextLine.text;
   }
 }

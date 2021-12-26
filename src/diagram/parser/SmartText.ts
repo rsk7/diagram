@@ -1,9 +1,5 @@
-import {
-  splitLines,
-  findActorLines,
-  findActorNames,
-  createSequenceActor
-} from "./SequenceParser";
+import { splitLines, findActorLines } from "./SequenceLines";
+import { findActorNames, createSequenceActor } from "./SequenceParser";
 import esc from "escape-string-regexp";
 
 function replaceActorName(
@@ -47,8 +43,8 @@ export default function SmartText(current: string, previous?: string): string {
   const previousActorLines = findActorLines(splitLines(previous));
   if (!currentActorLines.length || !previousActorLines.length) return current;
   for (let i = 0; i < currentActorLines.length; i++) {
-    const currentActorNames = findActorNames(currentActorLines[i]);
-    const previousActorNames = findActorNames(previousActorLines[i]);
+    const currentActorNames = findActorNames(currentActorLines[i].text);
+    const previousActorNames = findActorNames(previousActorLines[i].text);
     if (currentActorNames.length !== previousActorNames.length) continue;
     for (let j = 0; j < currentActorNames.length; j++) {
       if (currentActorNames[j] === previousActorNames[j]) continue;

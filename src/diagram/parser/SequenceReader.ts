@@ -1,10 +1,6 @@
 import SequenceDiagram from "../SequenceDiagram";
-import {
-  splitLines,
-  findActors,
-  findInteractions,
-  findTitle
-} from "./SequenceParser";
+import { splitLines } from "./SequenceLines";
+import { findActors, findInteractions, findTitle } from "./SequenceParser";
 import SmartText from "./SmartText";
 
 interface Options {

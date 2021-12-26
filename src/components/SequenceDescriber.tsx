@@ -8,7 +8,7 @@ import { ReactComponent as ClipboardIcon } from "../bootstrap-icons/clipboard.sv
 import { ReactComponent as ClipboardCheckIcon } from "../bootstrap-icons/clipboard-check.svg";
 import { ReactComponent as TrashIcon } from "../bootstrap-icons/trash.svg";
 import CodeMirror from "@uiw/react-codemirror";
-import { EditorView, basicSetup } from "@codemirror/basic-setup";
+import { setup } from "../codemirror/setup";
 
 interface SequenceDescriberProps {
   sequenceText: string;
@@ -42,11 +42,6 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
   useEffect(() => {
     if (showClipSuccess) {
       setTimeout(() => setShowClipSuccess(false), 5000);
-    }
-  });
-  const Theme = EditorView.theme({
-    ".cm-content": {
-      fontSize: "10pt"
     }
   });
   return (
@@ -83,7 +78,8 @@ export default function SequenceDescriber(props: SequenceDescriberProps) {
           <div className="cm-container">
             <CodeMirror
               value={props.sequenceText}
-              extensions={[basicSetup, EditorView.lineWrapping, Theme]}
+              basicSetup={false}
+              extensions={setup}
               onChange={(value) => {
                 props.onChange(value);
               }}
