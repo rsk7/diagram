@@ -25,6 +25,10 @@ export function isActorLine(line: Line): boolean {
   return line.text.startsWith("actor:") || line.text.startsWith("actors:");
 }
 
+export function isCommentLine(line: Line): boolean {
+  return line.text.trim().startsWith("#");
+}
+
 export function isInteractionLine(line: Line): boolean {
   if (line.text?.trim() && line.text?.startsWith("#")) return false;
   for (const matcher of interactionLineRegex) {
@@ -36,7 +40,10 @@ export function isInteractionLine(line: Line): boolean {
 
 export function isAnnotationLine(line: Line): boolean {
   return (
-    !!line.text?.trim().length && !isInteractionLine(line) && !isActorLine(line)
+    !!line.text?.trim().length &&
+    !isInteractionLine(line) &&
+    !isActorLine(line) &&
+    !isCommentLine(line)
   );
 }
 

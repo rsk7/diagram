@@ -2,7 +2,7 @@
   display: block;
   margin: 10px;
   position: absolute;
-  min-width: 300px;
+  min-width: 400px;
   min-height: 300px;
   top: 0px;
   border: 2px solid #e0e0e0;
@@ -62,6 +62,15 @@
 
 .cm-panels .cm-panel.cm-search {
   background-color: white;
+  font-size: 20px;
+}
+
+.cm-panels .cm-panel.cm-search label {
+  display: none;
+}
+
+.cm-panels .cm-panel.cm-search button {
+  cursor: pointer;
 }
 
 .cm-panels .cm-button {
@@ -71,7 +80,33 @@
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 2px;
+  text-transform: capitalize;
 }
+
+/* aligning buttons with css instead of implementing custom codemirror panel */
+.cm-panels .cm-search button.cm-button[name="replace"] {
+  margin-right: 6px;
+}
+
+.cm-panels .cm-search button.cm-button[name="replaceAll"] {
+  margin-right: 10px;
+  padding-right: 9px;
+}
+
+.cm-panels .cm-search button.cm-button[name="next"] {
+  margin-right: 6px;
+  padding: 5px 9px;
+}
+
+.cm-panels .cm-search button.cm-button[name="prev"] {
+  margin-right: 6px;
+  padding: 5px 8px;
+}
+
+.cm-panels .cm-search button.cm-button[name="select"] {
+  margin-right: 10px;
+}
+/* done with alignment */
 
 .cm-panels .cm-button:hover {
   background-color: white;
