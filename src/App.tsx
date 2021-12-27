@@ -4,7 +4,7 @@ import sequenceDiagramLayout from "./diagram/layout/SequenceDiagramLayout";
 import GithubLogo from "./GitHub-Mark-32px.png";
 import { ReactComponent as TextIcon } from "./bootstrap-icons/card-text.svg";
 import Downloader from "./components/downloader";
-import SequenceDiagramComponent from "./components/SequenceDiagram/SequenceDiagram";
+import SequenceDiagramComponent from "./components/SequenceDiagram";
 import { useAppReducer } from "./AppReducer";
 import FileManager from "./components/FileManager";
 

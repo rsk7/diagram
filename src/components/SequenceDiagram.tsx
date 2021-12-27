@@ -1,0 +1,72 @@
+import Rect from "./Rect";
+import LifelineComponent from "./Lifeline";
+import MessageArrowComponent from "./MessageArrow";
+import AnnotationDescriptionComponent from "./AnnotationDescription";
+import Lifeline from "../diagram/layout/Lifeline";
+import MessageArrow from "../diagram/layout/MessageArrow";
+import AnnotationDescription from "../diagram/layout/AnnotationDescription";
+import Title from "../diagram/layout/Title";
+import DiagramSvg from "./DiagamSvg";
+
+interface SequenceDiagramProps {
+  lifelineProps: Lifeline[];
+  messageArrowProps?: MessageArrow[];
+  annotationDescriptionProps?: AnnotationDescription[];
+  title?: Title;
+  watermark?: { x: number; y: number };
+}
+
+export default function SequenceDiagram(props: SequenceDiagramProps) {
+  return (
+    <DiagramSvg>
+      {props.title && (
+        <Rect
+          boxX={props.title.x}
+          boxY={props.title.y}
+          textBoxDetails={props.title.textBoxDetails}
+        />
+      )}
+      {props.lifelineProps.map((p, index) => (
+        <LifelineComponent
+          key={index}
+          lineX={p.lineX}
+          textBoxDetails={p.textBoxDetails}
+          length={p.length}
+          x={p.x}
+          y={p.y}
+          annotation={p.annotationData}
+        />
+      ))}
+      {props.messageArrowProps?.map((p, index) => (
+        <MessageArrowComponent
+          key={index}
+          textBoxDetails={p.textBoxDetails}
+          labelX={p.labelX}
+          labelY={p.labelY}
+          points={p.points}
+          annotation={p.annotationData}
+        />
+      ))}
+      {props.annotationDescriptionProps?.map((p, index) => (
+        <AnnotationDescriptionComponent
+          key={index}
+          boxX={p.x}
+          boxY={p.y}
+          textBoxDetails={p.textBoxDetails}
+          annotation={p.annotationData}
+        />
+      ))}
+      {props.watermark && (
+        <text
+          fill="#b0b0b0"
+          style={{ font: "12px Consolas" }}
+          textAnchor="end"
+          x={props.watermark.x}
+          y={props.watermark.y}
+        >
+          sequencediagram.xyz
+        </text>
+      )}
+    </DiagramSvg>
+  );
+}

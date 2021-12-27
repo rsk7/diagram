@@ -10,7 +10,7 @@ interface DragState {
   mouseDownMatrixState: DOMMatrix | null;
 }
 
-export default function useSvgMatrixState(startPosition?: Position) {
+export function useSvgMatrixState(startPosition?: Position) {
   const translate = startPosition ? [startPosition.x, startPosition.y] : [0, 0];
   const [matrixState, setMatrixState] = useState<DOMMatrix>(
     new DOMMatrix([1, 0, 0, 1, ...translate])
