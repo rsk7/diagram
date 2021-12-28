@@ -1,0 +1,126 @@
+#describer {
+  display: block;
+  margin: 10px;
+  position: absolute;
+  min-width: 400px;
+  min-height: 300px;
+  top: 0px;
+  border: 2px solid #e0e0e0;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+#describer .cm-editor.cm-focused {
+  outline: none;
+}
+
+#describer .cm-scroller {
+  overflow-x: hidden;
+}
+
+#describer.hide {
+  display: none;
+}
+
+#describer .cm-container {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+#describer .tools {
+  position: absolute;
+  display: flex;
+  top: 2px;
+  right: 10px;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 1000;
+}
+
+#describer .tools .tool {
+  height: 15px;
+  width: 15px;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px;
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+#describer .tools .tool:hover {
+  background-color: #ffffff;
+}
+
+#describer .tools #lightbulb.on {
+  background-color: #ffffff;
+  fill: orange;
+}
+
+.cm-panels .cm-panel.cm-search {
+  background-color: white;
+  font-size: 20px;
+}
+
+.cm-panels .cm-panel.cm-search label {
+  display: none;
+}
+
+.cm-panels .cm-panel.cm-search button {
+  cursor: pointer;
+}
+
+.cm-panels .cm-button {
+  border: 1px solid #e0e0e0;
+  background-color: #e0e0e0;
+  background-image: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 2px;
+  text-transform: capitalize;
+}
+
+/* aligning buttons with css instead of implementing custom codemirror panel */
+.cm-panels .cm-search button.cm-button[name="replace"] {
+  margin-right: 6px;
+}
+
+.cm-panels .cm-search button.cm-button[name="replaceAll"] {
+  margin-right: 10px;
+  padding-right: 9px;
+}
+
+.cm-panels .cm-search button.cm-button[name="next"] {
+  margin-right: 6px;
+  padding: 5px 9px;
+}
+
+.cm-panels .cm-search button.cm-button[name="prev"] {
+  margin-right: 6px;
+  padding: 5px 8px;
+}
+
+.cm-panels .cm-search button.cm-button[name="select"] {
+  margin-right: 10px;
+}
+/* done with alignment */
+
+.cm-panels .cm-button:hover {
+  background-color: white;
+}
+
+.cm-panel .cm-textfield {
+  padding: 1px;
+  border: none;
+}
+
+.cm-panel input.cm-textfield:focus {
+  outline: none;
+}
+
+#sequenceDescriber .cm-editor {
+  background-color: rgba(255, 255, 255, 0.5);
+}
