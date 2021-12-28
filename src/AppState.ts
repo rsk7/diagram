@@ -1,11 +1,20 @@
-import SequenceDiagram from "./diagram/SequenceDiagram";
+export type DiagramType = "sequenceDiagram" | "mindMap";
+
+export interface Diagram {
+  title: string;
+}
+
+export interface DiagramFile {
+  guid: string;
+  fileName: string;
+  fileType: DiagramType;
+}
 
 export default interface AppState {
-  diagram: SequenceDiagram;
   fileGUID: string;
   fileName: string;
+  fileType: DiagramType;
   text: string;
-  smartTextEnabled: boolean;
-  showSequenceDescriber: boolean;
-  files: { guid: string; fileName: string }[];
+  showDescriber: boolean;
+  files: DiagramFile[];
 }

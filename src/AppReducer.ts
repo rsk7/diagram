@@ -1,10 +1,14 @@
-import SequenceReader from "./diagram/parser/SequenceReader";
-import AppState from "./AppState";
+import AppState, { DiagramFile } from "./AppState";
 import { v4 as uuidv4 } from "uuid";
 import { EXAMPLE_GUID } from "./exampleText";
 import { useEffect, useReducer } from "react";
 
-function setSequenceText(currState: AppState, text: string): AppState {
+function setText(currState: AppState, text: string): AppState {
+  return {
+    ...currState,
+    text
+  };
+  /*
   const previousText = currState.text;
   const newSequenceState = SequenceReader(text, {
     enableSmartText: currState.smartTextEnabled ? { previousText } : undefined
@@ -16,13 +20,13 @@ function setSequenceText(currState: AppState, text: string): AppState {
     },
     currState.fileGUID,
     newSequenceState.diagram.title || currState.fileName
-  );
+  ); */
 }
 
-function renameFile(state: AppState, guid: string, newName: string): AppState {
+function renameFile(state: AppState, newName: string): AppState {
   const files = state.files;
   for (let i = 0; i < files.length; i++) {
-    if (files[i].guid === guid) {
+    if (files[i].guid === state.fileGUID) {
       files[i].fileName = newName;
     }
   }
@@ -32,17 +36,10 @@ function renameFile(state: AppState, guid: string, newName: string): AppState {
   };
 }
 
-function toggleSmartText(currState: AppState): AppState {
-  return {
-    ...currState,
-    smartTextEnabled: !currState.smartTextEnabled
-  };
-}
-
 function toggleCloseState(currState: AppState): AppState {
   return {
     ...currState,
-    showSequenceDescriber: !currState.showSequenceDescriber
+    showDescriber: !currState.showDescriber
   };
 }
 
@@ -50,7 +47,7 @@ export function initState(): AppState {
   const currentGUID = localStorage.getItem("currentGUID");
   if (!currentGUID) localStorage.setItem("currentGUID", EXAMPLE_GUID);
   const currentFileGUID: string = localStorage.getItem("currentGUID") || "";
-  const files: { guid: string; fileName: string }[] = JSON.parse(
+  const files: DiagramFile[] = JSON.parse(
     localStorage.getItem("files") || "[]"
   );
   const currentFile = files.find((f) => f.guid === currentFileGUID);
@@ -59,9 +56,8 @@ export function initState(): AppState {
     fileName: currentFile?.fileName || "",
     fileGUID: currentFile?.guid || "",
     text: currentFileText,
-    diagram: SequenceReader(currentFileText).diagram,
-    smartTextEnabled: false,
-    showSequenceDescriber: true,
+    showDescriber: true,
+    fileType: currentFile?.fileType || "sequenceDiagram",
     files
   };
 }
@@ -69,13 +65,13 @@ export function initState(): AppState {
 function createNewFile(state: AppState): AppState {
   const fileName = "Untitled";
   const guid = uuidv4();
+  const fileType = "sequenceDiagram";
   return {
     ...state,
     fileName,
     fileGUID: guid,
     text: "",
-    diagram: SequenceReader("").diagram,
-    files: [...state.files, { fileName, guid }]
+    files: [...state.files, { fileName, guid, fileType }]
   };
 }
 
@@ -87,8 +83,8 @@ function changeCurrentFile(state: AppState, guid: string): AppState {
     ...state,
     fileName: file.fileName,
     fileGUID: guid,
-    text,
-    diagram: SequenceReader(text).diagram
+    fileType: file.fileType,
+    text
   };
 }
 
@@ -116,10 +112,8 @@ export function AppReducer(
   action: { type: string; data?: unknown }
 ): AppState {
   switch (action.type) {
-    case "setSequenceText":
-      return setSequenceText(state, action.data as string);
-    case "toggleSmartText":
-      return toggleSmartText(state);
+    case "setText":
+      return setText(state, action.data as string);
     case "toggleCloseState":
       return toggleCloseState(state);
     case "newFile":
@@ -128,6 +122,8 @@ export function AppReducer(
       return changeCurrentFile(state, action.data as string);
     case "delete":
       return deleteFile(state);
+    case "renameFile":
+      return renameFile(state, action.data as string);
     default:
       return state;
   }

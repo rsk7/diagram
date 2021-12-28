@@ -1,4 +1,5 @@
 import { Diagram, DiagramType } from "../AppState";
+import MindMapReader from "./MindMapDiagram/parser/MindMapReader";
 import SequenceReader from "./SequenceDiagram/parser/SequenceReader";
 
 export default function DiagramFactory(

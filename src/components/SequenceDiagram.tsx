@@ -2,10 +2,10 @@ import Rect from "./Rect";
 import LifelineComponent from "./Lifeline";
 import MessageArrowComponent from "./MessageArrow";
 import AnnotationDescriptionComponent from "./AnnotationDescription";
-import Lifeline from "../diagram/layout/Lifeline";
-import MessageArrow from "../diagram/layout/MessageArrow";
-import AnnotationDescription from "../diagram/layout/AnnotationDescription";
-import Title from "../diagram/layout/Title";
+import Lifeline from "../Diagrams/SequenceDiagram/layout/Lifeline";
+import MessageArrow from "../Diagrams/SequenceDiagram/layout/MessageArrow";
+import AnnotationDescription from "../Diagrams/SequenceDiagram/layout/AnnotationDescription";
+import Title from "../Diagrams/SequenceDiagram/layout/Title";
 import DiagramSvg from "./DiagamSvg";
 
 interface SequenceDiagramProps {

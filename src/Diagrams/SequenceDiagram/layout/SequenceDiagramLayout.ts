@@ -1,7 +1,4 @@
-import SequenceDiagram, {
-  SequenceActor,
-  SequenceInteraction
-} from "../SequenceDiagram";
+import SequenceDiagram from "../SequenceDiagram";
 import Lifeline from "./Lifeline";
 import {
   createLifelineSequenceMap,
@@ -13,60 +10,14 @@ import { createMessageArrowSequence } from "./MessageArrowLayout";
 import createTitle from "./TitleLayout";
 import Title from "./Title";
 import createAnnotationSequence, {
-  AnnotationData,
   createAnnotationMap,
   setAnnotationIndex
 } from "./AnnotationLayout";
 import AnnotationDescription from "./AnnotationDescription";
-import DiagramLayout, { Positional } from "../../DiagramLayout";
 
 const PADDING = 50;
 
-export default class SequenceDiagramLayout implements DiagramLayout {
-  private _actors: SequenceActor[] = [];
-  private _interactions: SequenceInteraction[] = [];
-  private _layoutHeight: number = 0;
-  private _layoutWidth: number = 0;
-  private _diagramStartX: number = 0;
-  private _diagramStartY: number = 0;
-  private _watermerk?: Positional;
-  private _lifelineProps: Lifeline[] = [];
-  private _messageArrowProps: MessageArrow[] = [];
-  private _annotationDescriptionProps: AnnotationDescription[] = [];
-  private _annotationMap: Map<string, AnnotationData>;
-  private _lifelineSequenceMap: Map<string, Lifeline>;
-  private _lifelineProps: Lifeline[];
-
-  constructor(diagram: SequenceDiagram) {
-    this._actors = diagram.actors;
-    this._interactions = diagram.interactions || [];
-    this._annotationMap = createAnnotationMap(diagram);
-    this._lifelineSequenceMap = createLifelineSequenceMap(
-      diagram.actors,
-      PADDING,
-      PADDING
-    );
-    this._lifelineProps = Array.from(this._lifelineSequenceMap.values());
-  }
-
-  get layoutHeight(): number {
-    return this._layoutHeight;
-  }
-
-  get layoutWidth(): number {
-    return this._layoutWidth;
-  }
-
-  get diagramStartX(): number {
-    return this._diagramStartX;
-  }
-
-  get diagramStartY(): number {
-    return this._diagramStartY;
-  }
-}
-
-export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
+export default function SequenceDiagramLayout(diagram: SequenceDiagram): {
   lifelineProps: Lifeline[];
   messageArrowProps: MessageArrow[] | undefined;
   annotationDescriptionProps: AnnotationDescription[] | undefined;
@@ -74,6 +25,7 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
   layoutHeight: number;
   layoutWidth: number;
   diagramStartY: number;
+  diagramStartX: number;
   watermark?: { x: number; y: number };
 } {
   const annotationMap = createAnnotationMap(diagram);
@@ -165,6 +117,7 @@ export default function sequenceDiagramLayout(diagram: SequenceDiagram): {
     messageArrowProps,
     annotationDescriptionProps,
     diagramStartY,
+    diagramStartX: 0,
     layoutHeight,
     layoutWidth,
     title,

@@ -1,37 +1,28 @@
 import { ReactNode } from "react";
-import Title from "../Diagrams/SequenceDiagram/layout/Title";
-import TextBoxDetails from "../services/TextBoxDetails";
+import { MindMapDiagramLayout } from "../Diagrams/MindMapDiagram/layout/MindMapLayout";
+import TreeNodeLayout from "../Diagrams/MindMapDiagram/layout/TreeNodeLayout";
+// import TextBoxDetails from "../services/TextBoxDetails";
 import DiagramSvg from "./DiagamSvg";
 import Rect from "./Rect";
 
-interface TreeLayoutNode {
-  x: number;
-  y: number;
-  arrowAnchor: {
-    left: { x: number; y: number };
-    right: { x: number; y: number };
-  };
-  textBoxDetails: TextBoxDetails;
-  children: TreeLayoutNode[];
-}
-
-interface MindMapDiagramProps {
-  title?: Title;
-  layout?: TreeLayoutNode;
-}
-
-export default function MindMapDiagram(props: MindMapDiagramProps) {
-  function drawNode(node: TreeLayoutNode): ReactNode[] {
+export default function MindMapDiagram(props: MindMapDiagramLayout) {
+  function drawNode(node: TreeNodeLayout): ReactNode[] {
     if (!node) return [];
     return [
-      <Rect boxX={node.x} boxY={node.y} textBoxDetails={node.textBoxDetails} />,
+      <Rect
+        boxX={node.x!}
+        boxY={node.y!}
+        textBoxDetails={node.textBoxDetails}
+      />,
       ...node.children.map((c) => (
         <path
-          d={`M${node.arrowAnchor.right.x},${node.arrowAnchor.right.y} C${
-            node.arrowAnchor.right.x + 100
-          },${node.arrowAnchor.right.y} ${c.arrowAnchor.left.x - 100}, ${
-            c.arrowAnchor.left.y
-          } ${c.arrowAnchor.left.x},${c.arrowAnchor.left.y}`}
+          d={`M${node.arrowAnchor?.right.x},${node.arrowAnchor?.right.y} C${
+            node.getArrowAnchorControl()?.right.x
+          },${node.getArrowAnchorControl()?.right.y} ${
+            c.getArrowAnchorControl()?.left.x
+          }, ${c.getArrowAnchorControl()?.left.y} ${c.arrowAnchor?.left.x},${
+            c.arrowAnchor?.left.y
+          }`}
           fill="none"
           stroke="black"
         />
@@ -40,6 +31,7 @@ export default function MindMapDiagram(props: MindMapDiagramProps) {
     ];
   }
 
+  /*
   const testBox = TextBoxDetails.Create(
     "test",
     "12px Arial",
@@ -69,7 +61,7 @@ export default function MindMapDiagram(props: MindMapDiagramProps) {
         children: []
       }
     ]
-  };
+  };*/
 
   return (
     <DiagramSvg>
@@ -80,8 +72,7 @@ export default function MindMapDiagram(props: MindMapDiagramProps) {
           textBoxDetails={props.title.textBoxDetails}
         />
       )}
-      {drawNode(layout)}
-      {props.layout && drawNode(props.layout)}
+      {drawNode(props.rootNode)}
     </DiagramSvg>
   );
 }

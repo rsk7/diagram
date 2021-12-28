@@ -11,7 +11,7 @@ import {
   findInteractionLines,
   findTitleLines,
   Line as SequenceLine
-} from "../diagram/parser/SequenceLines";
+} from "../Diagrams/SequenceDiagram/parser/SequenceLines";
 import { Line } from "@codemirror/text";
 
 const baseTheme = EditorView.baseTheme({

@@ -1,16 +1,25 @@
 import "./App.css";
-import SequenceDescriber from "./components/SequenceDescriber";
-import sequenceDiagramLayout from "./diagram/layout/SequenceDiagramLayout";
+import Describer from "./components/Describer";
 import GithubLogo from "./GitHub-Mark-32px.png";
 import { ReactComponent as TextIcon } from "./bootstrap-icons/card-text.svg";
 import Downloader from "./components/downloader";
-import SequenceDiagramComponent from "./components/SequenceDiagram";
 import { useAppReducer } from "./AppReducer";
 import FileManager from "./components/FileManager";
+import DiagramComponentFactory from "./DiagramComponentFactory";
+import { useEffect } from "react";
 
 function App() {
   const { appState, dispatch } = useAppReducer();
-  const layout = sequenceDiagramLayout(appState.diagram);
+  const { layout, diagramComponent } = DiagramComponentFactory(
+    appState.text,
+    appState.fileType
+  );
+  useEffect(() => {
+    dispatch({
+      type: "renameFile",
+      data: layout.title?.text || appState.fileName
+    });
+  }, [appState.text, appState.fileName, layout.title?.text, dispatch]);
   return (
     <div className="App">
       <a id="github" href="https://github.com/rsk7/diagram">
@@ -39,19 +48,18 @@ function App() {
           fileName={layout.title?.text.replace(/\s/g, "_")}
         />
       </div>
-      <SequenceDiagramComponent {...layout} />
-      <SequenceDescriber
-        isVisible={appState.showSequenceDescriber}
-        sequenceText={appState.text}
-        smartTextOn={appState.smartTextEnabled}
-        onSmartTextToggle={() => dispatch({ type: "toggleSmartText" })}
-        onChange={(text) => dispatch({ type: "setSequenceText", data: text })}
+      {diagramComponent}
+      <Describer
+        isVisible={appState.showDescriber}
+        text={appState.text}
+        onChange={(text) => dispatch({ type: "setText", data: text })}
         onClose={() => dispatch({ type: "toggleCloseState" })}
         onDelete={() => {
           if (window.confirm("Are you sure?")) {
             dispatch({ type: "delete" });
           }
         }}
+        type={"sequenceDiagram"}
       />
     </div>
   );

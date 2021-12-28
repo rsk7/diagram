@@ -1,8 +1,9 @@
 import "./FileManager.css";
 import { ReactComponent as PlusIcon } from "../bootstrap-icons/plus-lg.svg";
+import { DiagramFile } from "../AppState";
 
 interface FileManagerProps {
-  files: { guid: string; fileName: string }[];
+  files: DiagramFile[];
   currentGUID: string;
   onFileClick: (guid: string) => void;
   onNewFileClick: () => void;

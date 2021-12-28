@@ -1,6 +1,5 @@
-import { isThisTypeNode } from "typescript";
 import TextBoxDetails from "../../../services/TextBoxDetails";
-import { MapNode } from "../MindMap";
+import { MapNode } from "../MindMapDiagram";
 
 interface Positional {
   x: number;
@@ -86,8 +85,8 @@ export default class TreeNodeLayout {
     return this._textBoxDetails;
   }
 
-  get arrowAnchor(): { left: Positional; right: Positional } | undefined {
-    if (!this.x || !this.y) return;
+  get arrowAnchor(): { left: Positional; right: Positional } | null {
+    if (!this.x || !this.y) return null;
     return {
       left: { x: this.x, y: this.y + this.textBoxDetails.height / 2 },
       right: {

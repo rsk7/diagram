@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import "./SequenceDescriber.css";
+import "./Describer.css";
 import { Resizable } from "react-resizable";
 import Draggable from "react-draggable";
 import { ReactComponent as MoveIcon } from "../bootstrap-icons/arrows-move.svg";
@@ -57,7 +57,7 @@ export default function Describer(props: DescriberProps) {
       >
         <div
           ref={nodeRef}
-          id="sequenceDescriber"
+          id="describer"
           className={props.isVisible ? "" : "hide"}
           style={{
             width: boxState.width + "px",

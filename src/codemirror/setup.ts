@@ -4,7 +4,8 @@ import { history, historyKeymap } from "@codemirror/history";
 import { searchKeymap, highlightSelectionMatches } from "@codemirror/search";
 import { defaultKeymap } from "@codemirror/commands";
 import { keymap, EditorView } from "@codemirror/view";
-import { decorateSequenceCode } from "./decoration";
+import { decorateSequenceCode } from "./sequenceDiagramDecoration";
+import { basicSetup } from "@codemirror/basic-setup";
 
 const Theme = EditorView.theme({
   ".cm-content": {
@@ -12,7 +13,7 @@ const Theme = EditorView.theme({
   }
 });
 
-export const setup: Extension[] = [
+const sequenceDiagramSetup: Extension[] = [
   lineNumbers(),
   highlightActiveLineGutter(),
   history(),
@@ -22,3 +23,5 @@ export const setup: Extension[] = [
   EditorView.lineWrapping,
   Theme
 ];
+
+export { basicSetup, sequenceDiagramSetup };
