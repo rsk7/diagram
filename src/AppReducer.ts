@@ -65,7 +65,7 @@ export function initState(): AppState {
 function createNewFile(state: AppState): AppState {
   const fileName = "Untitled";
   const guid = uuidv4();
-  const fileType = "sequenceDiagram";
+  const fileType = "mindMap";
   return {
     ...state,
     fileName,
@@ -83,7 +83,7 @@ function changeCurrentFile(state: AppState, guid: string): AppState {
     ...state,
     fileName: file.fileName,
     fileGUID: guid,
-    fileType: file.fileType,
+    fileType: file.fileType || "sequenceDiagram",
     text
   };
 }

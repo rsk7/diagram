@@ -59,7 +59,7 @@ function App() {
             dispatch({ type: "delete" });
           }
         }}
-        type={"sequenceDiagram"}
+        type={appState.fileType}
       />
     </div>
   );

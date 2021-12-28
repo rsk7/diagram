@@ -10,6 +10,7 @@ export default function MindMapDiagram(props: MindMapDiagramLayout) {
     if (!node) return [];
     return [
       <Rect
+        key={node.text} // fix this
         boxX={node.x!}
         boxY={node.y!}
         textBoxDetails={node.textBoxDetails}

@@ -16,17 +16,18 @@ export default function DiagramComponentFactory(
   diagramComponent: ReactNode;
 } {
   switch (type) {
-    case "sequenceDiagram":
-      const sdl = SequenceDiagramLayout(SequenceReader(text).diagram);
-      return {
-        layout: sdl,
-        diagramComponent: <SequenceDiagramComponent {...sdl} />
-      };
     case "mindMap":
       const mml = MindMapLayout(MindMapReader(text).diagram);
       return {
         layout: mml,
         diagramComponent: <MindMapDiagramComponent {...mml} />
+      };
+    case "sequenceDiagram":
+    default:
+      const sdl = SequenceDiagramLayout(SequenceReader(text).diagram);
+      return {
+        layout: sdl,
+        diagramComponent: <SequenceDiagramComponent {...sdl} />
       };
   }
 }
