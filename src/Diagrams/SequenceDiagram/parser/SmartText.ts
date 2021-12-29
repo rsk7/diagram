@@ -1,4 +1,5 @@
-import { splitLines, findActorLines } from "./SequenceLines";
+import { findActorLines } from "./SequenceLines";
+import { splitLines } from "../../parser";
 import { findActorNames, createSequenceActor } from "./SequenceParser";
 import esc from "escape-string-regexp";
 

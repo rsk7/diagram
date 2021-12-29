@@ -1,13 +1,12 @@
 import { SequenceActor, SequenceInteraction } from "../SequenceDiagram";
 import { interactionLineRegex } from "./regex";
 import {
-  Line,
   findActorLines,
-  findTitleLines,
   findInteractionLines,
   isAnnotationLine,
   isActorLine
 } from "./SequenceLines";
+import { Line, findTitleLines } from "../../parser";
 
 export function findActorNames(line?: string): string[] {
   if (!line) return [];

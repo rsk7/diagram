@@ -1,5 +1,5 @@
 import SequenceDiagram from "../SequenceDiagram";
-import { splitLines } from "./SequenceLines";
+import { splitLines } from "../../parser";
 import { findActors, findInteractions, findTitle } from "./SequenceParser";
 import SmartText from "./SmartText";
 

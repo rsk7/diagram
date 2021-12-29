@@ -8,11 +8,10 @@ import {
 import { RangeSetBuilder } from "@codemirror/rangeset";
 import {
   findActorLines,
-  findInteractionLines,
-  findTitleLines,
-  Line as SequenceLine
+  findInteractionLines
 } from "../Diagrams/SequenceDiagram/parser/SequenceLines";
 import { Line } from "@codemirror/text";
+import { Line as SequenceLine, findTitleLines } from "../Diagrams/parser";
 
 const baseTheme = EditorView.baseTheme({
   ".cm-sequence-code": { backgroundColor: "rgb(144, 238, 144, 0.2)" }

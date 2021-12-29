@@ -7,7 +7,6 @@ import { useAppReducer } from "./AppReducer";
 import FileManager from "./components/FileManager";
 import DiagramComponentFactory from "./DiagramComponentFactory";
 import { useEffect } from "react";
-import { DiagramType } from "./AppState";
 
 function App() {
   const { appState, dispatch } = useAppReducer();

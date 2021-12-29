@@ -5,7 +5,6 @@ import { searchKeymap, highlightSelectionMatches } from "@codemirror/search";
 import { defaultKeymap } from "@codemirror/commands";
 import { keymap, EditorView } from "@codemirror/view";
 import { decorateSequenceCode } from "./sequenceDiagramDecoration";
-import { basicSetup } from "@codemirror/basic-setup";
 import { DiagramType } from "../AppState";
 
 const Theme = EditorView.theme({
