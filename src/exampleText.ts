@@ -47,15 +47,15 @@ const mapExampleText = `Map Title
 -Security
 
 =Security
--Terminal
--Boarding
+-Terminal Gate
+-Boarding Pass
 
 =Pilot
 -cockpit
 
 =Flight
--preflight
--postflight
+-preflight stuff
+-postflight stuff
 
 `;
 
