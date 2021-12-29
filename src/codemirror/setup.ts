@@ -6,6 +6,7 @@ import { defaultKeymap } from "@codemirror/commands";
 import { keymap, EditorView } from "@codemirror/view";
 import { decorateSequenceCode } from "./sequenceDiagramDecoration";
 import { basicSetup } from "@codemirror/basic-setup";
+import { DiagramType } from "../AppState";
 
 const Theme = EditorView.theme({
   ".cm-content": {
@@ -13,15 +14,22 @@ const Theme = EditorView.theme({
   }
 });
 
-const sequenceDiagramSetup: Extension[] = [
+const diagramSetup: Extension[] = [
   lineNumbers(),
   highlightActiveLineGutter(),
   history(),
   highlightSelectionMatches(),
   keymap.of([...defaultKeymap, ...searchKeymap, ...historyKeymap]),
-  decorateSequenceCode(),
   EditorView.lineWrapping,
   Theme
 ];
 
-export { basicSetup, sequenceDiagramSetup };
+export default function createExtenstions(type: DiagramType): Extension[] {
+  switch (type) {
+    case "mindMap":
+      return diagramSetup;
+    case "sequenceDiagram":
+    default:
+      return [...diagramSetup, decorateSequenceCode()];
+  }
+}

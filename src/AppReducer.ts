@@ -1,4 +1,4 @@
-import AppState, { DiagramFile } from "./AppState";
+import AppState, { DiagramFile, DiagramType } from "./AppState";
 import { v4 as uuidv4 } from "uuid";
 import { EXAMPLE_GUID } from "./exampleText";
 import { useEffect, useReducer } from "react";
@@ -8,19 +8,6 @@ function setText(currState: AppState, text: string): AppState {
     ...currState,
     text
   };
-  /*
-  const previousText = currState.text;
-  const newSequenceState = SequenceReader(text, {
-    enableSmartText: currState.smartTextEnabled ? { previousText } : undefined
-  });
-  return renameFile(
-    {
-      ...currState,
-      ...newSequenceState
-    },
-    currState.fileGUID,
-    newSequenceState.diagram.title || currState.fileName
-  ); */
 }
 
 function renameFile(state: AppState, newName: string): AppState {
@@ -32,6 +19,7 @@ function renameFile(state: AppState, newName: string): AppState {
   }
   return {
     ...state,
+    fileName: newName,
     files: [...files]
   };
 }
@@ -107,23 +95,45 @@ function deleteFile(state: AppState): AppState {
   }
 }
 
-export function AppReducer(
-  state: AppState,
-  action: { type: string; data?: unknown }
-): AppState {
+function changeFileType(state: AppState, fileType: DiagramType): AppState {
+  const files = state.files;
+  for (let i = 0; i < files.length; i++) {
+    if (files[i].guid === state.fileGUID) {
+      files[i].fileType = fileType;
+    }
+  }
+  return {
+    ...state,
+    fileType,
+    files: [...files]
+  };
+}
+
+type Action =
+  | { type: "setText"; text: string }
+  | { type: "toggleCloseState" }
+  | { type: "newFile" }
+  | { type: "changeCurrentFile"; guid: string }
+  | { type: "delete" }
+  | { type: "renameFile"; newName: string }
+  | { type: "changeDiagramType"; diagramType: DiagramType };
+
+export function AppReducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case "setText":
-      return setText(state, action.data as string);
+      return setText(state, action.text);
     case "toggleCloseState":
       return toggleCloseState(state);
     case "newFile":
       return createNewFile(state);
     case "changeCurrentFile":
-      return changeCurrentFile(state, action.data as string);
+      return changeCurrentFile(state, action.guid);
     case "delete":
       return deleteFile(state);
     case "renameFile":
-      return renameFile(state, action.data as string);
+      return renameFile(state, action.newName);
+    case "changeDiagramType":
+      return changeFileType(state, action.diagramType);
     default:
       return state;
   }

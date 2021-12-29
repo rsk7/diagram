@@ -8,15 +8,17 @@ import { ReactComponent as ClipboardIcon } from "../bootstrap-icons/clipboard.sv
 import { ReactComponent as ClipboardCheckIcon } from "../bootstrap-icons/clipboard-check.svg";
 import { ReactComponent as TrashIcon } from "../bootstrap-icons/trash.svg";
 import CodeMirror from "@uiw/react-codemirror";
-import { basicSetup, sequenceDiagramSetup } from "../codemirror/setup";
+import createExtenstions from "../codemirror/setup";
+import { DiagramType } from "../AppState";
 
 interface DescriberProps {
   text: string;
-  type: "sequenceDiagram" | "mindMap";
+  diagramType: "sequenceDiagram" | "mindMap";
   onChange: (sequnenceText: string) => void;
   onClose: () => void;
   onDelete: () => void;
   isVisible: boolean;
+  onDiagramTypeChange: (diagram: DiagramType) => void;
 }
 
 export default function Describer(props: DescriberProps) {
@@ -43,6 +45,15 @@ export default function Describer(props: DescriberProps) {
       setTimeout(() => setShowClipSuccess(false), 5000);
     }
   });
+  const onDiagramTypeChange = (value: string) => {
+    switch (value) {
+      case "mindMap":
+        return props.onDiagramTypeChange("mindMap");
+      case "sequenceDiagram":
+      default:
+        return props.onDiagramTypeChange("sequenceDiagram");
+    }
+  };
   return (
     <Draggable nodeRef={nodeRef} bounds="parent" handle="#move">
       <Resizable
@@ -65,6 +76,14 @@ export default function Describer(props: DescriberProps) {
           }}
         >
           <div className="tools">
+            <select
+              id="diagramTypeSelect"
+              value={props.diagramType}
+              onChange={(e) => onDiagramTypeChange(e.target.value)}
+            >
+              <option value="sequenceDiagram">Sequence Diagram</option>
+              <option value="mindMap">Mind Map</option>
+            </select>
             <TrashIcon className="tool" onClick={props.onDelete} />
             {showClipSuccess ? (
               <ClipboardCheckIcon className="tool" onClick={copyToClipboard} />
@@ -78,11 +97,7 @@ export default function Describer(props: DescriberProps) {
             <CodeMirror
               value={props.text}
               basicSetup={false}
-              extensions={
-                props.type === "sequenceDiagram"
-                  ? sequenceDiagramSetup
-                  : [basicSetup]
-              }
+              extensions={createExtenstions(props.diagramType)}
               onChange={(value) => {
                 props.onChange(value);
               }}

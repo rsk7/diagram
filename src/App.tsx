@@ -7,6 +7,7 @@ import { useAppReducer } from "./AppReducer";
 import FileManager from "./components/FileManager";
 import DiagramComponentFactory from "./DiagramComponentFactory";
 import { useEffect } from "react";
+import { DiagramType } from "./AppState";
 
 function App() {
   const { appState, dispatch } = useAppReducer();
@@ -17,7 +18,7 @@ function App() {
   useEffect(() => {
     dispatch({
       type: "renameFile",
-      data: layout.title?.text || appState.fileName
+      newName: layout.title?.text || appState.fileName
     });
   }, [appState.text, appState.fileName, layout.title?.text, dispatch]);
   return (
@@ -29,7 +30,7 @@ function App() {
         currentGUID={appState.fileGUID}
         files={appState.files}
         onFileClick={(guid: string) =>
-          dispatch({ type: "changeCurrentFile", data: guid })
+          dispatch({ type: "changeCurrentFile", guid })
         }
         onNewFileClick={() => dispatch({ type: "newFile" })}
       />
@@ -52,14 +53,17 @@ function App() {
       <Describer
         isVisible={appState.showDescriber}
         text={appState.text}
-        onChange={(text) => dispatch({ type: "setText", data: text })}
+        onChange={(text) => dispatch({ type: "setText", text })}
         onClose={() => dispatch({ type: "toggleCloseState" })}
         onDelete={() => {
           if (window.confirm("Are you sure?")) {
             dispatch({ type: "delete" });
           }
         }}
-        type={appState.fileType}
+        diagramType={appState.fileType}
+        onDiagramTypeChange={(diagramType) => {
+          dispatch({ type: "changeDiagramType", diagramType });
+        }}
       />
     </div>
   );

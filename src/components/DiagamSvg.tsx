@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { useSvgMatrixState } from "./DiagramSvgHooks";
+import "./DiagramSvg.css";
 
 interface SvgProps {
   children: ReactNode[];
