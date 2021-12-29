@@ -43,7 +43,7 @@ export default class TreeNodeLayout {
     this._y = startY;
     if (!this.children.length) return;
     const childrenX = this.x! + this.textBoxDetails.width + COLUMN_SPACING;
-    let y = this.y! + this.textBoxDetails.width / 2 - this.width / 2;
+    let y = this.y! + this.textBoxDetails.height / 2 - this.height / 2;
     for (const c of this.children) {
       c.position(childrenX, y);
       y = y + c.height + ROW_SPACING;
