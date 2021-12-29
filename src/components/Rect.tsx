@@ -24,6 +24,7 @@ export default function Rect(props: RectProps) {
         y={props.boxY}
         height={props.textBoxDetails.height}
         width={props.textBoxDetails.width}
+        rx={props.textBoxDetails.rounding}
         fill="transparent"
         {...(props.textBoxDetails.border
           ? {

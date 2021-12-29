@@ -9,9 +9,12 @@ interface Positional {
 const FONT = "12px Arial";
 const MAX_WIDTH = 200;
 const MIN_WIDTH = 50;
-const PADDING = 5;
+const PADDING = 10;
 const COLUMN_SPACING = 100;
 const ROW_SPACING = 20;
+const ROUNDING = 15;
+const BORDER = true;
+const ALIGNMENT = "center";
 
 export default class TreeNodeLayout {
   private _x: number | undefined;
@@ -78,8 +81,9 @@ export default class TreeNodeLayout {
         MAX_WIDTH,
         MIN_WIDTH,
         PADDING,
-        true,
-        "center"
+        BORDER,
+        ALIGNMENT,
+        ROUNDING
       );
     }
     return this._textBoxDetails;

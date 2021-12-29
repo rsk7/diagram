@@ -11,6 +11,7 @@ export default class TextBoxDetails {
   font: string;
   padding: number;
   alignment: TextAlignment;
+  rounding?: number;
 
   constructor(
     height: number,
@@ -20,7 +21,8 @@ export default class TextBoxDetails {
     border: boolean,
     font: string,
     padding: number,
-    alignment: TextAlignment
+    alignment: TextAlignment,
+    rounding?: number
   ) {
     this.height = height;
     this.width = width;
@@ -30,6 +32,7 @@ export default class TextBoxDetails {
     this.font = font;
     this.padding = padding;
     this.alignment = alignment;
+    this.rounding = rounding;
   }
 
   getTextPosition(
@@ -67,7 +70,8 @@ export default class TextBoxDetails {
     minWidth: number,
     padding: number,
     border: boolean,
-    alignment: TextAlignment
+    alignment: TextAlignment,
+    rounding?: number
   ): TextBoxDetails {
     const lineHeight = getLineHeight(font);
     const lines = WrapText(text, font, maxWidth - padding * 2);
@@ -85,7 +89,8 @@ export default class TextBoxDetails {
       border,
       font,
       padding,
-      alignment
+      alignment,
+      rounding
     );
   }
 }

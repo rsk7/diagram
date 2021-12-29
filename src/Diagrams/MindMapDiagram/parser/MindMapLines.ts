@@ -37,7 +37,8 @@ export function findRelations(lines: Line[]): Map<Line, Line[]> {
   let parentNodeIndex = -1;
   for (const line of lines) {
     if (isParentNodeLine(line)) {
-      parentNodeIndex = line.lineNumber;
+      parentNodeIndex = line.lineNumber - 1;
+      edges.set(lines[parentNodeIndex], []);
     }
     if (isChildNodeLine(line) && parentNodeIndex >= 0) {
       const list = edges.get(lines[parentNodeIndex]) || [];
