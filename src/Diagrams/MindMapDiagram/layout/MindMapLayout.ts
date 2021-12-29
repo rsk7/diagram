@@ -10,7 +10,7 @@ function createNodeLayoutTree(node: MapNode): TreeNodeLayout {
 }
 
 export interface MindMapDiagramLayout extends DiagramLayout {
-  rootNode: TreeNodeLayout;
+  rootNode?: TreeNodeLayout;
 }
 
 export default function MindMapLayout(
@@ -18,9 +18,12 @@ export default function MindMapLayout(
   startX: number = 100,
   startY: number = 100
 ): MindMapDiagramLayout {
-  const root = diagram.root || { content: "", children: [] };
-  const rootLayoutNode = createNodeLayoutTree(root);
-  rootLayoutNode.position(startX, startY);
+  let rootLayoutNode;
+  if (diagram.root) {
+    const root = diagram.root;
+    const rootLayoutNode = createNodeLayoutTree(root);
+    rootLayoutNode.position(startX, startY);
+  }
   return {
     layoutHeight: 100,
     layoutWidth: 100,

@@ -15,8 +15,9 @@ export default function MindMapDiagram(props: MindMapDiagramLayout) {
         boxY={node.y!}
         textBoxDetails={node.textBoxDetails}
       />,
-      ...node.children.map((c) => (
+      ...node.children.map((c, idx) => (
         <path
+          key={idx}
           d={`M${node.arrowAnchor?.right.x},${node.arrowAnchor?.right.y} C${
             node.getArrowAnchorControl()?.right.x
           },${node.getArrowAnchorControl()?.right.y} ${
@@ -73,7 +74,7 @@ export default function MindMapDiagram(props: MindMapDiagramLayout) {
           textBoxDetails={props.title.textBoxDetails}
         />
       )}
-      {drawNode(props.rootNode)}
+      {props.rootNode && drawNode(props.rootNode)}
     </DiagramSvg>
   );
 }

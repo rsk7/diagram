@@ -18,3 +18,8 @@ export function findTitleLines(lines: Line[]): Line[] {
   }
   return [];
 }
+
+export function findTitle(lines: Line[]): string {
+  const titleLines = findTitleLines(lines);
+  return titleLines?.length ? lines[0].text : "";
+}

@@ -6,7 +6,7 @@ import {
   isAnnotationLine,
   isActorLine
 } from "./SequenceLines";
-import { Line, findTitleLines } from "../../parser";
+import { Line } from "../../parser";
 
 export function findActorNames(line?: string): string[] {
   if (!line) return [];
@@ -70,11 +70,6 @@ export function findActors(lines: Line[]): SequenceActor[] {
       .reduce(mergeDuplicateSequenceActors, new Map<string, SequenceActor>())
       .values()
   );
-}
-
-export function findTitle(lines: Line[]): string {
-  const titleLines = findTitleLines(lines);
-  return titleLines?.length ? lines[0].text : "";
 }
 
 function interactionMatcher(line: string): SequenceInteraction | undefined {
