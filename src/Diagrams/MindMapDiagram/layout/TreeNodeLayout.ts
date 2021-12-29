@@ -65,12 +65,12 @@ export default class TreeNodeLayout {
       return this.textBoxDetails.height;
     }
     const maxHeight = Math.max(
-      this.children.reduce((max, c) => {
-        return max < c.height ? c.height : max;
+      this.children.reduce((sum, c) => {
+        return sum + c.height;
       }, 0),
       this.textBoxDetails.height
     );
-    return maxHeight + ROW_SPACING * this.children.length;
+    return maxHeight;
   }
 
   get textBoxDetails(): TextBoxDetails {

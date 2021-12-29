@@ -10,7 +10,7 @@ export default function MindMapDiagram(props: MindMapDiagramLayout) {
     if (!node) return [];
     return [
       <Rect
-        key={node.text} // fix this
+        key={node.text}
         boxX={node.x!}
         boxY={node.y!}
         textBoxDetails={node.textBoxDetails}
@@ -19,10 +19,10 @@ export default function MindMapDiagram(props: MindMapDiagramLayout) {
         <path
           key={idx}
           d={`M${node.arrowAnchor?.right.x},${node.arrowAnchor?.right.y} C${
-            node.getArrowAnchorControl()?.right.x
-          },${node.getArrowAnchorControl()?.right.y} ${
-            c.getArrowAnchorControl()?.left.x
-          }, ${c.getArrowAnchorControl()?.left.y} ${c.arrowAnchor?.left.x},${
+            node.getArrowAnchorControl(50)?.right.x
+          },${node.getArrowAnchorControl(50)?.right.y} ${
+            c.getArrowAnchorControl(50)?.left.x
+          }, ${c.getArrowAnchorControl(50)?.left.y} ${c.arrowAnchor?.left.x},${
             c.arrowAnchor?.left.y
           }`}
           fill="none"
