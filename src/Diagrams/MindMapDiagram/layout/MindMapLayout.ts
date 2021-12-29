@@ -23,7 +23,6 @@ export default function MindMapLayout(
     const root = diagram.root;
     rootLayoutNode = createNodeLayoutTree(root);
     rootLayoutNode.position(startX, startY);
-    console.log("done positioning");
   }
   return {
     layoutHeight: 100,

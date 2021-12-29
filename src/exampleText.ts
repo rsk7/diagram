@@ -1,4 +1,6 @@
-export const exampleText = `Sequence Diagram
+import { DiagramFile, DiagramType } from "./AppState";
+
+export const sequenceExampleText = `Sequence Diagram
 =================
 
 This is a tool that draws simple sequence diagrams. The diagrams are described in text using a simple language. To create a diagram start by defining some "actors" and some interactions between them.
@@ -36,25 +38,61 @@ This editor is codemirror.net/6 used in React via https://uiwjs.github.io/react-
 
 `;
 
-const REFRESH_EXAMPLE_GUID = "2df39b83-30d1-4f8f-8479-b4f692d25972";
+const mapExampleText = `Map Title
+====
+
+=Aeroplane
+-Pilot
+-Flight
+-Security
+
+=Security
+-Terminal
+-Boarding
+
+=Pilot
+-cockpit
+
+=Flight
+-preflight
+-postflight
+
+`;
+
+const REFRESH_EXAMPLE_GUID = "2df39b83-30d1-4f8f-8479-b4f692d25978";
 export const EXAMPLE_GUID = "27e67be2-598c-49df-85c2-3a8942088cbe";
+export const MAP_EXAMPLE_GUID = "cde8785f-43a7-4496-8364-5dd7529829d1";
+
+function setExample(
+  files: DiagramFile[],
+  guid: string,
+  fileName: string,
+  fileType: DiagramType
+) {
+  const exampleFile = files.find((f: { guid: string }) => f.guid === guid);
+  console.log(exampleFile);
+  if (!exampleFile) {
+    files.push({
+      fileName,
+      guid,
+      fileType
+    });
+  }
+}
 
 if (
+  !localStorage.getItem(MAP_EXAMPLE_GUID) ||
   !localStorage.getItem(EXAMPLE_GUID) ||
   localStorage.getItem("refreshExampleGUID") !== REFRESH_EXAMPLE_GUID
 ) {
-  localStorage.setItem(EXAMPLE_GUID, exampleText);
+  localStorage.setItem(MAP_EXAMPLE_GUID, mapExampleText);
+  localStorage.setItem(EXAMPLE_GUID, sequenceExampleText);
   localStorage.setItem("refreshExampleGUID", REFRESH_EXAMPLE_GUID);
-  const files = JSON.parse(localStorage.getItem("files") || "[]");
-  const exampleFile = files.find(
-    (f: { guid: string }) => f.guid === EXAMPLE_GUID
+  const files: DiagramFile[] = JSON.parse(
+    localStorage.getItem("files") || "[]"
   );
-  if (!exampleFile) {
-    files.push({
-      fileName: "Example",
-      guid: EXAMPLE_GUID
-    });
-    localStorage.setItem("files", JSON.stringify(files));
-    localStorage.setItem("currentGUID", EXAMPLE_GUID);
-  }
+  setExample(files, EXAMPLE_GUID, "Sequence Example", "sequenceDiagram");
+  setExample(files, MAP_EXAMPLE_GUID, "Map Example", "mindMap");
+  localStorage.setItem("files", JSON.stringify(files));
+  localStorage.setItem("currentGUID", EXAMPLE_GUID);
 }
