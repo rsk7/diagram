@@ -82,7 +82,7 @@ export default function Describer(props: DescriberProps) {
               onChange={(e) => onDiagramTypeChange(e.target.value)}
             >
               <option value="sequenceDiagram">Sequence Diagram</option>
-              <option value="mindMap">Map</option>
+              <option value="mindMap">Map (Experimental)</option>
             </select>
             <TrashIcon className="tool" onClick={props.onDelete} />
             {showClipSuccess ? (
