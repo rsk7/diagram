@@ -22,7 +22,6 @@ export default function MindMapLayout(
   if (diagram.root) {
     const root = diagram.root;
     rootLayoutNode = createNodeLayoutTree(root);
-    console.log("before positioning");
     rootLayoutNode.position(startX, startY);
   }
   return {
