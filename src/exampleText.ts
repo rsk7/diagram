@@ -38,7 +38,7 @@ This editor is codemirror.net/6 used in React via https://uiwjs.github.io/react-
 
 `;
 
-const mapExampleText = `Map Title
+const mapExampleText = `Map
 ====
 
 From Tree - Wikipedia.

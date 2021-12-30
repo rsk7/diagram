@@ -4,7 +4,7 @@ import { history, historyKeymap } from "@codemirror/history";
 import { searchKeymap, highlightSelectionMatches } from "@codemirror/search";
 import { defaultKeymap } from "@codemirror/commands";
 import { keymap, EditorView } from "@codemirror/view";
-import { decorateSequenceCode } from "./sequenceDiagramDecoration";
+import { decorateMapCode, decorateSequenceCode } from "./decorateCode";
 import { DiagramType } from "../AppState";
 
 const Theme = EditorView.theme({
@@ -26,9 +26,9 @@ const diagramSetup: Extension[] = [
 export default function createExtenstions(type: DiagramType): Extension[] {
   switch (type) {
     case "mindMap":
-      return diagramSetup;
+      return [...diagramSetup, decorateMapCode];
     case "sequenceDiagram":
     default:
-      return [...diagramSetup, decorateSequenceCode()];
+      return [...diagramSetup, decorateSequenceCode];
   }
 }

@@ -36,10 +36,12 @@ export default function MindMapLayout(
         rootLayoutNode.subTreeWidth
       );
     }
-    watermark = {
-      x: startX + rootLayoutNode.subTreeWidth - DIAGRAM_PADDING * 0.1,
-      y: startY + rootLayoutNode.subTreeHeight + DIAGRAM_PADDING * 0.5
-    };
+    if (rootLayoutNode.subTreeWidth > 300) {
+      watermark = {
+        x: startX + rootLayoutNode.subTreeWidth - DIAGRAM_PADDING * 0.1,
+        y: startY + rootLayoutNode.subTreeHeight + DIAGRAM_PADDING * 0.5
+      };
+    }
   }
   return {
     layoutHeight: (rootLayoutNode?.subTreeHeight || 0) + 2 * DIAGRAM_PADDING,
