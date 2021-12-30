@@ -75,11 +75,10 @@ export default class TextBoxDetails {
   ): TextBoxDetails {
     const lineHeight = getLineHeight(font);
     const lines = WrapText(text, font, maxWidth - padding * 2);
-    const boxWidth = lines.reduce(
-      (max, curr) => (max < curr.width ? curr.width : max),
-      0
-    );
-    const width = boxWidth < minWidth ? minWidth : boxWidth + padding * 2;
+    const boxWidth =
+      lines.reduce((max, curr) => (max < curr.width ? curr.width : max), 0) +
+      padding * 2;
+    const width = boxWidth < minWidth ? minWidth : boxWidth;
     const height = lineHeight * lines.length + padding * 2;
     return new TextBoxDetails(
       height,

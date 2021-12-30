@@ -41,25 +41,26 @@ This editor is codemirror.net/6 used in React via https://uiwjs.github.io/react-
 const mapExampleText = `Map Title
 ====
 
-=Aeroplane
--Pilot
--Flight
--Security
+From Tree - Wikipedia.
 
-=Security
--Terminal Gate
--Boarding Pass
+=In botany, a tree is a perennial plant with an elongated stem, or trunk, usually supporting branches and leaves.
+-Leaves
+-Trunk
+-Root
 
-=Pilot
--cockpit
+=Trunk
+-The main purpose of the trunk is to raise the leaves above the ground, enabling the tree to overtop other plants and outcompete them for light.
 
-=Flight
--preflight stuff
--postflight stuff
+=Root
+-The roots of a tree serve to anchor it to the ground and gather water and nutrients to transfer to all parts of the tree.
+
+=Leaves
+-Leaves are structures specialised for photosynthesis and are arranged on the tree in such a way as to maximise their exposure to light without shading each other.
+- evergreen
 
 `;
 
-const REFRESH_EXAMPLE_GUID = "2df39b83-30d1-4f8f-8479-b4f692d25978";
+const REFRESH_EXAMPLE_GUID = "2df39b83-30d1-4f8f-8479-b4f692d25979";
 export const EXAMPLE_GUID = "27e67be2-598c-49df-85c2-3a8942088cbe";
 export const MAP_EXAMPLE_GUID = "cde8785f-43a7-4496-8364-5dd7529829d1";
 

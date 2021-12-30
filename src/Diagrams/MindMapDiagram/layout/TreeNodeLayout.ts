@@ -7,7 +7,7 @@ interface Positional {
 }
 
 const FONT = "12px Arial";
-const MAX_WIDTH = 200;
+const MAX_WIDTH = 300;
 const MIN_WIDTH = 50;
 const PADDING = 10;
 const COLUMN_SPACING = 100;
@@ -70,7 +70,7 @@ export default class TreeNodeLayout {
       }, 0),
       this.textBoxDetails.height
     );
-    return maxHeight;
+    return maxHeight + ROW_SPACING * this.children.length;
   }
 
   get textBoxDetails(): TextBoxDetails {

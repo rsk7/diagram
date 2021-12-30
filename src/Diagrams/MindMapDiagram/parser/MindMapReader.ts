@@ -15,8 +15,11 @@ function search(root: MapNode, searchNode: MapNode): MapNode | undefined {
 
 function createMapNode(l: Line, c: Line[]): MapNode {
   return {
-    content: l.text.substring(1),
-    children: c.map((c) => ({ content: c.text.substring(1), children: [] }))
+    content: l.text.substring(1).trim(),
+    children: c.map((c) => ({
+      content: c.text.substring(1).trim(),
+      children: []
+    }))
   };
 }
 
