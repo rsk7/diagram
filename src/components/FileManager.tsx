@@ -53,7 +53,10 @@ export default function FileManager(props: FileManagerProps) {
   const currentFile = props.files.find((f) => f.guid === props.currentGUID);
   const modal = fileOptions({
     isOpen: showOptions,
-    fileClick: props.onFileClick,
+    fileClick: (guid: string) => {
+      toggleShowOptions(!showOptions);
+      props.onFileClick(guid);
+    },
     files: props.files,
     currentFile,
     deleteFileClick: props.onDeleteFileClick
