@@ -1,4 +1,5 @@
 #files .file,
+.examples .file,
 .modal.file-options .file {
   background-color: #e0e0e0;
   margin: 5px;
@@ -7,6 +8,14 @@
   border-radius: 4px;
   cursor: pointer;
   max-width: 250px;
+}
+
+.examples {
+  position: absolute;
+  bottom: 22px;
+  right: 100px;
+  display: flex;
+  align-items: center;
 }
 
 .modal.file-options {
@@ -48,12 +57,10 @@
 }
 
 #files .file:hover,
+.examples .file:hover,
 .modal.file-options .file:hover {
   background-color: white;
   border-color: white;
-}
-
-.modal.file-options {
 }
 
 .App > #files {

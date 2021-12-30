@@ -4,6 +4,7 @@ import { DiagramFile } from "../AppState";
 import ReactDOM from "react-dom";
 import { ReactComponent as TrashIcon } from "../bootstrap-icons/trash.svg";
 import { useState } from "react";
+import { EXAMPLE_GUID, MAP_EXAMPLE_GUID } from "../exampleText";
 
 interface FileManagerProps {
   files: DiagramFile[];
@@ -12,6 +13,27 @@ interface FileManagerProps {
   onNewFileClick: () => void;
   onDeleteFileClick: (guid: string) => void;
 }
+
+const examples = ({
+  fileClick,
+  examples
+}: {
+  fileClick: (guid: string) => void;
+  examples: DiagramFile[];
+}) => {
+  return ReactDOM.createPortal(
+    <div className="examples">
+      Examples:
+      {!!examples.length &&
+        examples.map((f) => (
+          <div className="file" key={f.guid} onClick={() => fileClick(f.guid)}>
+            {f.fileName}
+          </div>
+        ))}
+    </div>,
+    document.body
+  );
+};
 
 const fileOptions = ({
   isOpen,
@@ -61,9 +83,17 @@ export default function FileManager(props: FileManagerProps) {
     currentFile,
     deleteFileClick: props.onDeleteFileClick
   });
+  const exampleFiles = props.files.filter((f) =>
+    new Set([EXAMPLE_GUID, MAP_EXAMPLE_GUID]).has(f.guid)
+  );
+  const info = examples({
+    fileClick: props.onFileClick,
+    examples: exampleFiles
+  });
   return (
     <div id="files">
       {modal}
+      {window.innerWidth > 700 && !!exampleFiles.length && info}
       <div
         className="file current"
         onClick={() => toggleShowOptions(!showOptions)}
