@@ -61,13 +61,13 @@ export default class TreeNodeLayout {
     }
   }
 
-  get width(): number {
+  get subTreeWidth(): number {
     if (this._subtreeWidth) return this._subtreeWidth;
     if (!this.children.length) {
       this._subtreeWidth = this.textBoxDetails.width;
     } else {
       const maxWidth = this.children.reduce((max, c) => {
-        return max < c.width ? c.width : max;
+        return max < c.subTreeWidth ? c.subTreeWidth : max;
       }, 0);
       this._subtreeWidth =
         maxWidth + COLUMN_SPACING + this.textBoxDetails.width;

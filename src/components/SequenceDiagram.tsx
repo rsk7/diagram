@@ -7,6 +7,7 @@ import MessageArrow from "../Diagrams/SequenceDiagram/layout/MessageArrow";
 import AnnotationDescription from "../Diagrams/SequenceDiagram/layout/AnnotationDescription";
 import Title from "../Diagrams/SequenceDiagram/layout/Title";
 import DiagramSvg from "./DiagamSvg";
+import Watermark from "./Watermark";
 
 interface SequenceDiagramProps {
   lifelineProps: Lifeline[];
@@ -56,17 +57,7 @@ export default function SequenceDiagram(props: SequenceDiagramProps) {
           annotation={p.annotationData}
         />
       ))}
-      {props.watermark && (
-        <text
-          fill="#b0b0b0"
-          style={{ font: "12px Consolas" }}
-          textAnchor="end"
-          x={props.watermark.x}
-          y={props.watermark.y}
-        >
-          sequencediagram.xyz
-        </text>
-      )}
+      {props.watermark && <Watermark {...props.watermark} />}
     </DiagramSvg>
   );
 }

@@ -1,9 +1,9 @@
 import { ReactNode } from "react";
 import { MindMapDiagramLayout } from "../Diagrams/MindMapDiagram/layout/MindMapLayout";
 import TreeNodeLayout from "../Diagrams/MindMapDiagram/layout/TreeNodeLayout";
-// import TextBoxDetails from "../services/TextBoxDetails";
 import DiagramSvg from "./DiagamSvg";
 import Rect from "./Rect";
+import Watermark from "./Watermark";
 
 export default function MindMapDiagram(props: MindMapDiagramLayout) {
   function drawNode(node: TreeNodeLayout): ReactNode[] {
@@ -33,38 +33,6 @@ export default function MindMapDiagram(props: MindMapDiagramLayout) {
     ];
   }
 
-  /*
-  const testBox = TextBoxDetails.Create(
-    "test",
-    "12px Arial",
-    200,
-    100,
-    10,
-    true,
-    "center"
-  );
-  const layout = {
-    x: 100,
-    y: 100,
-    arrowAnchor: {
-      left: { x: 100, y: 150 },
-      right: { x: 200, y: 150 }
-    },
-    textBoxDetails: testBox,
-    children: [
-      {
-        x: 300,
-        y: 300,
-        arrowAnchor: {
-          left: { x: 300, y: 350 },
-          right: { x: 400, y: 450 }
-        },
-        textBoxDetails: testBox,
-        children: []
-      }
-    ]
-  };*/
-
   return (
     <DiagramSvg>
       {props.title && (
@@ -75,6 +43,7 @@ export default function MindMapDiagram(props: MindMapDiagramLayout) {
         />
       )}
       {props.rootNode && drawNode(props.rootNode)}
+      {props.watermark && <Watermark {...props.watermark} />}
     </DiagramSvg>
   );
 }
