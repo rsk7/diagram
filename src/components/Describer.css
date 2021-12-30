@@ -39,6 +39,7 @@
   align-items: center;
   z-index: 1000;
   border-bottom: 1px solid #e0e0e0;
+  background-color: #ffffff;
 }
 
 #describer .tools .tool {
