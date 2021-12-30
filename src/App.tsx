@@ -32,6 +32,9 @@ function App() {
           dispatch({ type: "changeCurrentFile", guid })
         }
         onNewFileClick={() => dispatch({ type: "newFile" })}
+        onDeleteFileClick={(guid: string) => {
+          dispatch({ type: "delete", guid });
+        }}
       />
       <div id="tools">
         <TextIcon

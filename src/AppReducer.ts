@@ -76,22 +76,21 @@ function changeCurrentFile(state: AppState, guid: string): AppState {
   };
 }
 
-function deleteFile(state: AppState): AppState {
-  localStorage.removeItem(state.fileGUID);
-  const files = [...state.files.filter((f) => f.guid !== state.fileGUID)];
+function deleteFile(state: AppState, guid?: string): AppState {
+  const shouldChangeCurrentFile = guid === state.fileGUID;
+  const fileGUID = guid || state.fileGUID;
+  localStorage.removeItem(fileGUID);
+  const files = [...state.files.filter((f) => f.guid !== fileGUID)];
+  const newState = {
+    ...state,
+    files
+  };
   if (!files.length) {
-    return createNewFile({
-      ...state,
-      files
-    });
+    return createNewFile(newState);
+  } else if (shouldChangeCurrentFile) {
+    return changeCurrentFile(newState, files[0]?.guid || "");
   } else {
-    return changeCurrentFile(
-      {
-        ...state,
-        files
-      },
-      files[0]?.guid || ""
-    );
+    return newState;
   }
 }
 
@@ -114,7 +113,7 @@ type Action =
   | { type: "toggleCloseState" }
   | { type: "newFile" }
   | { type: "changeCurrentFile"; guid: string }
-  | { type: "delete" }
+  | { type: "delete"; guid?: string }
   | { type: "renameFile"; newName: string }
   | { type: "changeDiagramType"; diagramType: DiagramType };
 
@@ -129,7 +128,7 @@ export function AppReducer(state: AppState, action: Action): AppState {
     case "changeCurrentFile":
       return changeCurrentFile(state, action.guid);
     case "delete":
-      return deleteFile(state);
+      return deleteFile(state, action.guid);
     case "renameFile":
       return renameFile(state, action.newName);
     case "changeDiagramType":

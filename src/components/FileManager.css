@@ -1,10 +1,39 @@
-#files .file {
+#files .file,
+.modal.file-options .file {
   background-color: #e0e0e0;
   margin: 5px;
   padding: 2px 5px 2px 5px;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   cursor: pointer;
+  max-width: 250px;
+}
+
+.modal.file-options {
+  bottom: 55px;
+  left: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.modal.file-options > div {
+  display: flex;
+  align-items: center;
+}
+
+.modal.file-options .file {
+  margin-left: 0px;
+  display: inline-block;
+}
+
+.modal.file-options .file.current {
+  background-color: #ffffff;
 }
 
 #files .tool:hover {
@@ -12,12 +41,19 @@
 }
 
 #files .file.current {
-  background-color: white;
+  background-color: #ffffff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-#files .file:hover {
+#files .file:hover,
+.modal.file-options .file:hover {
   background-color: white;
   border-color: white;
+}
+
+.modal.file-options {
 }
 
 .App > #files {
@@ -28,4 +64,14 @@
   max-width: 50vw;
   flex-wrap: wrap;
   min-width: min(300px, 50vw);
+  z-index: 1000;
+}
+
+.modal.file-options .tool {
+  height: 15px;
+  width: 15px;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px;
+  cursor: pointer;
 }
