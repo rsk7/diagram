@@ -20,9 +20,11 @@ export default class TreeNodeLayout {
   private _x: number | undefined;
   private _y: number | undefined;
   private _textBoxDetails: TextBoxDetails | undefined;
+  private _subtreeHeight: number | undefined;
+  private _subtreeWidth: number | undefined;
+  private _children: TreeNodeLayout[] = [];
 
   text: string;
-  children: TreeNodeLayout[] = [];
 
   constructor(node: MapNode) {
     this.text = node.content;
@@ -34,6 +36,16 @@ export default class TreeNodeLayout {
 
   get y(): number | undefined {
     return this._y;
+  }
+
+  get children(): TreeNodeLayout[] {
+    return this._children;
+  }
+
+  set children(value: TreeNodeLayout[]) {
+    this._children = value;
+    this._subtreeHeight = undefined;
+    this._subtreeWidth = undefined;
   }
 
   position(x: number, y: number) {
@@ -50,25 +62,33 @@ export default class TreeNodeLayout {
   }
 
   get width(): number {
+    if (this._subtreeWidth) return this._subtreeWidth;
     if (!this.children.length) {
-      return this.textBoxDetails.width;
+      this._subtreeWidth = this.textBoxDetails.width;
+    } else {
+      const maxWidth = this.children.reduce((max, c) => {
+        return max < c.width ? c.width : max;
+      }, 0);
+      this._subtreeWidth =
+        maxWidth + COLUMN_SPACING + this.textBoxDetails.width;
     }
-    const maxWidth = this.children.reduce((max, c) => {
-      return max < c.width ? c.width : max;
-    }, 0);
-    return maxWidth + COLUMN_SPACING + this.textBoxDetails.width;
+    return this._subtreeWidth;
   }
 
   get subTreeHeight(): number {
+    if (this._subtreeHeight) return this._subtreeHeight;
     if (!this.children.length) {
-      return this.textBoxDetails.height;
+      this._subtreeHeight = this.textBoxDetails.height;
+    } else {
+      const maxHeight = Math.max(
+        this.children.reduce((sum, c) => {
+          return sum + c.subTreeHeight;
+        }, 0)
+      );
+      this._subtreeHeight =
+        maxHeight + ROW_SPACING * Math.max(this.children.length - 1, 0);
     }
-    const maxHeight = Math.max(
-      this.children.reduce((sum, c) => {
-        return sum + c.subTreeHeight;
-      }, 0)
-    );
-    return maxHeight + ROW_SPACING * Math.max(this.children.length - 1, 0);
+    return this._subtreeHeight;
   }
 
   get textBoxDetails(): TextBoxDetails {
