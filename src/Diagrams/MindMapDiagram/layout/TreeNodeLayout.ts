@@ -36,17 +36,16 @@ export default class TreeNodeLayout {
     return this._y;
   }
 
-  // first pass at positioning
-  // this needs some changes
-  position(startX: number, startY: number): void {
-    this._x = startX;
-    this._y = startY;
+  position(x: number, y: number) {
+    this._x = x;
+    this._y = y + this.subTreeHeight / 2 - this.textBoxDetails.height / 2;
     if (!this.children.length) return;
     const childrenX = this.x! + this.textBoxDetails.width + COLUMN_SPACING;
-    let y = this.y! + this.textBoxDetails.height / 2 - this.height / 2;
+    let childrenY =
+      this.y! + this.textBoxDetails.height / 2 - this.subTreeHeight / 2;
     for (const c of this.children) {
-      c.position(childrenX, y);
-      y = y + c.height + ROW_SPACING;
+      c.position(childrenX, childrenY);
+      childrenY = childrenY + c.subTreeHeight + ROW_SPACING;
     }
   }
 
@@ -60,17 +59,16 @@ export default class TreeNodeLayout {
     return maxWidth + COLUMN_SPACING + this.textBoxDetails.width;
   }
 
-  get height(): number {
+  get subTreeHeight(): number {
     if (!this.children.length) {
       return this.textBoxDetails.height;
     }
     const maxHeight = Math.max(
       this.children.reduce((sum, c) => {
-        return sum + c.height;
-      }, 0),
-      this.textBoxDetails.height
+        return sum + c.subTreeHeight;
+      }, 0)
     );
-    return maxHeight + ROW_SPACING * this.children.length;
+    return maxHeight + ROW_SPACING * Math.max(this.children.length - 1, 0);
   }
 
   get textBoxDetails(): TextBoxDetails {
