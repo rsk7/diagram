@@ -83,7 +83,8 @@ export default class TreeNodeLayout {
       const maxHeight = Math.max(
         this.children.reduce((sum, c) => {
           return sum + c.subTreeHeight;
-        }, 0)
+        }, 0),
+        this.textBoxDetails.height
       );
       this._subtreeHeight =
         maxHeight + ROW_SPACING * Math.max(this.children.length - 1, 0);
