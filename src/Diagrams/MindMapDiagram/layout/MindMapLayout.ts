@@ -19,7 +19,7 @@ const DIAGRAM_PADDING = 100;
 export default function MindMapLayout(
   diagram: MindMapDiagram,
   startX: number = 10,
-  startY: number = 100
+  startY: number = 10
 ): MindMapDiagramLayout {
   let rootLayoutNode;
   let title;

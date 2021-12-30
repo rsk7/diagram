@@ -8,7 +8,7 @@ interface SvgProps {
 
 export default function DiagramSvg(props: SvgProps) {
   const x = window.innerWidth < 600 ? 25 : window.innerWidth * 0.4;
-  const y = 50;
+  const y = 100;
   const {
     matrixState,
     isDragging,
@@ -23,8 +23,17 @@ export default function DiagramSvg(props: SvgProps) {
       id="mainDiagram"
       xmlns="http://www.w3.org/2000/svg"
       onMouseDown={(e) => handleMouseDown({ x: e.pageX, y: e.pageY })}
+      onPointerDown={(e) => {
+        handleMouseDown({ x: e.pageX, y: e.pageY });
+      }}
       onMouseMove={(e) => handleMouseMove({ x: e.pageX, y: e.pageY })}
+      onPointerMove={(e) => {
+        handleMouseMove({ x: e.pageX, y: e.pageY });
+      }}
       onMouseUp={(e) => handleMouseUp({ x: e.pageX, y: e.pageY })}
+      onPointerUp={(e) => {
+        handleMouseUp({ x: e.pageX, y: e.pageY });
+      }}
       onWheel={(e) => handleZoom({ x: e.pageX, y: e.pageY }, e.deltaY > 0)}
       style={{ cursor: isDragging ? "grabbing" : "grab" }}
     >

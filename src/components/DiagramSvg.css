@@ -3,4 +3,5 @@ svg#mainDiagram {
   width: 100vw;
   display: block;
   user-select: none;
+  touch-action: none;
 }
