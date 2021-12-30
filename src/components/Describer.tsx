@@ -55,7 +55,7 @@ export default function Describer(props: DescriberProps) {
     }
   };
   return (
-    <Draggable nodeRef={nodeRef} bounds="parent" handle="#move">
+    <Draggable nodeRef={nodeRef} bounds="parent" handle=".moveHandle">
       <Resizable
         height={boxState.height}
         width={boxState.width}
@@ -75,22 +75,22 @@ export default function Describer(props: DescriberProps) {
             height: boxState.height + "px"
           }}
         >
-          <div className="tools">
+          <div className="tools moveHandle">
             <select
               id="diagramTypeSelect"
               value={props.diagramType}
               onChange={(e) => onDiagramTypeChange(e.target.value)}
             >
               <option value="sequenceDiagram">Sequence Diagram</option>
-              <option value="mindMap">Map (Experimental)</option>
+              <option value="mindMap">Map</option>
             </select>
-            <TrashIcon className="tool" onClick={props.onDelete} />
             {showClipSuccess ? (
               <ClipboardCheckIcon className="tool" onClick={copyToClipboard} />
             ) : (
               <ClipboardIcon className="tool" onClick={copyToClipboard} />
             )}
-            <MoveIcon id="move" className="tool" />
+            <TrashIcon className="tool" onClick={props.onDelete} />
+            <MoveIcon className="tool moveHandle" />
             <CloseIcon id="close" className="tool" onClick={props.onClose} />
           </div>
           <div className="cm-container">

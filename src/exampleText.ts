@@ -41,6 +41,7 @@ This editor is codemirror.net/6 used in React via https://uiwjs.github.io/react-
 const mapExampleText = `Map
 ====
 
+This diagram is created by starting lines with "=" or "-".
 From Tree - Wikipedia.
 
 =In botany, a tree is a perennial plant with an elongated stem, or trunk, usually supporting branches and leaves.
@@ -58,9 +59,13 @@ From Tree - Wikipedia.
 -Leaves are structures specialised for photosynthesis and are arranged on the tree in such a way as to maximise their exposure to light without shading each other.
 - evergreen
 
+=evergreen
+-a
+-b
+
 `;
 
-const REFRESH_EXAMPLE_GUID = "2df39b83-30d1-4f8f-8479-b4f692d25979";
+const REFRESH_EXAMPLE_GUID = "f8c31073-090a-4ef9-b5a3-806a86590366";
 export const EXAMPLE_GUID = "27e67be2-598c-49df-85c2-3a8942088cbe";
 export const MAP_EXAMPLE_GUID = "cde8785f-43a7-4496-8364-5dd7529829d1";
 

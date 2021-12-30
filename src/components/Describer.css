@@ -23,7 +23,7 @@
 }
 
 #describer .cm-container {
-  height: 100%;
+  height: calc(100% - 36px);
   width: 100%;
   overflow-y: auto;
   border: none;
@@ -32,13 +32,13 @@
 }
 
 #describer .tools {
-  position: absolute;
   display: flex;
   top: 2px;
   right: 10px;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
   z-index: 1000;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 #describer .tools .tool {
@@ -47,12 +47,16 @@
   padding: 5px;
   border-radius: 5px;
   margin: 5px;
-  background-color: #e0e0e0;
+  background-color: #ffffff;
   cursor: pointer;
 }
 
+#describer .tools .tool:last-of-type {
+  margin-left: auto;
+}
+
 #describer .tools .tool:hover {
-  background-color: #ffffff;
+  background-color: #e0e0e0;
 }
 
 #describer .tools #lightbulb.on {
@@ -128,9 +132,15 @@
 #diagramTypeSelect {
   padding: 3px 5px;
   border: 1px solid #e0e0e0;
-  margin-right: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 #diagramTypeSelect {
   outline: none;
+}
+
+#describer .tools .tool.moveHandle,
+#describer .moveHandle {
+  cursor: move;
 }
