@@ -27,5 +27,5 @@
   display: flex;
   max-width: 50vw;
   flex-wrap: wrap;
-  min-width: 300px;
+  min-width: min(300px, 50vw);
 }

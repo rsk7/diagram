@@ -30,8 +30,8 @@ export default function Describer(props: DescriberProps) {
     }
   });
   const [boxState, setBoxState] = useState({
-    height: 600,
-    width: 500
+    height: Math.min(600, window.innerHeight - 30),
+    width: Math.min(500, window.innerWidth - 30)
   });
   const nodeRef = useRef(null);
 
@@ -75,7 +75,7 @@ export default function Describer(props: DescriberProps) {
             height: boxState.height + "px"
           }}
         >
-          <div className="tools moveHandle">
+          <div className="tools">
             <select
               id="diagramTypeSelect"
               value={props.diagramType}

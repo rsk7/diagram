@@ -7,6 +7,8 @@ interface SvgProps {
 }
 
 export default function DiagramSvg(props: SvgProps) {
+  const x = window.innerWidth < 600 ? 25 : window.innerWidth * 0.4;
+  const y = 50;
   const {
     matrixState,
     isDragging,
@@ -14,7 +16,7 @@ export default function DiagramSvg(props: SvgProps) {
     handleMouseUp,
     handleMouseMove,
     handleZoom
-  } = useSvgMatrixState({ x: window.innerWidth * 0.4, y: 50 });
+  } = useSvgMatrixState({ x, y });
 
   return (
     <svg

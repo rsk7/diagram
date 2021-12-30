@@ -2,8 +2,8 @@
   display: block;
   margin: 10px;
   position: absolute;
-  min-width: 400px;
-  min-height: 300px;
+  min-width: min(400px, calc(100% - 40px));
+  min-height: min(300px, calc(100% - 40px));
   top: 0px;
   border: 2px solid #e0e0e0;
   border-radius: 5px;
