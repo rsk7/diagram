@@ -1,6 +1,6 @@
 import AppState, { DiagramFile, DiagramType } from "./AppState";
 import { v4 as uuidv4 } from "uuid";
-import { EXAMPLE_GUID } from "./exampleText";
+import { EXAMPLE_GUID, MAP_EXAMPLE_GUID } from "./exampleText";
 import { useEffect, useReducer } from "react";
 
 function setText(currState: AppState, text: string): AppState {
@@ -32,6 +32,16 @@ function toggleCloseState(currState: AppState): AppState {
 }
 
 export function initState(): AppState {
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const exampleName = urlSearchParams.get("example");
+  switch (exampleName) {
+    case "map":
+      localStorage.setItem("currentGUID", MAP_EXAMPLE_GUID);
+      break;
+    case "sequence":
+      localStorage.setItem("currentGUID", EXAMPLE_GUID);
+      break;
+  }
   const currentGUID = localStorage.getItem("currentGUID");
   if (!currentGUID) localStorage.setItem("currentGUID", EXAMPLE_GUID);
   const currentFileGUID: string = localStorage.getItem("currentGUID") || "";
