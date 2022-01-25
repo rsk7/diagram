@@ -49,6 +49,10 @@ export default class MessageArrow {
     return Math.abs(this.distanceX) - MESSAGE_ARROW_DESCRIPTION_PADDING - 10;
   }
 
+  protected get fill(): string {
+    return "transparent";
+  }
+
   get textBoxDetails(): TextBoxDetails {
     if (!this._textBoxDetails) {
       this._textBoxDetails = TextBoxDetails.Create(
@@ -58,7 +62,9 @@ export default class MessageArrow {
         MIN_WIDTH,
         PADDING,
         this.textBoxBorder,
-        this.textAlignment
+        this.textAlignment,
+        undefined,
+        this.fill
       );
     }
     return this._textBoxDetails;

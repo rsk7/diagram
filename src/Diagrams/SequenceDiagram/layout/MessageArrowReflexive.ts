@@ -15,6 +15,10 @@ export default class MessageArrowReflexive extends MessageArrow {
     return "left";
   }
 
+  protected get fill(): string {
+    return "white";
+  }
+
   get y(): number {
     return (
       this.startY +

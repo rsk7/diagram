@@ -16,6 +16,7 @@ import createAnnotationSequence, {
 import AnnotationDescription from "./AnnotationDescription";
 
 const PADDING = 50;
+const MARGIN = 400; // 2 * reflexive message
 
 export default function SequenceDiagramLayout(diagram: SequenceDiagram): {
   lifelineProps: Lifeline[];
@@ -30,7 +31,7 @@ export default function SequenceDiagramLayout(diagram: SequenceDiagram): {
 } {
   const annotationMap = createAnnotationMap(diagram);
   const actors = diagram.actors;
-  const lifelinePropsMap = createLifelineSequenceMap(actors, PADDING, PADDING);
+  const lifelinePropsMap = createLifelineSequenceMap(actors, MARGIN, PADDING);
   const lifelineProps = Array.from(lifelinePropsMap.values());
   const maxLifelineHeight = getMaxLifelineHeight(lifelineProps);
 
@@ -65,7 +66,8 @@ export default function SequenceDiagramLayout(diagram: SequenceDiagram): {
       lastLifeline.x +
       lastLifeline.textBoxDetails.width +
       PADDING +
-      PADDING * 0.2;
+      PADDING * 0.2 +
+      MARGIN;
     layoutEndX = layoutWidth;
     layoutEndY = lastMessage.endY + 1.5 * PADDING;
   }
