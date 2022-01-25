@@ -18,12 +18,14 @@ const DIAGRAM_PADDING = 100;
 
 export default function MindMapLayout(
   diagram: MindMapDiagram,
-  startX: number = 10,
-  startY: number = 10
+  diagramStartX: number = 0,
+  diagramStartY: number = 0
 ): MindMapDiagramLayout {
   let rootLayoutNode;
   let title;
   let watermark;
+  let startX = diagramStartX + DIAGRAM_PADDING;
+  let startY = diagramStartY + DIAGRAM_PADDING;
   if (diagram.root) {
     const root = diagram.root;
     rootLayoutNode = createNodeLayoutTree(root);
